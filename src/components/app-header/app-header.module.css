@@ -12,12 +12,9 @@
 }
 
 .listItem {
-    /*composes: p-5 mr-2 from global;*/
     display: flex;
     align-items: center;
     cursor: pointer;
-    font-family: 'JetBrains Mono', Arial, sans-serif;
-    font-weight: 400;
 }
 
 .logo {

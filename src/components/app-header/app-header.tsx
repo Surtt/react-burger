@@ -10,16 +10,20 @@ import styles from "./app-header.module.css";
 
 const AppHeader = () => {
   return (
-    <header className="p-4">
+    <header className="pt-4 pb-4">
       <nav className={styles.nav}>
         <ul className={styles.list}>
           <li className={cn(styles.listItem, "p-5 mr-2")}>
             <BurgerIcon type="primary" />
-            <span className="ml-2">Конструктор</span>
+            <span className="text text_type_main-default ml-2">
+              Конструктор
+            </span>
           </li>
           <li className={cn(styles.listItem, "p-5 mr-2")}>
             <ListIcon type="primary" />
-            <span className="ml-2">Лента заказов</span>
+            <span className="text text_type_main-default ml-2">
+              Лента заказов
+            </span>
           </li>
         </ul>
         <div className={styles.logo}>
@@ -27,7 +31,9 @@ const AppHeader = () => {
         </div>
         <li className={styles.listItem}>
           <ProfileIcon type="primary" />
-          <span className="ml-2">Личный кабинет</span>
+          <span className="text text_type_main-default ml-2">
+            Личный кабинет
+          </span>
         </li>
       </nav>
     </header>
