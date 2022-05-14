@@ -7,7 +7,10 @@ function App() {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <BurgerIngredients />
+      <main className=" pl-5 pr-5" style={{ display: "flex", columnGap: 40 }}>
+        <BurgerIngredients />
+        <div></div>
+      </main>
     </div>
   );
 }

@@ -19,7 +19,7 @@ const AppHeader = () => {
               Конструктор
             </span>
           </li>
-          <li className={cn(styles.listItem, "p-5 mr-2")}>
+          <li className={cn(styles.listItem, "p-5")}>
             <ListIcon type="primary" />
             <span className="text text_type_main-default ml-2">
               Лента заказов
@@ -29,7 +29,7 @@ const AppHeader = () => {
         <div className={styles.logo}>
           <Logo />
         </div>
-        <li className={styles.listItem}>
+        <li className={cn(styles.listItem, "p-5")}>
           <ProfileIcon type="primary" />
           <span className="text text_type_main-default ml-2">
             Личный кабинет

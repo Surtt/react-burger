@@ -1,0 +1,20 @@
+.cardTop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ingredientContainer {
+    composes: cardTop;
+    width: 50%;
+    max-width: 272px;
+}
+
+.priceContainer {
+    display: flex;
+    column-gap: 9px;
+}
+
+.name {
+    text-align: center;
+}
