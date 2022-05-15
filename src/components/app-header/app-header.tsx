@@ -20,8 +20,11 @@ const AppHeader = () => {
             </span>
           </li>
           <li className={cn(styles.listItem, "p-5")}>
-            <ListIcon type="primary" />
-            <span className="text text_type_main-default ml-2">
+            <ListIcon type="secondary" />
+            <span
+              className="text text_type_main-default ml-2"
+              style={{ color: "#8585AD" }}
+            >
               Лента заказов
             </span>
           </li>
@@ -30,8 +33,11 @@ const AppHeader = () => {
           <Logo />
         </div>
         <li className={cn(styles.listItem, "p-5")}>
-          <ProfileIcon type="primary" />
-          <span className="text text_type_main-default ml-2">
+          <ProfileIcon type="secondary" />
+          <span
+            className="text text_type_main-default ml-2"
+            style={{ color: "#8585AD" }}
+          >
             Личный кабинет
           </span>
         </li>

@@ -1,15 +1,9 @@
-import React, { FC } from "react";
-import data from "../../utils/data";
+import React from "react";
 import cn from "classnames";
 import styles from "./ingredients.module.css";
 import IngredientCard from "../ingredient/ingredient-card";
 
-interface IIngredients {
-  title: string;
-  typeIng: string;
-}
-
-const Ingredients: FC<IIngredients> = ({ title, typeIng }) => {
+const Ingredients = ({ data, title, typeIng }) => {
   return (
     <section className="mt-10">
       <p className="text text_type_main-medium mb-6">{title}</p>
@@ -22,6 +16,7 @@ const Ingredients: FC<IIngredients> = ({ title, typeIng }) => {
               image={image}
               name={name}
               price={price}
+              idx={idx}
             />
           ))}
       </section>

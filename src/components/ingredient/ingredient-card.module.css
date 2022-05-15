@@ -6,6 +6,7 @@
 
 .ingredientContainer {
     composes: cardTop;
+    position: relative;
     width: 50%;
     max-width: 272px;
 }
