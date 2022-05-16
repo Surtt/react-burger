@@ -26,9 +26,9 @@ const Ingredients = ({ data, title, typeIng }) => {
 };
 
 Ingredients.propTypes = {
-  title: PropTypes.string,
-  typeIng: PropTypes.string,
-  data: PropTypes.array,
+  title: PropTypes.string.isRequired,
+  typeIng: PropTypes.string.isRequired,
+  data: PropTypes.array.isRequired,
 };
 
 export default Ingredients;
