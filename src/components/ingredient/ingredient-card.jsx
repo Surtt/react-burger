@@ -1,21 +1,15 @@
-import React, { FC, ReactNode } from "react";
+import React from "react";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ingredient-card.module.css";
 import cn from "classnames";
+import PropTypes from "prop-types";
 
-interface IIngredientCard {
-  image: string;
-  name: string;
-  price: ReactNode;
-  idx: number;
-}
-
-const IngredientCard: FC<IIngredientCard> = ({ image, name, price, idx }) => {
+const IngredientCard = ({ image, name, price, idx }) => {
   return (
-    <div className={styles.ingredientContainer}>
+    <li className={styles.ingredientContainer}>
       <div className={cn(styles.cardTop, "pl-4 pr-4")}>
         {idx === 0 && <Counter count={1} size="default" />}
         <img src={image} alt={name} />
@@ -25,8 +19,15 @@ const IngredientCard: FC<IIngredientCard> = ({ image, name, price, idx }) => {
         </div>
       </div>
       <p className={cn(styles.name, "text text_type_main-default")}>{name}</p>
-    </div>
+    </li>
   );
+};
+
+IngredientCard.propTypes = {
+  image: PropTypes.string,
+  name: PropTypes.string,
+  price: PropTypes.number,
+  idx: PropTypes.number,
 };
 
 export default IngredientCard;

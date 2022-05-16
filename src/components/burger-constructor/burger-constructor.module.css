@@ -5,13 +5,15 @@
 .constructorWrapper {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
     gap: 10px;
 }
 
 .ingredientsWrapper {
     composes: constructorWrapper;
     overflow-y: scroll;
-    height: 33vh;
+    max-height: calc(100vh - 526px);
 }
 
 .ingredientWrapper, .bunWrapper {

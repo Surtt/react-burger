@@ -7,6 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
 import styles from "./burger-constructor.module.css";
+import PropTypes from "prop-types";
 
 const BurgerConstructor = ({ data }) => {
   const bun = data.find((b) => b.name === "Краторная булка N-200i");
@@ -24,11 +25,11 @@ const BurgerConstructor = ({ data }) => {
             thumbnail={bun.image}
           />
         </div>
-        <div className={styles.ingredientsWrapper}>
+        <ul className={styles.ingredientsWrapper}>
           {data
             .filter(({ type }) => type !== "bun")
             .map(({ image, name, price }, idx) => (
-              <div key={idx.toString()} className={styles.ingredientWrapper}>
+              <li key={idx.toString()} className={styles.ingredientWrapper}>
                 <DragIcon type="primary" />
                 <div />
                 <ConstructorElement
@@ -36,9 +37,9 @@ const BurgerConstructor = ({ data }) => {
                   price={price}
                   thumbnail={image}
                 />
-              </div>
+              </li>
             ))}
-        </div>
+        </ul>
         <div className={styles.bunWrapper}>
           <div />
           <div />
@@ -60,6 +61,10 @@ const BurgerConstructor = ({ data }) => {
       </div>
     </section>
   );
+};
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.array,
 };
 
 export default BurgerConstructor;

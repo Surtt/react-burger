@@ -1,5 +1,5 @@
 .ingredientsContainer {
-    height: 65vh;
+    max-height: calc(100vh - 283px);
     overflow-y: scroll;
 }
 
