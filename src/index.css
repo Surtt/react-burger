@@ -12,6 +12,19 @@
   src: url("./fonts/JetBrainsMono-Regular.ttf") format("ttf");
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+::-webkit-scrollbar-thumb {
+  background: #8585AD;
+  height: 50px;
+  border-radius: 5px;
+}
+
 ul {
   list-style: none;
   padding: 0;

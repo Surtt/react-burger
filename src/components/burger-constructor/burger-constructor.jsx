@@ -28,8 +28,8 @@ const BurgerConstructor = ({ data }) => {
         <ul className={styles.ingredientsWrapper}>
           {data
             .filter(({ type }) => type !== "bun")
-            .map(({ image, name, price }, idx) => (
-              <li key={idx.toString()} className={styles.ingredientWrapper}>
+            .map(({ _id, image, name, price }) => (
+              <li key={_id} className={styles.ingredientWrapper}>
                 <DragIcon type="primary" />
                 <div />
                 <ConstructorElement
@@ -64,7 +64,7 @@ const BurgerConstructor = ({ data }) => {
 };
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.array.isRequired,
 };
 
 export default BurgerConstructor;

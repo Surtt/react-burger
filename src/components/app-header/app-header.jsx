@@ -22,8 +22,10 @@ const AppHeader = () => {
           <li className={cn(styles.listItem, "p-5")}>
             <ListIcon type="secondary" />
             <span
-              className="text text_type_main-default ml-2"
-              style={{ color: "#8585AD" }}
+              className={cn(
+                styles.notActiveLink,
+                "text text_type_main-default ml-2"
+              )}
             >
               Лента заказов
             </span>
@@ -35,8 +37,10 @@ const AppHeader = () => {
         <li className={cn(styles.listItem, "p-5")}>
           <ProfileIcon type="secondary" />
           <span
-            className="text text_type_main-default ml-2"
-            style={{ color: "#8585AD" }}
+            className={cn(
+              styles.notActiveLink,
+              "text text_type_main-default ml-2"
+            )}
           >
             Личный кабинет
           </span>

@@ -3,16 +3,7 @@
     overflow-y: scroll;
 }
 
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #2F2F37;
-}
-::-webkit-scrollbar-thumb {
-    background: #8585AD;
-    height: 50px;
-    border-radius: 5px;
+.ingredientsBlockContainer {
+    width: 50%;
 }
 

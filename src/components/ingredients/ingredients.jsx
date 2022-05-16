@@ -11,9 +11,9 @@ const Ingredients = ({ data, title, typeIng }) => {
       <ul className={cn(styles.ingredientsContainer, "pl-4")}>
         {data
           .filter(({ type }) => type === typeIng)
-          .map(({ image, name, price }, idx) => (
+          .map(({ _id, image, name, price }, idx) => (
             <IngredientCard
-              key={idx.toString()}
+              key={_id}
               image={image}
               name={name}
               price={price}
@@ -26,9 +26,9 @@ const Ingredients = ({ data, title, typeIng }) => {
 };
 
 Ingredients.propTypes = {
-  data: PropTypes.array,
   title: PropTypes.string,
   typeIng: PropTypes.string,
+  data: PropTypes.array,
 };
 
 export default Ingredients;
