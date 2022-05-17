@@ -1,0 +1,35 @@
+.burgerConstructorContainer {
+    width: 50%;
+}
+
+.constructorWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    gap: 10px;
+}
+
+.ingredientsWrapper {
+    composes: constructorWrapper;
+    overflow-y: scroll;
+    max-height: calc(100vh - 526px);
+}
+
+.ingredientWrapper, .bunWrapper {
+    align-items: center;
+    display: grid;
+    grid-template-columns: 24px 14px 1fr;
+}
+
+.price {
+     display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.priceWrapper {
+    display: flex;
+    column-gap: 40px;
+    justify-content: flex-end;
+}

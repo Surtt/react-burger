@@ -1,0 +1,9 @@
+.ingredientsContainer {
+    max-height: calc(100vh - 283px);
+    overflow-y: scroll;
+}
+
+.ingredientsBlockContainer {
+    width: 50%;
+}
+

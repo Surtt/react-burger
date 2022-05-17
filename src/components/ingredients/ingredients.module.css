@@ -1,0 +1,6 @@
+.ingredientsContainer {
+    display: flex;
+    column-gap: 24px;
+    row-gap: 32px;
+    flex-wrap: wrap;
+}
