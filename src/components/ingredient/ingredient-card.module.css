@@ -9,6 +9,7 @@
     position: relative;
     width: 50%;
     max-width: 272px;
+    cursor: pointer;
 }
 
 .priceContainer {
@@ -20,27 +21,3 @@
     text-align: center;
 }
 
-.detailIngredientModal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 520px;
-    margin: auto;
-}
-
-.name {
-    text-align: center;
-}
-
-.nutrients {
-    display: flex;
-    justify-content: space-between;
-    column-gap: 20px;
-    width: 100%;
-}
-
-.nutrient {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}

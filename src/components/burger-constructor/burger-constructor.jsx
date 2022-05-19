@@ -9,6 +9,7 @@ import cn from "classnames";
 import styles from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
 import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
 
 const BurgerConstructor = ({ data }) => {
   const bun = data.find((b) => b.name === "Краторная булка N-200i");
@@ -73,7 +74,7 @@ const BurgerConstructor = ({ data }) => {
       </section>
       {isOpenModal && (
         <Modal onClose={handleCloseModal}>
-          <p className="text text_type_digits-large">034536</p>
+          <OrderDetails />
         </Modal>
       )}
     </>
