@@ -67,17 +67,15 @@ const BurgerConstructor = ({ data }) => {
               <p className="text text_type_digits-medium">610</p>
               <CurrencyIcon widht={33} height={33} type="primary" />
             </div>
-            <div style={{ overflow: "hidden" }}>
-              <Button onClick={handleOpenModal}>Оформить заказ</Button>
-              {isOpenModal && (
-                <Modal onClose={handleCloseModal}>
-                  <p className="text text_type_digits-large">034536</p>
-                </Modal>
-              )}
-            </div>
+            <Button onClick={handleOpenModal}>Оформить заказ</Button>
           </div>
         </div>
       </section>
+      {isOpenModal && (
+        <Modal onClose={handleCloseModal}>
+          <p className="text text_type_digits-large">034536</p>
+        </Modal>
+      )}
     </>
   );
 };
