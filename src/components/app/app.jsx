@@ -5,11 +5,8 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import cn from "classnames";
 
-// import data from "../../utils/data";
-
-const baseUrl = "https://norma.nomoreparties.space";
-
 function App() {
+  const baseUrl = "https://norma.nomoreparties.space";
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -17,7 +14,7 @@ function App() {
       try {
         const response = await fetch(`${baseUrl}/api/ingredients`);
         const ingredientsData = await response.json();
-        setData([...data, ...ingredientsData.data]);
+        setData([...ingredientsData.data]);
       } catch (e) {
         console.log(e.message);
       }

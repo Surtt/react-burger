@@ -3,8 +3,6 @@ import cn from "classnames";
 import styles from "./ingredients.module.css";
 import IngredientCard from "../ingredient/ingredient-card";
 import PropTypes from "prop-types";
-import { useState } from "react";
-import Modal from "../modal/modal";
 
 const Ingredients = ({ data, title, typeIng }) => {
   return (
