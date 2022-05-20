@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
-import AppHeader from "../app-header/app-header";
-import styles from "./app.module.css";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
 import cn from "classnames";
 
+import AppHeader from "../app-header/app-header";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
+import getData from "../../utils/api/api";
+
+import styles from "./app.module.css";
+
 function App() {
-  const baseUrl = "https://norma.nomoreparties.space";
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const getData = async () => {
+    const getIngredients = async () => {
       try {
-        const response = await fetch(`${baseUrl}/api/ingredients`);
-        const ingredientsData = await response.json();
-        setData([...ingredientsData.data]);
+        const dataIngredients = await getData();
+        setData([...dataIngredients]);
       } catch (e) {
         console.log(e.message);
       }
     };
-
-    getData();
+    getIngredients();
   }, []);
 
   return (

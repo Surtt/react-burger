@@ -12,7 +12,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 
 const BurgerConstructor = ({ data }) => {
-  const bun = data.find((b) => b.name === "Краторная булка N-200i");
+  const bun = data.find(({ type }) => type === "bun");
   const [isOpenModal, setOpenModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -32,8 +32,8 @@ const BurgerConstructor = ({ data }) => {
             <ConstructorElement
               type="top"
               isLocked={true}
-              text="Краторная булка N-200i (верх)"
-              price={200}
+              text={`${bun?.name} (верх)`}
+              price={bun?.price}
               thumbnail={bun?.image}
             />
           </div>
@@ -58,8 +58,8 @@ const BurgerConstructor = ({ data }) => {
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text="Краторная булка N-200i (низ)"
-              price={200}
+              text={`${bun?.name} (низ)`}
+              price={bun?.price}
               thumbnail={bun?.image}
             />
           </div>
@@ -82,7 +82,22 @@ const BurgerConstructor = ({ data }) => {
 };
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      image_large: PropTypes.string.isRequired,
+      image_mobile: PropTypes.string.isRequired,
+      _v: PropTypes.number,
+      calories: PropTypes.number.isRequired,
+      carbohydrates: PropTypes.number.isRequired,
+      fat: PropTypes.number.isRequired,
+      proteins: PropTypes.number.isRequired,
+      price: PropTypes.number.isRequired,
+    }).isRequired
+  ),
 };
 
 export default BurgerConstructor;
