@@ -8,7 +8,9 @@ const Ingredients = ({ data, title }) => {
   return (
     <>
       <section className="mt-10">
-        <p className="text text_type_main-medium mb-6">{title}</p>
+        <p className="text text_type_main-medium mb-6" id={data[0]?.type}>
+          {title}
+        </p>
         <ul className={cn(styles.ingredientsContainer, "pl-4")}>
           {data.map(({ _id, image, name, price, ...props }, idx) => (
             <IngredientCard
