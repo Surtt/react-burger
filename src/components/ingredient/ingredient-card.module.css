@@ -9,6 +9,7 @@
     position: relative;
     width: 50%;
     max-width: 272px;
+    cursor: pointer;
 }
 
 .priceContainer {
@@ -19,3 +20,4 @@
 .name {
     text-align: center;
 }
+
