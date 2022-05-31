@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import {
@@ -10,12 +10,30 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
 import styles from "./ingredient-card.module.css";
+import { DataContext } from "../../utils/dataContext";
 
-const IngredientCard = ({ image, imageLarge, name, price, idx, ...props }) => {
+const IngredientCard = ({
+  id,
+  image,
+  imageLarge,
+  name,
+  price,
+  idx,
+  ...props
+}) => {
+  const { dispatch } = useContext(DataContext);
   const [isOpenModal, setOpenModal] = useState(false);
 
   const handleOpenModal = () => {
     setOpenModal(true);
+    // временное решение для тренировки useReducer
+    if (props.type === "bun") {
+      return;
+    }
+    dispatch({
+      type: "addIngredient",
+      payload: { id, image, name, price },
+    });
   };
 
   const handleCloseModal = () => {

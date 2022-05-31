@@ -1,11 +1,16 @@
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import Tabs from "../tabs/tabs";
 import Ingredients from "../ingredients/ingredients";
 import styles from "./burger-ingredients.module.css";
 import cn from "classnames";
 import PropTypes from "prop-types";
+import { dataTypes } from "../../utils/dataTypes";
+import { DataContext } from "../../utils/dataContext";
 
-const BurgerIngredients = ({ data }) => {
+const BurgerIngredients = () => {
+  const {
+    state: { data },
+  } = useContext(DataContext);
   const buns = useMemo(() => data.filter(({ type }) => type === "bun"), [data]);
   const sauces = useMemo(
     () => data.filter(({ type }) => type === "sauce"),
@@ -29,22 +34,7 @@ const BurgerIngredients = ({ data }) => {
 };
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      _v: PropTypes.number,
-      calories: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      proteins: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-    }).isRequired
-  ),
+  data: PropTypes.arrayOf(PropTypes.shape(dataTypes).isRequired),
 };
 
 export default BurgerIngredients;

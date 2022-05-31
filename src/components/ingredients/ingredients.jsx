@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import cn from "classnames";
 import styles from "./ingredients.module.css";
 import IngredientCard from "../ingredient/ingredient-card";
@@ -15,6 +15,7 @@ const Ingredients = ({ data, title }) => {
           {data.map(({ _id, image, name, price, ...props }, idx) => (
             <IngredientCard
               key={_id}
+              id={_id}
               image={image}
               name={name}
               price={price}
