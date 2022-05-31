@@ -23,11 +23,15 @@ const BurgerConstructor = () => {
   const bun = data.find(({ type }) => type === "bun");
   const [isOpenModal, setOpenModal] = useState(false);
 
+  const getTotalPrice =
+    ingredients.reduce((acc, { price }) => acc + price, 0) + bun?.price * 2;
+
   const handleOpenModal = (data) => {
     setOpenModal(true);
     const ids = data.map(({ id }) => id);
-    console.log(ids);
-    placeOrder({ ingredients: ids }).then(console.log);
+    placeOrder({ ingredients: [bun._id, ...ids] }).then((data) =>
+      dispatch({ type: "getOrderNumber", payload: data.order.number })
+    );
   };
 
   const handleCloseModal = () => {
@@ -81,7 +85,9 @@ const BurgerConstructor = () => {
           </div>
           <div className={cn(styles.priceWrapper, "mt-10")}>
             <div className={styles.price}>
-              <p className="text text_type_digits-medium">610</p>
+              <p className="text text_type_digits-medium">
+                {getTotalPrice ? getTotalPrice : 0}
+              </p>
               <CurrencyIcon widht={33} height={33} type="primary" />
             </div>
             <Button onClick={() => handleOpenModal(ingredients)}>

@@ -11,13 +11,18 @@ import { DataContext } from "../../utils/dataContext";
 
 const initialState = {
   data: [],
+  buns: [],
   ingredients: [],
+  orderNumber: null,
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "getIngredients": {
       return { ...state, data: action.payload };
+    }
+    case "addBuns": {
+      return { ...state, buns: [...state.buns, action.payload] };
     }
     case "addIngredient": {
       return { ...state, ingredients: [...state.ingredients, action.payload] };
@@ -29,6 +34,9 @@ const reducer = (state, action) => {
           ...state.ingredients.filter(({ id }) => id !== action.payload),
         ],
       };
+    }
+    case "getOrderNumber": {
+      return { ...state, orderNumber: action.payload };
     }
     default:
       return state;
