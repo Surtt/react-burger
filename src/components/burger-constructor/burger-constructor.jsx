@@ -6,14 +6,14 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
-import styles from "./burger-constructor.module.css";
-import PropTypes from "prop-types";
+import { v4 as uuidv4 } from "uuid";
+
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { dataTypes } from "../../utils/dataTypes";
 import { DataContext } from "../../utils/dataContext";
-import { v4 as uuidv4 } from "uuid";
 import { placeOrder } from "../../utils/api/api";
+
+import styles from "./burger-constructor.module.css";
 
 const BurgerConstructor = () => {
   const {
@@ -103,10 +103,6 @@ const BurgerConstructor = () => {
       )}
     </>
   );
-};
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(dataTypes).isRequired),
 };
 
 export default BurgerConstructor;

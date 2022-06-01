@@ -3,8 +3,6 @@ import Tabs from "../tabs/tabs";
 import Ingredients from "../ingredients/ingredients";
 import styles from "./burger-ingredients.module.css";
 import cn from "classnames";
-import PropTypes from "prop-types";
-import { dataTypes } from "../../utils/dataTypes";
 import { DataContext } from "../../utils/dataContext";
 
 const BurgerIngredients = () => {
@@ -31,10 +29,6 @@ const BurgerIngredients = () => {
       </div>
     </section>
   );
-};
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(dataTypes).isRequired),
 };
 
 export default BurgerIngredients;

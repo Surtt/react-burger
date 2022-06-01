@@ -50,7 +50,7 @@ function App() {
     const getIngredients = async () => {
       try {
         const dataIngredients = await getData();
-        dispatch({ type: "getIngredients", payload: dataIngredients });
+        dispatch({ type: "getIngredients", payload: dataIngredients.data });
       } catch (e) {
         console.log(e.message);
       }

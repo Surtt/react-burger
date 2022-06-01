@@ -8,31 +8,29 @@ import {
 
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import { DataContext } from "../../utils/dataContext";
+import { dataTypes } from "../../utils/dataTypes";
 
 import styles from "./ingredient-card.module.css";
-import { DataContext } from "../../utils/dataContext";
 
-const IngredientCard = ({
-  id,
-  image,
-  imageLarge,
-  name,
-  price,
-  idx,
-  ...props
-}) => {
+const IngredientCard = ({ data, idx }) => {
   const { dispatch } = useContext(DataContext);
   const [isOpenModal, setOpenModal] = useState(false);
 
   const handleOpenModal = () => {
     setOpenModal(true);
     // временное решение для тренировки useReducer
-    if (props.type === "bun") {
+    if (data.type === "bun") {
       return;
     }
     dispatch({
       type: "addIngredient",
-      payload: { id, image, name, price },
+      payload: {
+        id: data._id,
+        image: data.image,
+        name: data.name,
+        price: data.price,
+      },
     });
   };
 
@@ -44,17 +42,19 @@ const IngredientCard = ({
       <li onClick={handleOpenModal} className={styles.ingredientContainer}>
         <div className={cn(styles.cardTop, "pl-4 pr-4")}>
           {idx === 0 && <Counter count={1} size="default" />}
-          <img src={image} alt={name} />
+          <img src={data.image} alt={data.name} />
           <div className={styles.priceContainer}>
-            <p className="text text_type_digits-default mb-1">{price}</p>
+            <p className="text text_type_digits-default mb-1">{data.price}</p>
             <CurrencyIcon type="primary" />
           </div>
         </div>
-        <p className={cn(styles.name, "text text_type_main-default")}>{name}</p>
+        <p className={cn(styles.name, "text text_type_main-default")}>
+          {data.name}
+        </p>
       </li>
       {isOpenModal && (
         <Modal title="Детали ингредиента" onClose={handleCloseModal}>
-          <IngredientDetails name={name} {...props} />
+          <IngredientDetails data={data} />
         </Modal>
       )}
     </>
@@ -62,10 +62,7 @@ const IngredientCard = ({
 };
 
 IngredientCard.propTypes = {
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  idx: PropTypes.number.isRequired,
+  data: PropTypes.shape(dataTypes).isRequired,
 };
 
 export default IngredientCard;
