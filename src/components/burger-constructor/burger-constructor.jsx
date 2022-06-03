@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   ConstructorElement,
   DragIcon,
@@ -6,21 +6,40 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
-import styles from "./burger-constructor.module.css";
-import PropTypes from "prop-types";
+import { v4 as uuidv4 } from "uuid";
+
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import { DataContext } from "../../utils/dataContext";
+import { placeOrder } from "../../utils/api/api";
 
-const BurgerConstructor = ({ data }) => {
+import styles from "./burger-constructor.module.css";
+
+const BurgerConstructor = () => {
+  const {
+    state: { data, ingredients },
+    dispatch,
+  } = useContext(DataContext);
   const bun = data.find(({ type }) => type === "bun");
   const [isOpenModal, setOpenModal] = useState(false);
 
-  const handleOpenModal = () => {
+  const getTotalPrice =
+    ingredients.reduce((acc, { price }) => acc + price, 0) + bun?.price * 2;
+
+  const handleOpenModal = (data) => {
     setOpenModal(true);
+    const ids = data.map(({ id }) => id);
+    placeOrder({ ingredients: [bun._id, ...ids] }).then((data) =>
+      dispatch({ type: "getOrderNumber", payload: data.order.number })
+    );
   };
 
   const handleCloseModal = () => {
     setOpenModal(false);
+  };
+
+  const handleDelete = (id) => {
+    dispatch({ type: "deleteIngredient", payload: id });
   };
   return (
     <>
@@ -38,16 +57,17 @@ const BurgerConstructor = ({ data }) => {
             />
           </div>
           <ul className={styles.ingredientsWrapper}>
-            {data
+            {ingredients
               .filter(({ type }) => type !== "bun")
-              .map(({ _id, image, name, price }) => (
-                <li key={_id} className={styles.ingredientWrapper}>
+              .map(({ id, image, name, price }) => (
+                <li key={uuidv4()} className={styles.ingredientWrapper}>
                   <DragIcon type="primary" />
                   <div />
                   <ConstructorElement
                     text={name}
                     price={price}
                     thumbnail={image}
+                    handleClose={() => handleDelete(id)}
                   />
                 </li>
               ))}
@@ -65,10 +85,14 @@ const BurgerConstructor = ({ data }) => {
           </div>
           <div className={cn(styles.priceWrapper, "mt-10")}>
             <div className={styles.price}>
-              <p className="text text_type_digits-medium">610</p>
+              <p className="text text_type_digits-medium">
+                {getTotalPrice ? getTotalPrice : 0}
+              </p>
               <CurrencyIcon widht={33} height={33} type="primary" />
             </div>
-            <Button onClick={handleOpenModal}>Оформить заказ</Button>
+            <Button onClick={() => handleOpenModal(ingredients)}>
+              Оформить заказ
+            </Button>
           </div>
         </div>
       </section>
@@ -79,25 +103,6 @@ const BurgerConstructor = ({ data }) => {
       )}
     </>
   );
-};
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      _v: PropTypes.number,
-      calories: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      proteins: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-    }).isRequired
-  ),
 };
 
 export default BurgerConstructor;

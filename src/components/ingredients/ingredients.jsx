@@ -1,8 +1,9 @@
-import React, { useMemo } from "react";
+import React from "react";
 import cn from "classnames";
 import styles from "./ingredients.module.css";
 import IngredientCard from "../ingredient/ingredient-card";
 import PropTypes from "prop-types";
+import { dataTypes } from "../../utils/dataTypes";
 
 const Ingredients = ({ data, title }) => {
   return (
@@ -12,15 +13,8 @@ const Ingredients = ({ data, title }) => {
           {title}
         </p>
         <ul className={cn(styles.ingredientsContainer, "pl-4")}>
-          {data.map(({ _id, image, name, price, ...props }, idx) => (
-            <IngredientCard
-              key={_id}
-              image={image}
-              name={name}
-              price={price}
-              idx={idx}
-              {...props}
-            />
+          {data.map((item, idx) => (
+            <IngredientCard key={item._id} data={item} idx={idx} />
           ))}
         </ul>
       </section>
@@ -29,8 +23,7 @@ const Ingredients = ({ data, title }) => {
 };
 
 Ingredients.propTypes = {
-  title: PropTypes.string.isRequired,
-  data: PropTypes.array.isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape(dataTypes).isRequired),
 };
 
 export default Ingredients;
