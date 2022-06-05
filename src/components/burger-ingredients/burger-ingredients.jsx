@@ -1,32 +1,51 @@
-import React, { useContext, useMemo } from "react";
+import React, { useMemo } from "react";
 import Tabs from "../tabs/tabs";
 import Ingredients from "../ingredients/ingredients";
 import styles from "./burger-ingredients.module.css";
 import cn from "classnames";
-import { DataContext } from "../../utils/dataContext";
+import { useSelector } from "react-redux";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const BurgerIngredients = () => {
-  const {
-    state: { data },
-  } = useContext(DataContext);
-  const buns = useMemo(() => data.filter(({ type }) => type === "bun"), [data]);
+  const { ingredientsData, ingredientsRequest, ingredientsFailed } =
+    useSelector((state) => state.ingredients);
+
+  const buns = useMemo(
+    () => ingredientsData.filter(({ type }) => type === "bun"),
+    [ingredientsData]
+  );
   const sauces = useMemo(
-    () => data.filter(({ type }) => type === "sauce"),
-    [data]
+    () => ingredientsData.filter(({ type }) => type === "sauce"),
+    [ingredientsData]
   );
   const mains = useMemo(
-    () => data.filter(({ type }) => type === "main"),
-    [data]
+    () => ingredientsData.filter(({ type }) => type === "main"),
+    [ingredientsData]
   );
+  const override = {
+    display: "block",
+    margin: "auto",
+  };
   return (
     <section className={cn(styles.ingredientsBlockContainer, "mt-10")}>
       <p className="text text_type_main-large">Соберите бургер</p>
       <Tabs />
-      <div className={styles.ingredientsContainer}>
-        <Ingredients data={buns} title="Булки" />
-        <Ingredients data={sauces} title="Соусы" />
-        <Ingredients data={mains} title="Начинки" />
-      </div>
+      {ingredientsRequest ? (
+        <div className={styles.loaderWrapper}>
+          <ClipLoader
+            color={"#ffffff"}
+            loading={ingredientsRequest}
+            css={override}
+            size={100}
+          />
+        </div>
+      ) : (
+        <div className={styles.ingredientsContainer}>
+          <Ingredients data={buns} title="Булки" />
+          <Ingredients data={sauces} title="Соусы" />
+          <Ingredients data={mains} title="Начинки" />
+        </div>
+      )}
     </section>
   );
 };

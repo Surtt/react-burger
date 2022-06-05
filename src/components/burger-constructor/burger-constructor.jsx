@@ -1,26 +1,32 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import cn from "classnames";
+import { v4 as uuid4 } from "uuid";
 import {
   ConstructorElement,
   DragIcon,
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import cn from "classnames";
-import { v4 as uuidv4 } from "uuid";
 
+import {
+  DELETE_INGREDIENT,
+  GET_ORDER_NUMBER,
+  getOrderNumber,
+} from "../../services/actions/ingredients";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { DataContext } from "../../utils/dataContext";
 import { placeOrder } from "../../utils/api/api";
 
 import styles from "./burger-constructor.module.css";
 
 const BurgerConstructor = () => {
-  const {
-    state: { data, ingredients },
-    dispatch,
-  } = useContext(DataContext);
-  const bun = data.find(({ type }) => type === "bun");
+  const { ingredientsData, ingredients } = useSelector(
+    (state) => state.ingredients
+  );
+  const dispatch = useDispatch();
+
+  const bun = ingredientsData.find(({ type }) => type === "bun");
   const [isOpenModal, setOpenModal] = useState(false);
 
   const getTotalPrice =
@@ -29,9 +35,10 @@ const BurgerConstructor = () => {
   const handleOpenModal = (data) => {
     setOpenModal(true);
     const ids = data.map(({ id }) => id);
-    placeOrder({ ingredients: [bun._id, ...ids] }).then((data) =>
-      dispatch({ type: "getOrderNumber", payload: data.order.number })
-    );
+    // placeOrder({ ingredients: [bun._id, ...ids] }).then((data) =>
+    //   dispatch({ type: GET_ORDER_NUMBER, payload: data.order.number })
+    // );
+    dispatch(getOrderNumber({ ingredients: [bun._id, ...ids] }));
   };
 
   const handleCloseModal = () => {
@@ -39,7 +46,7 @@ const BurgerConstructor = () => {
   };
 
   const handleDelete = (id) => {
-    dispatch({ type: "deleteIngredient", payload: id });
+    dispatch({ type: DELETE_INGREDIENT, payload: id });
   };
   return (
     <>
@@ -60,7 +67,7 @@ const BurgerConstructor = () => {
             {ingredients
               .filter(({ type }) => type !== "bun")
               .map(({ id, image, name, price }) => (
-                <li key={uuidv4()} className={styles.ingredientWrapper}>
+                <li key={uuid4()} className={styles.ingredientWrapper}>
                   <DragIcon type="primary" />
                   <div />
                   <ConstructorElement

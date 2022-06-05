@@ -24,6 +24,7 @@ const Ingredients = ({ data, title }) => {
 
 Ingredients.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape(dataTypes).isRequired),
+  title: PropTypes.string.isRequired,
 };
 
 export default Ingredients;

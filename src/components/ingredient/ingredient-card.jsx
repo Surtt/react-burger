@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import {
@@ -6,25 +7,26 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+import {
+  ADD_INGREDIENT,
+  HIDE_INGREDIENT_DETAILS,
+  SHOW_INGREDIENT_DETAILS,
+} from "../../services/actions/ingredients";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { DataContext } from "../../utils/dataContext";
 import { dataTypes } from "../../utils/dataTypes";
 
 import styles from "./ingredient-card.module.css";
 
 const IngredientCard = ({ data, idx }) => {
-  const { dispatch } = useContext(DataContext);
   const [isOpenModal, setOpenModal] = useState(false);
+  const dispatch = useDispatch();
 
   const handleOpenModal = () => {
     setOpenModal(true);
-    // временное решение для тренировки useReducer
-    if (data.type === "bun") {
-      return;
-    }
+
     dispatch({
-      type: "addIngredient",
+      type: ADD_INGREDIENT,
       payload: {
         id: data._id,
         image: data.image,
@@ -32,10 +34,24 @@ const IngredientCard = ({ data, idx }) => {
         price: data.price,
       },
     });
+
+    dispatch({
+      type: SHOW_INGREDIENT_DETAILS,
+      payload: {
+        id: data._id,
+        image: data.image_large,
+        name: data.name,
+        calories: data.calories,
+        proteins: data.proteins,
+        fat: data.fat,
+        carbohydrates: data.carbohydrates,
+      },
+    });
   };
 
   const handleCloseModal = () => {
     setOpenModal(false);
+    dispatch({ type: HIDE_INGREDIENT_DETAILS });
   };
   return (
     <>
