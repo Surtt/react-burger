@@ -9,6 +9,7 @@ import {
   HIDE_INGREDIENT_DETAILS,
   GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_NUMBER_FAILED,
+  ADD_BUNS,
 } from "../actions/ingredients";
 
 const initialState = {
@@ -17,7 +18,7 @@ const initialState = {
   ingredientsFailed: false,
   ingredientDetails: null,
   ingredients: [],
-  buns: [],
+  buns: null,
   orderNumber: {},
   orderNumberRequest: false,
   orderNumberFailed: false,
@@ -37,6 +38,9 @@ export const ingredients = (state = initialState, action) => {
     }
     case GET_INGREDIENTS_FAILED: {
       return { ...state, ingredientsFailed: true, ingredientsRequest: false };
+    }
+    case ADD_BUNS: {
+      return { ...state, buns: action.payload };
     }
     case ADD_INGREDIENT: {
       return {

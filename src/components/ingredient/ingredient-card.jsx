@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import {
@@ -8,6 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import {
+  ADD_BUNS,
   ADD_INGREDIENT,
   HIDE_INGREDIENT_DETAILS,
   SHOW_INGREDIENT_DETAILS,
@@ -15,25 +16,47 @@ import {
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { dataTypes } from "../../utils/dataTypes";
+import { useDrag } from "react-dnd";
 
 import styles from "./ingredient-card.module.css";
 
 const IngredientCard = ({ data, idx }) => {
-  const [isOpenModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
+  const [isOpenModal, setOpenModal] = useState(false);
+
+  const [{ isDrag }, dragRef] = useDrag({
+    type: "ingredient",
+    item: { id: data._id },
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
 
   const handleOpenModal = () => {
     setOpenModal(true);
 
-    dispatch({
-      type: ADD_INGREDIENT,
-      payload: {
-        id: data._id,
-        image: data.image,
-        name: data.name,
-        price: data.price,
-      },
-    });
+    if (data.type === "bun") {
+      console.log(data);
+      dispatch({
+        type: ADD_BUNS,
+        payload: {
+          id: data._id,
+          image: data.image,
+          name: data.name,
+          price: data.price,
+        },
+      });
+    } else {
+      dispatch({
+        type: ADD_INGREDIENT,
+        payload: {
+          id: data._id,
+          image: data.image,
+          name: data.name,
+          price: data.price,
+        },
+      });
+    }
 
     dispatch({
       type: SHOW_INGREDIENT_DETAILS,
@@ -55,9 +78,12 @@ const IngredientCard = ({ data, idx }) => {
   };
   return (
     <>
-      <li onClick={handleOpenModal} className={styles.ingredientContainer}>
+      <li
+        ref={dragRef}
+        onClick={handleOpenModal}
+        className={styles.ingredientContainer}
+      >
         <div className={cn(styles.cardTop, "pl-4 pr-4")}>
-          {idx === 0 && <Counter count={1} size="default" />}
           <img src={data.image} alt={data.name} />
           <div className={styles.priceContainer}>
             <p className="text text_type_digits-default mb-1">{data.price}</p>

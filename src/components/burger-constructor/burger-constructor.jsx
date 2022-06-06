@@ -19,26 +19,37 @@ import OrderDetails from "../order-details/order-details";
 import { placeOrder } from "../../utils/api/api";
 
 import styles from "./burger-constructor.module.css";
+import { useDrop } from "react-dnd";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
-const BurgerConstructor = () => {
-  const { ingredientsData, ingredients } = useSelector(
+const BurgerConstructor = ({ onDropHandler }) => {
+  const { ingredientsData, ingredients, buns } = useSelector(
     (state) => state.ingredients
   );
   const dispatch = useDispatch();
 
-  const bun = ingredientsData.find(({ type }) => type === "bun");
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(itemId) {
+      onDropHandler(itemId);
+    },
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+  });
+
+  // const bun = ingredientsData.find(({ type }) => type === "bun");
   const [isOpenModal, setOpenModal] = useState(false);
 
   const getTotalPrice =
-    ingredients.reduce((acc, { price }) => acc + price, 0) + bun?.price * 2;
+    ingredients.reduce((acc, current) => acc + current?.price, 0) +
+    buns?.price * 2;
 
   const handleOpenModal = (data) => {
     setOpenModal(true);
     const ids = data.map(({ id }) => id);
-    // placeOrder({ ingredients: [bun._id, ...ids] }).then((data) =>
-    //   dispatch({ type: GET_ORDER_NUMBER, payload: data.order.number })
-    // );
-    dispatch(getOrderNumber({ ingredients: [bun._id, ...ids] }));
+    dispatch(getOrderNumber({ ingredients: [buns._id, ...ids] }));
   };
 
   const handleCloseModal = () => {
@@ -48,33 +59,40 @@ const BurgerConstructor = () => {
   const handleDelete = (id) => {
     dispatch({ type: DELETE_INGREDIENT, payload: id });
   };
+
+  const outline = isHover ? "2px dotted #4c4cff" : "transparent";
   return (
     <>
-      <section className={cn(styles.burgerConstructorContainer, "mt-25")}>
-        <div className={styles.constructorWrapper}>
+      <section
+        ref={dropTarget}
+        className={cn(styles.burgerConstructorContainer, "mt-25")}
+      >
+        <div style={{ outline }} className={styles.constructorWrapper}>
           <div className={styles.bunWrapper}>
             <div />
             <div />
-            <ConstructorElement
-              type="top"
-              isLocked={true}
-              text={`${bun?.name} (верх)`}
-              price={bun?.price}
-              thumbnail={bun?.image}
-            />
+            {buns && (
+              <ConstructorElement
+                type="top"
+                isLocked={true}
+                text={`${buns?.name} (верх)`}
+                price={buns?.price}
+                thumbnail={buns?.image}
+              />
+            )}
           </div>
           <ul className={styles.ingredientsWrapper}>
             {ingredients
-              .filter(({ type }) => type !== "bun")
-              .map(({ id, image, name, price }) => (
+              .filter((ingredient) => ingredient?.type !== "bun")
+              .map((ingredient) => (
                 <li key={uuid4()} className={styles.ingredientWrapper}>
                   <DragIcon type="primary" />
                   <div />
                   <ConstructorElement
-                    text={name}
-                    price={price}
-                    thumbnail={image}
-                    handleClose={() => handleDelete(id)}
+                    text={ingredient?.name}
+                    price={ingredient?.price}
+                    thumbnail={ingredient?.image}
+                    handleClose={() => handleDelete(ingredient?.id)}
                   />
                 </li>
               ))}
@@ -82,13 +100,15 @@ const BurgerConstructor = () => {
           <div className={styles.bunWrapper}>
             <div />
             <div />
-            <ConstructorElement
-              type="bottom"
-              isLocked={true}
-              text={`${bun?.name} (низ)`}
-              price={bun?.price}
-              thumbnail={bun?.image}
-            />
+            {buns && (
+              <ConstructorElement
+                type="bottom"
+                isLocked={true}
+                text={`${buns?.name} (низ)`}
+                price={buns?.price}
+                thumbnail={buns?.image}
+              />
+            )}
           </div>
           <div className={cn(styles.priceWrapper, "mt-10")}>
             <div className={styles.price}>
