@@ -22,6 +22,7 @@ import styles from "./burger-constructor.module.css";
 import { useDrop } from "react-dnd";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 
 const BurgerConstructor = ({ onDropHandler }) => {
   const { ingredientsData, ingredients, buns } = useSelector(
@@ -86,17 +87,13 @@ const BurgerConstructor = ({ onDropHandler }) => {
           <ul className={styles.ingredientsWrapper}>
             {ingredients
               .filter((ingredient) => ingredient?.type !== "bun")
-              .map((ingredient) => (
-                <li key={uuid4()} className={styles.ingredientWrapper}>
-                  <DragIcon type="primary" />
-                  <div />
-                  <ConstructorElement
-                    text={ingredient?.name}
-                    price={ingredient?.price}
-                    thumbnail={ingredient?.image}
-                    handleClose={() => handleDelete(ingredient?._id)}
-                  />
-                </li>
+              .map((ingredient, idx) => (
+                <BurgerIngredient
+                  key={ingredient._id}
+                  index={idx}
+                  ingredient={ingredient}
+                  handleDelete={() => handleDelete(ingredient?._id)}
+                />
               ))}
           </ul>
           <div className={styles.bunWrapper}>
