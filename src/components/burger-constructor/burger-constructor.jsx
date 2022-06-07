@@ -59,7 +59,6 @@ const BurgerConstructor = ({ onDropHandler }) => {
   };
 
   const handleDelete = (id) => {
-    console.log(id);
     dispatch({ type: DELETE_INGREDIENT, payload: id });
   };
 

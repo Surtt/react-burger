@@ -57,9 +57,9 @@ const IngredientCard = ({ data, idx }) => {
     const ingredientsAmount = ingredients.filter(
       (ingredient) => ingredient.name === ingredientByName
     ).length;
-    return ingredientsAmount;
-  }, [ingredients]);
-  // console.log(ingredientsAmount);
+
+    return data.name === buns?.name ? 2 : ingredientsAmount;
+  }, [ingredients, buns]);
 
   const handleCloseModal = () => {
     setOpenModal(false);
