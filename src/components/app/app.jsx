@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
+import { v4 as uuid4 } from "uuid";
 
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -29,7 +30,10 @@ function App() {
     if (isBun) {
       dispatch({ type: ADD_BUNS, payload: targetIngredient });
     } else {
-      dispatch({ type: ADD_INGREDIENT, payload: targetIngredient });
+      dispatch({
+        type: ADD_INGREDIENT,
+        payload: { ...targetIngredient, _id: uuid4() },
+      });
     }
   };
 

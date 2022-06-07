@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import cn from "classnames";
@@ -8,8 +8,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import {
-  ADD_BUNS,
-  ADD_INGREDIENT,
   HIDE_INGREDIENT_DETAILS,
   SHOW_INGREDIENT_DETAILS,
 } from "../../services/actions/ingredients";
@@ -21,6 +19,9 @@ import { useDrag } from "react-dnd";
 import styles from "./ingredient-card.module.css";
 
 const IngredientCard = ({ data, idx }) => {
+  const { ingredientsData, ingredients, buns } = useSelector(
+    (state) => state.ingredients
+  );
   const dispatch = useDispatch();
   const [isOpenModal, setOpenModal] = useState(false);
 
@@ -34,29 +35,6 @@ const IngredientCard = ({ data, idx }) => {
 
   const handleOpenModal = () => {
     setOpenModal(true);
-
-    if (data.type === "bun") {
-      console.log(data);
-      dispatch({
-        type: ADD_BUNS,
-        payload: {
-          id: data._id,
-          image: data.image,
-          name: data.name,
-          price: data.price,
-        },
-      });
-    } else {
-      dispatch({
-        type: ADD_INGREDIENT,
-        payload: {
-          id: data._id,
-          image: data.image,
-          name: data.name,
-          price: data.price,
-        },
-      });
-    }
 
     dispatch({
       type: SHOW_INGREDIENT_DETAILS,
@@ -72,6 +50,17 @@ const IngredientCard = ({ data, idx }) => {
     });
   };
 
+  const getCounter = useMemo(() => {
+    const ingredientByName = ingredients?.find(
+      (ingredient) => ingredient.name === data.name
+    )?.name;
+    const ingredientsAmount = ingredients.filter(
+      (ingredient) => ingredient.name === ingredientByName
+    ).length;
+    return ingredientsAmount;
+  }, [ingredients]);
+  // console.log(ingredientsAmount);
+
   const handleCloseModal = () => {
     setOpenModal(false);
     dispatch({ type: HIDE_INGREDIENT_DETAILS });
@@ -84,6 +73,7 @@ const IngredientCard = ({ data, idx }) => {
         className={styles.ingredientContainer}
       >
         <div className={cn(styles.cardTop, "pl-4 pr-4")}>
+          {getCounter ? <Counter count={getCounter} size="default" /> : null}
           <img src={data.image} alt={data.name} />
           <div className={styles.priceContainer}>
             <p className="text text_type_digits-default mb-1">{data.price}</p>

@@ -52,7 +52,7 @@ export const ingredients = (state = initialState, action) => {
       return {
         ...state,
         ingredients: [
-          ...state.ingredients.filter(({ id }) => id !== action.payload),
+          ...state.ingredients.filter(({ _id }) => _id !== action.payload),
         ],
       };
     }

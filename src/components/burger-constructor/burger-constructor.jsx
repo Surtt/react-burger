@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { v4 as uuid4 } from "uuid";
@@ -39,12 +39,14 @@ const BurgerConstructor = ({ onDropHandler }) => {
     }),
   });
 
-  // const bun = ingredientsData.find(({ type }) => type === "bun");
   const [isOpenModal, setOpenModal] = useState(false);
 
-  const getTotalPrice =
-    ingredients.reduce((acc, current) => acc + current?.price, 0) +
-    buns?.price * 2;
+  const getTotalPrice = useMemo(() => {
+    return (
+      ingredients.reduce((acc, current) => acc + current?.price, 0) +
+      buns?.price * 2
+    );
+  }, [ingredients, buns]);
 
   const handleOpenModal = (data) => {
     setOpenModal(true);
@@ -57,6 +59,7 @@ const BurgerConstructor = ({ onDropHandler }) => {
   };
 
   const handleDelete = (id) => {
+    console.log(id);
     dispatch({ type: DELETE_INGREDIENT, payload: id });
   };
 
@@ -92,7 +95,7 @@ const BurgerConstructor = ({ onDropHandler }) => {
                     text={ingredient?.name}
                     price={ingredient?.price}
                     thumbnail={ingredient?.image}
-                    handleClose={() => handleDelete(ingredient?.id)}
+                    handleClose={() => handleDelete(ingredient?._id)}
                   />
                 </li>
               ))}
