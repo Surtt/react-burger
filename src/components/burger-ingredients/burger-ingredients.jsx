@@ -29,13 +29,18 @@ const BurgerIngredients = () => {
     margin: "auto",
   };
 
-  const { ref, inView } = useInView({
-    threshold: 0,
-  });
+  const [refBuns, inViewBuns] = useInView();
+  const [refSauces, inViewSauces] = useInView();
+  const [refMains, inViewMains] = useInView();
+
   return (
     <section className={cn(styles.ingredientsBlockContainer, "mt-10")}>
       <p className="text text_type_main-large">Соберите бургер</p>
-      <Tabs inView={inView} />
+      <Tabs
+        inViewBuns={inViewBuns}
+        inViewSauces={inViewSauces}
+        inViewMains={inViewMains}
+      />
       {ingredientsRequest ? (
         <div className={styles.loaderWrapper}>
           <ClipLoader
@@ -47,9 +52,9 @@ const BurgerIngredients = () => {
         </div>
       ) : (
         <div className={styles.ingredientsContainer}>
-          <Ingredients data={buns} title="Булки" />
-          <Ingredients data={sauces} title="Соусы" />
-          <Ingredients data={mains} title="Начинки" />
+          <Ingredients ref={refBuns} data={buns} title="Булки" />
+          <Ingredients ref={refSauces} data={sauces} title="Соусы" />
+          <Ingredients ref={refMains} data={mains} title="Начинки" />
         </div>
       )}
     </section>
