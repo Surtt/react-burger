@@ -4,9 +4,6 @@ import styles from "./tabs.module.css";
 import cn from "classnames";
 
 const Tabs = ({ inViewBuns, inViewSauces, inViewMains }) => {
-  console.log(inViewBuns, "first");
-  console.log(inViewSauces, "second");
-  console.log(inViewMains, "third");
   const [currentTab, setCurrentTab] = useState("bun");
   const handleTabClick = (type) => {
     setCurrentTab(type);
@@ -14,7 +11,7 @@ const Tabs = ({ inViewBuns, inViewSauces, inViewMains }) => {
       .getElementById(type)
       .scrollIntoView({ block: "start", behavior: "smooth" });
   };
-  console.log(currentTab);
+
   useEffect(() => {
     if (inViewBuns) {
       setCurrentTab("bun");

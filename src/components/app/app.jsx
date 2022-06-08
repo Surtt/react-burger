@@ -1,25 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { v4 as uuid4 } from "uuid";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-
-import styles from "./app.module.css";
 import {
   ADD_BUNS,
   ADD_INGREDIENT,
   getIngredients,
 } from "../../services/actions/ingredients";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+
+import styles from "./app.module.css";
 
 function App() {
   const dispatch = useDispatch();
-  const { ingredientsData, ingredientsRequest, ingredientsFailed } =
-    useSelector((state) => state.ingredients);
+  const { ingredientsData } = useSelector((state) => state.ingredients);
 
   const handleDrop = (itemId) => {
     const targetIngredient = ingredientsData.find(

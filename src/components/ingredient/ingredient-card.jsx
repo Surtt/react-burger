@@ -19,9 +19,7 @@ import { useDrag } from "react-dnd";
 import styles from "./ingredient-card.module.css";
 
 const IngredientCard = ({ data, idx }) => {
-  const { ingredientsData, ingredients, buns } = useSelector(
-    (state) => state.ingredients
-  );
+  const { ingredients, buns } = useSelector((state) => state.ingredients);
   const dispatch = useDispatch();
   const [isOpenModal, setOpenModal] = useState(false);
 

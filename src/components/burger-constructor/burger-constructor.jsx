@@ -2,33 +2,26 @@ import React, { useCallback, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { v4 as uuid4 } from "uuid";
+import { useDrop } from "react-dnd";
 import {
   ConstructorElement,
-  DragIcon,
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import {
   DELETE_INGREDIENT,
-  GET_ORDER_NUMBER,
   getOrderNumber,
   UPDATE_ORDER_INGREDIENTS,
 } from "../../services/actions/ingredients";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { placeOrder } from "../../utils/api/api";
-
-import styles from "./burger-constructor.module.css";
-import { useDrop } from "react-dnd";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 
+import styles from "./burger-constructor.module.css";
+
 const BurgerConstructor = ({ onDropHandler }) => {
-  const { ingredientsData, ingredients, buns } = useSelector(
-    (state) => state.ingredients
-  );
+  const { ingredients, buns } = useSelector((state) => state.ingredients);
   const dispatch = useDispatch();
 
   const [{ isHover }, dropTarget] = useDrop({
@@ -66,15 +59,15 @@ const BurgerConstructor = ({ onDropHandler }) => {
 
   const outline = isHover ? "2px dotted #4c4cff" : "transparent";
 
-  const moveCard = useCallback((dragIndex, hoverIndex) => {
-    dispatch(
-      {
+  const moveCard = useCallback(
+    (dragIndex, hoverIndex) => {
+      dispatch({
         type: UPDATE_ORDER_INGREDIENTS,
         payload: { toIndex: hoverIndex, fromIndex: dragIndex },
-      },
-      [dispatch]
-    );
-  });
+      });
+    },
+    [dispatch]
+  );
   return (
     <>
       <section

@@ -1,12 +1,13 @@
 import React, { useMemo } from "react";
-import Tabs from "../tabs/tabs";
-import Ingredients from "../ingredients/ingredients";
-import styles from "./burger-ingredients.module.css";
-import cn from "classnames";
-
 import { useSelector } from "react-redux";
+import cn from "classnames";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useInView } from "react-intersection-observer";
+
+import Tabs from "../tabs/tabs";
+import Ingredients from "../ingredients/ingredients";
+
+import styles from "./burger-ingredients.module.css";
 
 const BurgerIngredients = () => {
   const { ingredientsData, ingredientsRequest, ingredientsFailed } =
@@ -24,14 +25,15 @@ const BurgerIngredients = () => {
     () => ingredientsData.filter(({ type }) => type === "main"),
     [ingredientsData]
   );
-  const override = {
-    display: "block",
-    margin: "auto",
-  };
 
   const [refBuns, inViewBuns] = useInView();
   const [refSauces, inViewSauces] = useInView();
   const [refMains, inViewMains] = useInView();
+
+  const override = {
+    display: "block",
+    margin: "auto",
+  };
 
   return (
     <section className={cn(styles.ingredientsBlockContainer, "mt-10")}>

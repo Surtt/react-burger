@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import cn from "classnames";
 
@@ -9,7 +9,7 @@ const OrderDetails = () => {
   const {
     orderNumber: { number },
   } = useSelector((state) => state.ingredients);
-  console.log(number);
+
   return (
     <div className={cn(styles.orderContainer, "mb-30")}>
       <p className="text text_type_digits-large mb-8">{number}</p>
