@@ -3,7 +3,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./tabs.module.css";
 import cn from "classnames";
 
-const Tabs = () => {
+const Tabs = ({ inView }) => {
   const [currentTab, setCurrentTab] = React.useState("bun");
   const handleTabClick = (type) => {
     setCurrentTab(type);
@@ -13,17 +13,25 @@ const Tabs = () => {
   };
   return (
     <div className={cn(styles.tabsContainer, "mt-5")}>
-      <Tab active={currentTab === "bun"} value="bun" onClick={handleTabClick}>
+      <Tab
+        active={inView && currentTab === "bun"}
+        value="bun"
+        onClick={handleTabClick}
+      >
         Булки
       </Tab>
       <Tab
-        active={currentTab === "sauce"}
+        active={inView && currentTab === "sauce"}
         value="sauce"
         onClick={handleTabClick}
       >
         Соусы
       </Tab>
-      <Tab active={currentTab === "main"} value="main" onClick={handleTabClick}>
+      <Tab
+        active={inView && currentTab === "main"}
+        value="main"
+        onClick={handleTabClick}
+      >
         Начинки
       </Tab>
     </div>

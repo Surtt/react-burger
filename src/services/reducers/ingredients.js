@@ -10,6 +10,7 @@ import {
   GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_NUMBER_FAILED,
   ADD_BUNS,
+  UPDATE_ORDER_INGREDIENTS,
 } from "../actions/ingredients";
 
 const initialState = {
@@ -80,6 +81,12 @@ export const ingredients = (state = initialState, action) => {
     }
     case GET_ORDER_NUMBER_FAILED: {
       return { ...state, orderNumberFailed: true, orderNumberRequest: false };
+    }
+    case UPDATE_ORDER_INGREDIENTS: {
+      const ingredients = [...state.ingredients];
+      const { toIndex, fromIndex } = action.payload;
+      ingredients.splice(toIndex, 0, ingredients.splice(fromIndex, 1)[0]);
+      return { ...state, ingredients: ingredients };
     }
     default: {
       return state;

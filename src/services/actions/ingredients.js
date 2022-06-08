@@ -11,6 +11,7 @@ export const DELETE_INGREDIENT = "DELETE_INGREDIENT";
 export const GET_ORDER_NUMBER = "GET_ORDER_NUMBER";
 export const GET_ORDER_NUMBER_SUCCESS = "GET_ORDER_NUMBER_SUCCESS";
 export const GET_ORDER_NUMBER_FAILED = "GET_ORDER_NUMBER_FAILED";
+export const UPDATE_ORDER_INGREDIENTS = "UPDATE_ORDER_INGREDIENTS";
 
 export const getIngredients = () => (dispatch) => {
   dispatch({ type: GET_INGREDIENTS });

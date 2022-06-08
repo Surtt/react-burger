@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { v4 as uuid4 } from "uuid";
@@ -13,6 +13,7 @@ import {
   DELETE_INGREDIENT,
   GET_ORDER_NUMBER,
   getOrderNumber,
+  UPDATE_ORDER_INGREDIENTS,
 } from "../../services/actions/ingredients";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
@@ -64,6 +65,16 @@ const BurgerConstructor = ({ onDropHandler }) => {
   };
 
   const outline = isHover ? "2px dotted #4c4cff" : "transparent";
+
+  const moveCard = useCallback((dragIndex, hoverIndex) => {
+    dispatch(
+      {
+        type: UPDATE_ORDER_INGREDIENTS,
+        payload: { toIndex: hoverIndex, fromIndex: dragIndex },
+      },
+      [dispatch]
+    );
+  });
   return (
     <>
       <section
@@ -89,10 +100,11 @@ const BurgerConstructor = ({ onDropHandler }) => {
               .filter((ingredient) => ingredient?.type !== "bun")
               .map((ingredient, idx) => (
                 <BurgerIngredient
-                  key={ingredient._id}
+                  key={uuid4()}
                   index={idx}
                   ingredient={ingredient}
                   handleDelete={() => handleDelete(ingredient?._id)}
+                  moveCard={moveCard}
                 />
               ))}
           </ul>

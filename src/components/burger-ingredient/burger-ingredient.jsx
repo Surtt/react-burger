@@ -6,7 +6,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag, useDrop } from "react-dnd";
 
-const BurgerIngredient = ({ ingredient, index, handleDelete }) => {
+const BurgerIngredient = ({ ingredient, index, handleDelete, moveCard }) => {
   const ref = useRef(null);
   const [{ handlerId }, drop] = useDrop({
     accept: "item",
@@ -43,7 +43,7 @@ const BurgerIngredient = ({ ingredient, index, handleDelete }) => {
         return;
       }
 
-      // moveCard(dragIndex, hoverIndex);
+      moveCard(dragIndex, hoverIndex);
 
       item.index = hoverIndex;
     },
@@ -59,6 +59,7 @@ const BurgerIngredient = ({ ingredient, index, handleDelete }) => {
   });
   const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
+
   return (
     <li ref={ref} className={styles.ingredientWrapper} style={{ opacity }}>
       <DragIcon type="primary" />

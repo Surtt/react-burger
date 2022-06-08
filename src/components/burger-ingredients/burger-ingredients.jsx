@@ -6,6 +6,7 @@ import cn from "classnames";
 
 import { useSelector } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
+import { useInView } from "react-intersection-observer";
 
 const BurgerIngredients = () => {
   const { ingredientsData, ingredientsRequest, ingredientsFailed } =
@@ -27,10 +28,14 @@ const BurgerIngredients = () => {
     display: "block",
     margin: "auto",
   };
+
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
   return (
     <section className={cn(styles.ingredientsBlockContainer, "mt-10")}>
       <p className="text text_type_main-large">Соберите бургер</p>
-      <Tabs />
+      <Tabs inView={inView} />
       {ingredientsRequest ? (
         <div className={styles.loaderWrapper}>
           <ClipLoader
