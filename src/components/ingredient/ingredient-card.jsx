@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import {
@@ -6,42 +7,71 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+import {
+  HIDE_INGREDIENT_DETAILS,
+  SHOW_INGREDIENT_DETAILS,
+} from "../../services/actions/ingredients";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { DataContext } from "../../utils/dataContext";
 import { dataTypes } from "../../utils/dataTypes";
+import { useDrag } from "react-dnd";
 
 import styles from "./ingredient-card.module.css";
 
 const IngredientCard = ({ data, idx }) => {
-  const { dispatch } = useContext(DataContext);
+  const { ingredients, buns } = useSelector((state) => state.ingredients);
+  const dispatch = useDispatch();
   const [isOpenModal, setOpenModal] = useState(false);
+
+  const [{ isDrag }, dragRef] = useDrag({
+    type: "ingredient",
+    item: { id: data._id },
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
 
   const handleOpenModal = () => {
     setOpenModal(true);
-    // временное решение для тренировки useReducer
-    if (data.type === "bun") {
-      return;
-    }
+
     dispatch({
-      type: "addIngredient",
+      type: SHOW_INGREDIENT_DETAILS,
       payload: {
         id: data._id,
-        image: data.image,
+        image: data.image_large,
         name: data.name,
-        price: data.price,
+        calories: data.calories,
+        proteins: data.proteins,
+        fat: data.fat,
+        carbohydrates: data.carbohydrates,
       },
     });
   };
 
+  const getCounter = useMemo(() => {
+    const ingredientByName = ingredients?.find(
+      (ingredient) => ingredient.name === data.name
+    )?.name;
+    const ingredientsAmount = ingredients.filter(
+      (ingredient) => ingredient.name === ingredientByName
+    ).length;
+
+    return data.name === buns?.name ? 2 : ingredientsAmount;
+  }, [ingredients, buns]);
+
   const handleCloseModal = () => {
     setOpenModal(false);
+    dispatch({ type: HIDE_INGREDIENT_DETAILS });
   };
   return (
     <>
-      <li onClick={handleOpenModal} className={styles.ingredientContainer}>
+      <li
+        ref={dragRef}
+        onClick={handleOpenModal}
+        className={styles.ingredientContainer}
+      >
         <div className={cn(styles.cardTop, "pl-4 pr-4")}>
-          {idx === 0 && <Counter count={1} size="default" />}
+          {getCounter ? <Counter count={getCounter} size="default" /> : null}
           <img src={data.image} alt={data.name} />
           <div className={styles.priceContainer}>
             <p className="text text_type_digits-default mb-1">{data.price}</p>
