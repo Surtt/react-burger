@@ -1,17 +1,18 @@
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import cn from "classnames";
-import ClipLoader from "react-spinners/ClipLoader";
 import { useInView } from "react-intersection-observer";
 
 import Tabs from "../tabs/tabs";
 import Ingredients from "../ingredients/ingredients";
 
 import styles from "./burger-ingredients.module.css";
+import Loader from "../loader/loader";
 
 const BurgerIngredients = () => {
-  const { ingredientsData, ingredientsRequest, ingredientsFailed } =
-    useSelector((state) => state.ingredients);
+  const { ingredientsData, ingredientsRequest } = useSelector(
+    (state) => state.ingredients
+  );
 
   const buns = useMemo(
     () => ingredientsData.filter(({ type }) => type === "bun"),
@@ -30,11 +31,6 @@ const BurgerIngredients = () => {
   const [refSauces, inViewSauces] = useInView();
   const [refMains, inViewMains] = useInView();
 
-  const override = {
-    display: "block",
-    margin: "auto",
-  };
-
   return (
     <section className={cn(styles.ingredientsBlockContainer, "mt-10")}>
       <p className="text text_type_main-large">Соберите бургер</p>
@@ -44,14 +40,7 @@ const BurgerIngredients = () => {
         inViewMains={inViewMains}
       />
       {ingredientsRequest ? (
-        <div className={styles.loaderWrapper}>
-          <ClipLoader
-            color={"#ffffff"}
-            loading={ingredientsRequest}
-            css={override}
-            size={100}
-          />
-        </div>
+        <Loader loading={ingredientsRequest} />
       ) : (
         <div className={styles.ingredientsContainer}>
           <Ingredients ref={refBuns} data={buns} title="Булки" />

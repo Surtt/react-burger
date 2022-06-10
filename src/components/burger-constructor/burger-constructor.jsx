@@ -10,6 +10,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import {
+  ADD_BUNS,
+  ADD_INGREDIENT,
   DELETE_INGREDIENT,
   getOrderNumber,
   UPDATE_ORDER_INGREDIENTS,
@@ -20,14 +22,32 @@ import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 
 import styles from "./burger-constructor.module.css";
 
-const BurgerConstructor = ({ onDropHandler }) => {
-  const { ingredients, buns } = useSelector((state) => state.ingredients);
+const BurgerConstructor = () => {
+  const { ingredientsData, ingredients, buns } = useSelector(
+    (state) => state.ingredients
+  );
   const dispatch = useDispatch();
+
+  const handleDrop = (itemId) => {
+    const targetIngredient = ingredientsData.find(
+      ({ _id }) => _id === itemId.id
+    );
+    const isBun = targetIngredient.type === "bun";
+
+    if (isBun) {
+      dispatch({ type: ADD_BUNS, payload: targetIngredient });
+    } else {
+      dispatch({
+        type: ADD_INGREDIENT,
+        payload: { ...targetIngredient, uuid: uuid4() },
+      });
+    }
+  };
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
     drop(itemId) {
-      onDropHandler(itemId);
+      handleDrop(itemId);
     },
     collect: (monitor) => ({
       isHover: monitor.isOver(),
@@ -96,7 +116,7 @@ const BurgerConstructor = ({ onDropHandler }) => {
                   key={uuid4()}
                   index={idx}
                   ingredient={ingredient}
-                  handleDelete={() => handleDelete(ingredient?._id)}
+                  handleDelete={() => handleDelete(ingredient?.uuid)}
                   moveCard={moveCard}
                 />
               ))}
@@ -114,17 +134,28 @@ const BurgerConstructor = ({ onDropHandler }) => {
               />
             )}
           </div>
-          <div className={cn(styles.priceWrapper, "mt-10")}>
-            <div className={styles.price}>
-              <p className="text text_type_digits-medium">
-                {getTotalPrice ? getTotalPrice : 0}
-              </p>
-              <CurrencyIcon widht={33} height={33} type="primary" />
+          {buns ? (
+            <div className={cn(styles.priceWrapper, "mt-10")}>
+              <div className={styles.price}>
+                <p className="text text_type_digits-medium">
+                  {getTotalPrice ? getTotalPrice : 0}
+                </p>
+                <CurrencyIcon widht={33} height={33} type="primary" />
+              </div>
+              <Button onClick={() => handleOpenModal(ingredients)}>
+                Оформить заказ
+              </Button>
             </div>
-            <Button onClick={() => handleOpenModal(ingredients)}>
-              Оформить заказ
-            </Button>
-          </div>
+          ) : (
+            <p
+              className={cn(
+                styles.emptyConstructor,
+                "text text_type_main-large"
+              )}
+            >
+              Перенесите булки в эту область
+            </p>
+          )}
         </div>
       </section>
       {isOpenModal && (

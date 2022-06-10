@@ -53,7 +53,7 @@ export const ingredients = (state = initialState, action) => {
       return {
         ...state,
         ingredients: [
-          ...state.ingredients.filter(({ _id }) => _id !== action.payload),
+          ...state.ingredients.filter(({ uuid }) => uuid !== action.payload),
         ],
       };
     }
