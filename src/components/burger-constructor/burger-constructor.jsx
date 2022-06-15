@@ -10,11 +10,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import {
-  ADD_BUNS,
-  ADD_INGREDIENT,
+  addBuns,
+  addIngredient,
   DELETE_INGREDIENT,
+  deleteIngredient,
   getOrderNumber,
   UPDATE_ORDER_INGREDIENTS,
+  updateOrderIngredients,
 } from "../../services/actions/ingredients";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
@@ -35,12 +37,9 @@ const BurgerConstructor = () => {
     const isBun = targetIngredient.type === "bun";
 
     if (isBun) {
-      dispatch({ type: ADD_BUNS, payload: targetIngredient });
+      dispatch(addBuns(targetIngredient));
     } else {
-      dispatch({
-        type: ADD_INGREDIENT,
-        payload: { ...targetIngredient, uuid: uuid4() },
-      });
+      dispatch(addIngredient({ ...targetIngredient, uuid: uuid4() }));
     }
   };
 
@@ -74,17 +73,16 @@ const BurgerConstructor = () => {
   };
 
   const handleDelete = (id) => {
-    dispatch({ type: DELETE_INGREDIENT, payload: id });
+    dispatch(deleteIngredient(id));
   };
 
   const outline = isHover ? "2px dotted #4c4cff" : "transparent";
 
   const moveCard = useCallback(
     (dragIndex, hoverIndex) => {
-      dispatch({
-        type: UPDATE_ORDER_INGREDIENTS,
-        payload: { toIndex: hoverIndex, fromIndex: dragIndex },
-      });
+      dispatch(
+        updateOrderIngredients({ toIndex: hoverIndex, fromIndex: dragIndex })
+      );
     },
     [dispatch]
   );

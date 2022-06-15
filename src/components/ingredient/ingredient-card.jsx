@@ -8,8 +8,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import {
-  HIDE_INGREDIENT_DETAILS,
-  SHOW_INGREDIENT_DETAILS,
+  hideIngredientDetails,
+  showIngredientDetails,
 } from "../../services/actions/ingredients";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
@@ -34,9 +34,8 @@ const IngredientCard = ({ data, idx }) => {
   const handleOpenModal = () => {
     setOpenModal(true);
 
-    dispatch({
-      type: SHOW_INGREDIENT_DETAILS,
-      payload: {
+    dispatch(
+      showIngredientDetails({
         id: data._id,
         image: data.image_large,
         name: data.name,
@@ -44,8 +43,8 @@ const IngredientCard = ({ data, idx }) => {
         proteins: data.proteins,
         fat: data.fat,
         carbohydrates: data.carbohydrates,
-      },
-    });
+      })
+    );
   };
 
   const getCounter = useMemo(() => {
@@ -61,7 +60,7 @@ const IngredientCard = ({ data, idx }) => {
 
   const handleCloseModal = () => {
     setOpenModal(false);
-    dispatch({ type: HIDE_INGREDIENT_DETAILS });
+    dispatch(hideIngredientDetails());
   };
   return (
     <>
