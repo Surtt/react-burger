@@ -10,7 +10,7 @@ import styles from "./app-header.module.css";
 
 const AppHeader = () => {
   return (
-    <header className="pt-4 pb-4">
+    <header className={cn(styles.header, "pt-4 pb-4")}>
       <nav className={styles.nav}>
         <ul className={styles.list}>
           <li className={cn(styles.listItem, "p-5 mr-2")}>

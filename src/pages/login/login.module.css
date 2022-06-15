@@ -1,0 +1,27 @@
+.container {
+    height: calc(100vh - 96px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 24px;
+}
+
+.bottomSide {
+    text-align: center;
+}
+
+.text {
+    color: var(--text-inactive-color);
+}
+
+.link {
+    color: var(--colors-interface-accent);
+    text-decoration: none;
+}
