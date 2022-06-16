@@ -4,13 +4,14 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
 import cn from "classnames";
+import { Link } from "react-router-dom";
 
 import styles from "../form.module.css";
 
-const Login = () => {
+const Registration = () => {
   const [values, setValues] = useState({
+    name: "",
     email: "",
     password: "",
   });
@@ -23,7 +24,17 @@ const Login = () => {
   return (
     <main className={cn(styles.container, "pl-5 pr-5")}>
       <form className={styles.wrapper}>
-        <p className="text text_type_main-medium">Вход</p>
+        <p className="text text_type_main-medium">Регистрация</p>
+        <Input
+          type="text"
+          placeholder="Имя"
+          onChange={handleChange}
+          value={values.name}
+          name="name"
+          error={false}
+          errorText="Ошибка"
+          size="default"
+        />
         <Input
           type="email"
           placeholder="E-mail"
@@ -40,26 +51,17 @@ const Login = () => {
           name="password"
         />
         <Button type="primary" size="medium">
-          Войти
+          Зарегистрироваться
         </Button>
       </form>
       <div className={cn(styles.bottomSide, "mt-20")}>
         <p className={cn(styles.text, "text text_type_main-default")}>
-          Вы — новый пользователь?&nbsp;
+          Уже зарегистрированы?&nbsp;
           <Link
             className={cn(styles.link, "text text_type_main-default")}
-            to="/register"
+            to="/login"
           >
-            Зарегистрироваться
-          </Link>
-        </p>
-        <p className={cn(styles.text, "mt-4 text text_type_main-default")}>
-          Забыли пароль?&nbsp;
-          <Link
-            className={cn(styles.link, "text text_type_main-default")}
-            to="/forgot-password"
-          >
-            Восстановить пароль
+            Войти
           </Link>
         </p>
       </div>
@@ -67,4 +69,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Registration;

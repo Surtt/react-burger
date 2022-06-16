@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 import AppHeader from "../app-header/app-header";
 import { getIngredients } from "../../services/actions/ingredients";
 
-import styles from "./app.module.css";
-import Main from "../../pages/main";
+import Main from "../../pages/main/main";
 import Login from "../../pages/login/login";
+import Registration from "../../pages/registration/registration";
+import PasswordRecovery from "../../pages/password-recovery/password-recovery";
+import ResetPassword from "../../pages/reset-password/reset-password";
 
 function App() {
   const dispatch = useDispatch();
@@ -17,17 +19,24 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className={styles.app}>
+    <>
       <AppHeader />
-      <Router>
-        <Route path="/" exact={true}>
-          <Main />
-        </Route>
-        <Route path="/login" exact={true}>
-          <Login />
-        </Route>
-      </Router>
-    </div>
+      <Route path="/" exact={true}>
+        <Main />
+      </Route>
+      <Route path="/login" exact={true}>
+        <Login />
+      </Route>
+      <Route path="/register" exact={true}>
+        <Registration />
+      </Route>
+      <Route path="/forgot-password" exact={true}>
+        <PasswordRecovery />
+      </Route>
+      <Route path="/reset-password" exact={true}>
+        <ResetPassword />
+      </Route>
+    </>
   );
 }
 
