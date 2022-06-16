@@ -20,6 +20,7 @@ const Login = () => {
     const name = target.name;
     setValues({ ...values, [name]: value });
   };
+
   return (
     <main className={cn(styles.container, "pl-5 pr-5")}>
       <form className={styles.wrapper}>

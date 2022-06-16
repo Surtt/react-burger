@@ -5,11 +5,16 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 
 import styles from "../form.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../services/actions/auth";
 
 const Registration = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const history = useHistory();
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -21,9 +26,19 @@ const Registration = () => {
     const name = target.name;
     setValues({ ...values, [name]: value });
   };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(registerUser(values));
+    history.replace({ pathname: "/" });
+  };
+
+  if (user) {
+    return <Redirect to={{ pathname: "/" }} />;
+  }
   return (
     <main className={cn(styles.container, "pl-5 pr-5")}>
-      <form className={styles.wrapper}>
+      <form onSubmit={onSubmit} className={styles.wrapper}>
         <p className="text text_type_main-medium">Регистрация</p>
         <Input
           type="text"
@@ -50,7 +65,7 @@ const Registration = () => {
           value={values.password}
           name="password"
         />
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" htmlType="submit">
           Зарегистрироваться
         </Button>
       </form>

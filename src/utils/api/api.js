@@ -22,3 +22,14 @@ export const placeOrder = async (ingredients) => {
   });
   return checkResponse(response);
 };
+
+export const signUpUserRequest = async (user) => {
+  const response = await fetch(`${API_URL}/auth/register`, {
+    method: "POST",
+    body: JSON.stringify(user),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return checkResponse(response);
+};
