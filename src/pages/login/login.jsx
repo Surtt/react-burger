@@ -4,16 +4,22 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import cn from "classnames";
 
 import styles from "../form.module.css";
+import { loginUser, registerUser } from "../../services/actions/auth";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const history = useHistory();
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
+
   const handleChange = (e) => {
     const target = e.target;
     const value = target.value;
@@ -21,9 +27,31 @@ const Login = () => {
     setValues({ ...values, [name]: value });
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(loginUser(values));
+    // if (user.name) {
+    //   history.replace({ pathname: "/" });
+    // }
+  };
+
+  const isEmptyUser = (user) => {
+    for (let key in user) {
+      if (user[key]) {
+        console.log(user[key]);
+        return false;
+      }
+    }
+    return true;
+  };
+  console.log(isEmptyUser(user));
+  if (!isEmptyUser(user)) {
+    return <Redirect to={{ pathname: "/" }} />;
+  }
+
   return (
     <main className={cn(styles.container, "pl-5 pr-5")}>
-      <form className={styles.wrapper}>
+      <form onSubmit={onSubmit} className={styles.wrapper}>
         <p className="text text_type_main-medium">Вход</p>
         <Input
           type="email"
@@ -40,7 +68,7 @@ const Login = () => {
           value={values.password}
           name="password"
         />
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" htmlType="submit">
           Войти
         </Button>
       </form>

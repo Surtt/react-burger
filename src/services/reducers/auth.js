@@ -1,4 +1,7 @@
 import {
+  LOGIN_FAILED,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
   REGISTER_FAILED,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -12,6 +15,8 @@ const initialState = {
   },
   registerRequest: false,
   registerFailed: false,
+  loginRequest: false,
+  loginFailed: false,
 };
 
 export const auth = (state = initialState, action) => {
@@ -29,6 +34,21 @@ export const auth = (state = initialState, action) => {
     }
     case REGISTER_FAILED: {
       return { ...state, registerRequest: false, registerFailed: true };
+    }
+
+    case LOGIN_REQUEST: {
+      return { ...state, loginRequest: true, loginFailed: false };
+    }
+    case LOGIN_SUCCESS: {
+      const { name, email } = action.payload;
+      return {
+        ...state,
+        user: { ...state.user, name, email },
+        loginRequest: false,
+      };
+    }
+    case LOGIN_FAILED: {
+      return { ...state, loginRequest: false, loginFailed: true };
     }
 
     default: {

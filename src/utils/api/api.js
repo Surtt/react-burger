@@ -26,6 +26,27 @@ export const placeOrder = async (ingredients) => {
 export const signUpUserRequest = async (user) => {
   const response = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify(user),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return checkResponse(response);
+};
+
+export const signInUserRequest = async (user) => {
+  const response = await fetch(`${API_URL}/auth/login`, {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
     body: JSON.stringify(user),
     headers: {
       "Content-Type": "application/json",

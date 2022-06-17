@@ -33,7 +33,14 @@ const Registration = () => {
     history.replace({ pathname: "/" });
   };
 
-  if (user) {
+  const isEmptyUser = (user) => {
+    for (let key in user) {
+      return false;
+    }
+    return true;
+  };
+
+  if (isEmptyUser(user)) {
     return <Redirect to={{ pathname: "/" }} />;
   }
   return (
