@@ -8,7 +8,7 @@ import { getIngredients } from "../../services/actions/ingredients";
 import Main from "../../pages/main/main";
 import Login from "../../pages/login/login";
 import Registration from "../../pages/registration/registration";
-import PasswordRecovery from "../../pages/password-recovery/password-recovery";
+import ForgotPassword from "../../pages/forgot-password/forgot-password";
 import ResetPassword from "../../pages/reset-password/reset-password";
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
         <Registration />
       </Route>
       <Route path="/forgot-password" exact={true}>
-        <PasswordRecovery />
+        <ForgotPassword />
       </Route>
       <Route path="/reset-password" exact={true}>
         <ResetPassword />

@@ -4,12 +4,16 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import cn from "classnames";
 
 import styles from "../form.module.css";
+import { forgotPassword, resetPassword } from "../../services/actions/auth";
+import { useDispatch, useSelector } from "react-redux";
 
 const ResetPassword = () => {
+  const dispatch = useDispatch();
+  const { isUserChangedPassword } = useSelector((state) => state.auth);
   const [values, setValues] = useState({
     newPassword: "",
     code: "",
@@ -20,9 +24,19 @@ const ResetPassword = () => {
     const name = target.name;
     setValues({ ...values, [name]: value });
   };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(resetPassword(values));
+  };
+
+  if (isUserChangedPassword) {
+    return <Redirect to={{ pathname: "/reset-password" }} />;
+  }
+
   return (
     <main className={cn(styles.container, "pl-5 pr-5")}>
-      <form className={styles.wrapper}>
+      <form onSubmit={onSubmit} className={styles.wrapper}>
         <p className="text text_type_main-medium">Восстановление пароля</p>
         <PasswordInput
           onChange={handleChange}
@@ -40,7 +54,7 @@ const ResetPassword = () => {
           errorText="Ошибка"
           size="default"
         />
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" htmlType="submit">
           Сохранить
         </Button>
       </form>

@@ -4,31 +4,52 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import cn from "classnames";
 
 import styles from "../form.module.css";
+import { forgotPassword, registerUser } from "../../services/actions/auth";
+import { useDispatch, useSelector } from "react-redux";
 
-const PasswordRecovery = () => {
-  const [email, setEmail] = useState("");
+const ForgotPassword = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { isUserSendPasswordChangeReq } = useSelector((state) => state.auth);
+  const [values, setValues] = useState({
+    email: "",
+  });
+
   const handleChange = (e) => {
-    setEmail(e.target.value);
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+    setValues({ ...values, [name]: value });
   };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(forgotPassword(values));
+  };
+
+  if (isUserSendPasswordChangeReq) {
+    return <Redirect to={{ pathname: "/reset-password" }} />;
+  }
+
   return (
     <main className={cn(styles.container, "pl-5 pr-5")}>
-      <form className={styles.wrapper}>
+      <form onSubmit={onSubmit} className={styles.wrapper}>
         <p className="text text_type_main-medium">Восстановление пароля</p>
         <Input
           type="email"
           placeholder="Укажите e-mail"
           onChange={handleChange}
-          value={email}
+          value={values.email}
           name="email"
           error={false}
           errorText="Ошибка"
           size="default"
         />
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" htmlType="submit">
           Восстановить
         </Button>
       </form>
@@ -47,4 +68,4 @@ const PasswordRecovery = () => {
   );
 };
 
-export default PasswordRecovery;
+export default ForgotPassword;
