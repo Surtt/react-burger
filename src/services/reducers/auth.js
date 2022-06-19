@@ -5,6 +5,9 @@ import {
   LOGIN_FAILED,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  LOGOUT_FAILED,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
   REGISTER_FAILED,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -24,6 +27,9 @@ const initialState = {
 
   loginRequest: false,
   loginFailed: false,
+
+  logoutRequest: false,
+  logoutFailed: false,
 
   forgotPasswordRequest: false,
   forgotPasswordFailed: false,
@@ -64,6 +70,20 @@ export const auth = (state = initialState, action) => {
     }
     case LOGIN_FAILED: {
       return { ...state, loginRequest: false, loginFailed: true };
+    }
+
+    case LOGOUT_REQUEST: {
+      return { ...state, logoutRequest: true, logoutFailed: false };
+    }
+    case LOGOUT_SUCCESS: {
+      return {
+        ...state,
+        user: { ...state.user, name: "", email: "" },
+        logoutRequest: false,
+      };
+    }
+    case LOGOUT_FAILED: {
+      return { ...state, logoutRequest: false, logoutFailed: true };
     }
 
     case FORGOT_PASSWORD_REQUEST: {

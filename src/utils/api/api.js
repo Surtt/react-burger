@@ -55,6 +55,22 @@ export const signInUserRequest = async (user) => {
   return checkResponse(response);
 };
 
+export const logOutRequest = async (data) => {
+  const response = await fetch(`${API_URL}/auth/logout`, {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return checkResponse(response);
+};
+
 export const forgotPasswordRequest = async (data) => {
   const response = await fetch(`${API_URL}/password-reset`, {
     method: "POST",

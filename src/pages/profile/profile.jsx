@@ -9,7 +9,7 @@ import { Link, NavLink, Redirect, useHistory } from "react-router-dom";
 
 import styles from "./profile.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../../services/actions/auth";
+import { logoutUser, registerUser } from "../../services/actions/auth";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -31,6 +31,11 @@ const Profile = () => {
     e.preventDefault();
     // dispatch(registerUser(values));
     // history.replace({ pathname: "/" });
+  };
+
+  const handleLogout = () => {
+    const refreshToken = localStorage.getItem("refreshToken");
+    dispatch(logoutUser({ token: refreshToken }));
   };
 
   const inputNameRef = useRef(null);
@@ -75,6 +80,7 @@ const Profile = () => {
             </li>
             <li className="text text_type_main-medium">
               <NavLink
+                onClick={handleLogout}
                 activeClassName={styles.active}
                 className={cn(styles.link, "pt-4 pb-4")}
                 to="/login"

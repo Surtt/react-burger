@@ -1,5 +1,6 @@
 import {
   forgotPasswordRequest,
+  logOutRequest,
   resetPasswordRequest,
   signInUserRequest,
   signUpUserRequest,
@@ -13,6 +14,10 @@ export const REGISTER_FAILED = "REGISTER_FAILED";
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILED = "LOGIN_FAILED";
+
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const LOGOUT_FAILED = "LOGOUT_FAILED";
 
 export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
 export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
@@ -57,6 +62,25 @@ export const loginSuccess = (payload) => {
 export const loginFailed = () => {
   return {
     type: LOGIN_FAILED,
+  };
+};
+
+export const logoutRequest = () => {
+  return {
+    type: LOGOUT_REQUEST,
+  };
+};
+
+export const logoutSuccess = (payload) => {
+  return {
+    type: LOGOUT_SUCCESS,
+    payload,
+  };
+};
+
+export const logoutFailed = () => {
+  return {
+    type: LOGOUT_FAILED,
   };
 };
 
@@ -105,6 +129,7 @@ export const registerUser = (data) => (dispatch) => {
       if (res && res.success) {
         const authToken = res.accessToken.split("Bearer ")[1];
         setCookie("token", authToken);
+        localStorage.setItem("refreshToken", res.refreshToken);
         dispatch(registerSuccess(res.user));
       } else {
         dispatch(registerFailed());
@@ -122,6 +147,7 @@ export const loginUser = (data) => (dispatch) => {
       if (res && res.success) {
         const authToken = res.accessToken.split("Bearer ")[1];
         setCookie("token", authToken);
+        localStorage.setItem("refreshToken", res.refreshToken);
         dispatch(loginSuccess(res.user));
       } else {
         dispatch(loginFailed());
@@ -129,6 +155,22 @@ export const loginUser = (data) => (dispatch) => {
     })
     .catch((error) => {
       dispatch(loginFailed());
+    });
+};
+
+export const logoutUser = (data) => (dispatch) => {
+  dispatch(logoutRequest());
+  logOutRequest(data)
+    .then((res) => {
+      console.log(res);
+      if (res && res.success) {
+        dispatch(logoutSuccess(res.user));
+      } else {
+        dispatch(logoutFailed());
+      }
+    })
+    .catch((error) => {
+      dispatch(logoutFailed());
     });
 };
 
