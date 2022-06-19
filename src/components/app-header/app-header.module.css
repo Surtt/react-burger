@@ -29,6 +29,11 @@
     transform: translateX(-50%);
 }
 
-.notActiveLink {
-    color: #8585AD;
+.link {
+    color: var(--text-inactive-color);
+    text-decoration: none;
+}
+
+.active {
+    color: var(--text-primary-color)
 }

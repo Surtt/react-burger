@@ -7,8 +7,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
 import styles from "./app-header.module.css";
+import { Link, NavLink, useRouteMatch } from "react-router-dom";
 
 const AppHeader = () => {
+  const isConstructor = !!useRouteMatch({ path: "/", exact: true });
+  const isFeed = !!useRouteMatch("/feed");
+  const isProfile = !!useRouteMatch("/profile");
+  console.log(isProfile);
   return (
     <header className={cn(styles.header, "pt-4 pb-4")}>
       <nav className={styles.nav}>
@@ -34,17 +39,18 @@ const AppHeader = () => {
         <div className={styles.logo}>
           <Logo />
         </div>
-        <li className={cn(styles.listItem, "p-5")}>
-          <ProfileIcon type="secondary" />
-          <span
-            className={cn(
-              styles.notActiveLink,
-              "text text_type_main-default ml-2"
-            )}
-          >
-            Личный кабинет
-          </span>
-        </li>
+        <NavLink
+          activeClassName={styles.active}
+          className={styles.link}
+          to="/profile"
+        >
+          <li className={cn(styles.listItem, "p-5")}>
+            <ProfileIcon type={isProfile ? "primary" : "secondary"} />
+            <span className="text text_type_main-default ml-2">
+              Личный кабинет
+            </span>
+          </li>
+        </NavLink>
       </nav>
     </header>
   );

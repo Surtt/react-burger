@@ -15,8 +15,8 @@ const ResetPassword = () => {
   const dispatch = useDispatch();
   const { isUserChangedPassword } = useSelector((state) => state.auth);
   const [values, setValues] = useState({
-    newPassword: "",
-    code: "",
+    password: "",
+    token: "",
   });
   const handleChange = (e) => {
     const target = e.target;
@@ -40,16 +40,16 @@ const ResetPassword = () => {
         <p className="text text_type_main-medium">Восстановление пароля</p>
         <PasswordInput
           onChange={handleChange}
-          value={values.newPassword}
-          name="newPassword"
+          value={values.password}
+          name="password"
           placeholder="Введите новый пароль"
         />
         <Input
           type="text"
           placeholder="Введите код из письма"
           onChange={handleChange}
-          value={values.code}
-          name="code"
+          value={values.token}
+          name="token"
           error={false}
           errorText="Ошибка"
           size="default"

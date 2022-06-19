@@ -1,0 +1,36 @@
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    margin-top: 120px;
+    display: flex;
+    column-gap: 60px;
+}
+
+.leftSide {
+    max-width: 320px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+}
+
+.link {
+    display: flex;
+    text-decoration: none;
+    color: var(--text-inactive-color)
+}
+
+.active {
+    color: var(--text-primary-color);
+}
+
+.text {
+    color: var(--text-inactive-color);
+    opacity: 0.4;
+}
