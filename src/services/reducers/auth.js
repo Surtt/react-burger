@@ -14,6 +14,9 @@ import {
   RESET_PASSWORD_FAILED,
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
+  USER_FAILED,
+  USER_REQUEST,
+  USER_SUCCESS,
 } from "../actions/auth";
 
 const initialState = {
@@ -30,6 +33,9 @@ const initialState = {
 
   logoutRequest: false,
   logoutFailed: false,
+
+  userRequest: false,
+  userFailed: false,
 
   forgotPasswordRequest: false,
   forgotPasswordFailed: false,
@@ -84,6 +90,21 @@ export const auth = (state = initialState, action) => {
     }
     case LOGOUT_FAILED: {
       return { ...state, logoutRequest: false, logoutFailed: true };
+    }
+
+    case USER_REQUEST: {
+      return { ...state, userRequest: true, userFailed: false };
+    }
+    case USER_SUCCESS: {
+      const { name, email } = action.payload;
+      return {
+        ...state,
+        user: { ...state.user, name, email },
+        userRequest: false,
+      };
+    }
+    case USER_FAILED: {
+      return { ...state, userRequest: false, userFailed: true };
     }
 
     case FORGOT_PASSWORD_REQUEST: {

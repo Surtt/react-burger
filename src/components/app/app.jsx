@@ -11,6 +11,7 @@ import Registration from "../../pages/registration/registration";
 import ForgotPassword from "../../pages/forgot-password/forgot-password";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import Profile from "../../pages/profile/profile";
+import { getUser } from "../../services/actions/auth";
 
 function App() {
   const dispatch = useDispatch();

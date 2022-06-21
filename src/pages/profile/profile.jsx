@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Input,
   PasswordInput,
@@ -9,15 +9,16 @@ import { Link, NavLink, Redirect, useHistory } from "react-router-dom";
 
 import styles from "./profile.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser, registerUser } from "../../services/actions/auth";
+import { getUser, logoutUser, registerUser } from "../../services/actions/auth";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const history = useHistory();
+
   const [values, setValues] = useState({
-    name: "",
-    email: "",
+    name: user.name,
+    email: user.email,
     password: "",
   });
   const handleChange = (e) => {
@@ -55,6 +56,10 @@ const Profile = () => {
   // if (isEmptyUser(user)) {
   //   return <Redirect to={{ pathname: "/" }} />;
   // }
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+
   return (
     <main className={cn(styles.container, "pl-5 pr-5")}>
       <section className={styles.wrapper}>

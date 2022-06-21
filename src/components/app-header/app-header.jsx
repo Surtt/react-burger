@@ -13,17 +13,23 @@ const AppHeader = () => {
   const isConstructor = !!useRouteMatch({ path: "/", exact: true });
   const isFeed = !!useRouteMatch("/feed");
   const isProfile = !!useRouteMatch("/profile");
-  console.log(isProfile);
+
   return (
     <header className={cn(styles.header, "pt-4 pb-4")}>
       <nav className={styles.nav}>
         <ul className={styles.list}>
-          <li className={cn(styles.listItem, "p-5 mr-2")}>
-            <BurgerIcon type="primary" />
-            <span className="text text_type_main-default ml-2">
-              Конструктор
-            </span>
-          </li>
+          <NavLink
+            activeClassName={isConstructor ? styles.active : ""}
+            className={styles.link}
+            to="/"
+          >
+            <li className={cn(styles.listItem, "p-5 mr-2")}>
+              <BurgerIcon type={isConstructor ? "primary" : "secondary"} />
+              <span className="text text_type_main-default ml-2">
+                Конструктор
+              </span>
+            </li>
+          </NavLink>
           <li className={cn(styles.listItem, "p-5")}>
             <ListIcon type="secondary" />
             <span

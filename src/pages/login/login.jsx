@@ -44,7 +44,7 @@ const Login = () => {
     }
     return true;
   };
-  console.log(isEmptyUser(user));
+
   if (!isEmptyUser(user)) {
     return <Redirect to={{ pathname: "/" }} />;
   }

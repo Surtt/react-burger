@@ -1,5 +1,6 @@
 import {
   forgotPasswordRequest,
+  getUserData,
   logOutRequest,
   resetPasswordRequest,
   signInUserRequest,
@@ -18,6 +19,10 @@ export const LOGIN_FAILED = "LOGIN_FAILED";
 export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILED = "LOGOUT_FAILED";
+
+export const USER_REQUEST = "USER_REQUEST";
+export const USER_SUCCESS = "USER_SUCCESS";
+export const USER_FAILED = "USER_FAILED";
 
 export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
 export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
@@ -81,6 +86,25 @@ export const logoutSuccess = (payload) => {
 export const logoutFailed = () => {
   return {
     type: LOGOUT_FAILED,
+  };
+};
+
+export const userRequest = () => {
+  return {
+    type: USER_REQUEST,
+  };
+};
+
+export const userSuccess = (payload) => {
+  return {
+    type: USER_SUCCESS,
+    payload,
+  };
+};
+
+export const userFailed = () => {
+  return {
+    type: USER_FAILED,
   };
 };
 
@@ -162,7 +186,6 @@ export const logoutUser = (data) => (dispatch) => {
   dispatch(logoutRequest());
   logOutRequest(data)
     .then((res) => {
-      console.log(res);
       if (res && res.success) {
         dispatch(logoutSuccess(res.user));
       } else {
@@ -171,6 +194,22 @@ export const logoutUser = (data) => (dispatch) => {
     })
     .catch((error) => {
       dispatch(logoutFailed());
+    });
+};
+
+export const getUser = () => (dispatch) => {
+  dispatch(userRequest());
+  getUserData()
+    .then((res) => {
+      console.log(res);
+      if (res && res.success) {
+        dispatch(userSuccess(res.user));
+      } else {
+        dispatch(userFailed());
+      }
+    })
+    .catch((error) => {
+      dispatch(userFailed());
     });
 };
 
