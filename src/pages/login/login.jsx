@@ -1,20 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Input,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import cn from "classnames";
 
 import styles from "../form.module.css";
-import { loginUser, registerUser } from "../../services/actions/auth";
+import { getUser, loginUser, registerUser } from "../../services/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
+import { getCookie } from "../../utils/getCookie";
 
 const Login = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const history = useHistory();
+
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -30,15 +32,11 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser(values));
-    // if (user.name) {
-    //   history.replace({ pathname: "/" });
-    // }
   };
 
   const isEmptyUser = (user) => {
     for (let key in user) {
       if (user[key]) {
-        console.log(user[key]);
         return false;
       }
     }
@@ -46,7 +44,7 @@ const Login = () => {
   };
 
   if (!isEmptyUser(user)) {
-    return <Redirect to={{ pathname: "/" }} />;
+    return <Redirect to={location.state?.from || "/"} />;
   }
 
   return (

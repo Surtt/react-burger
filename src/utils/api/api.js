@@ -114,14 +114,28 @@ export const fetchWithRefresh = async (url, options) => {
 };
 
 export const getUserData = async () => {
-  const response = await fetchWithRefresh(`${API_URL}/auth/user`, {
+  return await fetchWithRefresh(`${API_URL}/auth/user`, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: getCookie("token"),
+      Authorization: "Bearer " + getCookie("token"),
     },
   });
-  console.log(response, "here");
-  return checkResponse(response);
+};
+
+export const updateUserData = async (data) => {
+  return await fetchWithRefresh(`${API_URL}/auth/user`, {
+    method: "PATCH",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("token"),
+    },
+  });
 };
 
 export const forgotPasswordRequest = async (data) => {

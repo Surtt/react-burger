@@ -14,6 +14,9 @@ import {
   RESET_PASSWORD_FAILED,
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
+  UPDATE_USER_FAILED,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
   USER_FAILED,
   USER_REQUEST,
   USER_SUCCESS,
@@ -36,6 +39,9 @@ const initialState = {
 
   userRequest: false,
   userFailed: false,
+
+  updateUserRequest: false,
+  updateUserFailed: false,
 
   forgotPasswordRequest: false,
   forgotPasswordFailed: false,
@@ -105,6 +111,21 @@ export const auth = (state = initialState, action) => {
     }
     case USER_FAILED: {
       return { ...state, userRequest: false, userFailed: true };
+    }
+
+    case UPDATE_USER_REQUEST: {
+      return { ...state, updateUserRequest: true, updateUserFailed: false };
+    }
+    case UPDATE_USER_SUCCESS: {
+      const { name, email } = action.payload;
+      return {
+        ...state,
+        user: { ...state.user, name, email },
+        updateUserRequest: false,
+      };
+    }
+    case UPDATE_USER_FAILED: {
+      return { ...state, updateUserRequest: false, updateUserFailed: true };
     }
 
     case FORGOT_PASSWORD_REQUEST: {

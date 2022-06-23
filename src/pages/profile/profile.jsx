@@ -1,20 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   Input,
-  PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
-import { Link, NavLink, Redirect, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import styles from "./profile.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, logoutUser, registerUser } from "../../services/actions/auth";
+import { logoutUser, updateUser } from "../../services/actions/auth";
+import Loader from "../../components/loader/loader";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  const history = useHistory();
+  const { user, userRequest } = useSelector((state) => state.auth);
 
   const [values, setValues] = useState({
     name: user.name,
@@ -30,8 +29,10 @@ const Profile = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // dispatch(registerUser(values));
-    // history.replace({ pathname: "/" });
+    dispatch(updateUser(values));
+    setDisabledName(true);
+    setDisabledEmail(true);
+    setDisabledPassword(true);
   };
 
   const handleLogout = () => {
@@ -42,8 +43,19 @@ const Profile = () => {
   const inputNameRef = useRef(null);
   const inputEmailRef = useRef(null);
   const inputPasswordRef = useRef(null);
+  const [isDisabledName, setDisabledName] = useState(true);
+  const [isDisabledEmail, setDisabledEmail] = useState(true);
+  const [isDisabledPassword, setDisabledPassword] = useState(true);
   const onIconClick = (refName) => {
-    refName.current.focus();
+    const name = refName.current.name;
+    if (name === "name") {
+      setDisabledName(!isDisabledName);
+    } else if (name === "email") {
+      setDisabledEmail(!isDisabledEmail);
+    } else if (name === "password") {
+      setDisabledPassword(!isDisabledPassword);
+    }
+    setTimeout(() => refName.current.focus(), 0);
   };
 
   // const isEmptyUser = (user) => {
@@ -56,9 +68,17 @@ const Profile = () => {
   // if (isEmptyUser(user)) {
   //   return <Redirect to={{ pathname: "/" }} />;
   // }
-  useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch]);
+
+  const handleReset = () => {
+    setValues({ ...values, name: user.name, email: user.email, password: "" });
+    setDisabledName(true);
+    setDisabledEmail(true);
+    setDisabledPassword(true);
+  };
+
+  if (userRequest) {
+    return <Loader />;
+  }
 
   return (
     <main className={cn(styles.container, "pl-5 pr-5")}>
@@ -110,9 +130,10 @@ const Profile = () => {
             error={false}
             errorText="Ошибка"
             size="default"
-            icon="EditIcon"
+            icon={isDisabledName ? "EditIcon" : "CloseIcon"}
             ref={inputNameRef}
             onIconClick={() => onIconClick(inputNameRef)}
+            disabled={isDisabledName}
           />
           <Input
             type="email"
@@ -123,9 +144,10 @@ const Profile = () => {
             error={false}
             errorText="Ошибка"
             size="default"
-            icon="EditIcon"
+            icon={isDisabledEmail ? "EditIcon" : "CloseIcon"}
             ref={inputEmailRef}
             onIconClick={() => onIconClick(inputEmailRef)}
+            disabled={isDisabledEmail}
           />
           <Input
             type="password"
@@ -136,10 +158,23 @@ const Profile = () => {
             error={false}
             errorText="Ошибка"
             size="default"
-            icon="EditIcon"
+            icon={isDisabledPassword ? "EditIcon" : "CloseIcon"}
             ref={inputPasswordRef}
             onIconClick={() => onIconClick(inputPasswordRef)}
+            disabled={isDisabledPassword}
           />
+          {user.name !== values.name ||
+          user.email !== values.email ||
+          values.password.length >= 3 ? (
+            <div className={styles.buttons}>
+              <Button type="secondary" size="medium" onClick={handleReset}>
+                Отмена
+              </Button>
+              <Button type="primary" size="medium" htmlType="submit">
+                Сохранить
+              </Button>
+            </div>
+          ) : null}
         </form>
       </section>
     </main>

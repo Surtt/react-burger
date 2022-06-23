@@ -5,13 +5,14 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 
 import styles from "../form.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../services/actions/auth";
 
 const Registration = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const history = useHistory();
@@ -35,13 +36,15 @@ const Registration = () => {
 
   const isEmptyUser = (user) => {
     for (let key in user) {
-      return false;
+      if (user[key]) {
+        return false;
+      }
     }
     return true;
   };
 
-  if (isEmptyUser(user)) {
-    return <Redirect to={{ pathname: "/" }} />;
+  if (!isEmptyUser(user)) {
+    return <Redirect to={location.state?.from || "/"} />;
   }
   return (
     <main className={cn(styles.container, "pl-5 pr-5")}>

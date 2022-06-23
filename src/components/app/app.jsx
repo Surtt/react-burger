@@ -12,12 +12,18 @@ import ForgotPassword from "../../pages/forgot-password/forgot-password";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import Profile from "../../pages/profile/profile";
 import { getUser } from "../../services/actions/auth";
+import ProtectedRoute from "../protected-route/protected-route";
+import { getCookie } from "../../utils/getCookie";
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getIngredients());
+    const isToken = getCookie("token");
+    if (isToken) {
+      dispatch(getUser());
+    }
   }, [dispatch]);
 
   return (
@@ -26,9 +32,9 @@ function App() {
       <Route path="/" exact={true}>
         <Main />
       </Route>
-      <Route path="/profile" exact={true}>
+      <ProtectedRoute path="/profile" exact={true}>
         <Profile />
-      </Route>
+      </ProtectedRoute>
       <Route path="/login" exact={true}>
         <Login />
       </Route>

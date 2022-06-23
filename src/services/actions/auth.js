@@ -5,6 +5,7 @@ import {
   resetPasswordRequest,
   signInUserRequest,
   signUpUserRequest,
+  updateUserData,
 } from "../../utils/api/api";
 import { setCookie } from "../../utils/setCookie";
 
@@ -23,6 +24,10 @@ export const LOGOUT_FAILED = "LOGOUT_FAILED";
 export const USER_REQUEST = "USER_REQUEST";
 export const USER_SUCCESS = "USER_SUCCESS";
 export const USER_FAILED = "USER_FAILED";
+
+export const UPDATE_USER_REQUEST = "UPDATE_USER_REQUEST";
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
+export const UPDATE_USER_FAILED = "UPDATE_USER_FAILED";
 
 export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
 export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
@@ -105,6 +110,25 @@ export const userSuccess = (payload) => {
 export const userFailed = () => {
   return {
     type: USER_FAILED,
+  };
+};
+
+export const updateUserRequest = () => {
+  return {
+    type: UPDATE_USER_REQUEST,
+  };
+};
+
+export const updateUserSuccess = (payload) => {
+  return {
+    type: UPDATE_USER_SUCCESS,
+    payload,
+  };
+};
+
+export const updateUserFailed = () => {
+  return {
+    type: UPDATE_USER_FAILED,
   };
 };
 
@@ -201,7 +225,6 @@ export const getUser = () => (dispatch) => {
   dispatch(userRequest());
   getUserData()
     .then((res) => {
-      console.log(res);
       if (res && res.success) {
         dispatch(userSuccess(res.user));
       } else {
@@ -210,6 +233,21 @@ export const getUser = () => (dispatch) => {
     })
     .catch((error) => {
       dispatch(userFailed());
+    });
+};
+
+export const updateUser = (data) => (dispatch) => {
+  dispatch(updateUserRequest());
+  updateUserData(data)
+    .then((res) => {
+      if (res && res.success) {
+        dispatch(updateUserSuccess(res.user));
+      } else {
+        dispatch(updateUserFailed());
+      }
+    })
+    .catch((error) => {
+      dispatch(updateUserFailed());
     });
 };
 

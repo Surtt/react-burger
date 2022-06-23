@@ -4,7 +4,7 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import cn from "classnames";
 
 import styles from "../form.module.css";
@@ -12,9 +12,11 @@ import { forgotPassword, registerUser } from "../../services/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
 
 const ForgotPassword = () => {
-  const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
-  const { isUserSendPasswordChangeReq } = useSelector((state) => state.auth);
+  const { user, isUserSendPasswordChangeReq } = useSelector(
+    (state) => state.auth
+  );
   const [values, setValues] = useState({
     email: "",
   });
@@ -30,6 +32,19 @@ const ForgotPassword = () => {
     e.preventDefault();
     dispatch(forgotPassword(values));
   };
+
+  const isEmptyUser = (user) => {
+    for (let key in user) {
+      if (user[key]) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  if (!isEmptyUser(user)) {
+    return <Redirect to={location.state?.from || "/"} />;
+  }
 
   if (isUserSendPasswordChangeReq) {
     return <Redirect to={{ pathname: "/reset-password" }} />;
