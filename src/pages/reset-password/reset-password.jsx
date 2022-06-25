@@ -14,7 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 const ResetPassword = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const { user, isUserChangedPassword } = useSelector((state) => state.auth);
+  const { user, isUserChangedPassword, isUserSendPasswordChangeReq } =
+    useSelector((state) => state.auth);
   const [values, setValues] = useState({
     password: "",
     token: "",
@@ -46,6 +47,10 @@ const ResetPassword = () => {
 
   if (isUserChangedPassword) {
     return <Redirect to={{ pathname: "/reset-password" }} />;
+  }
+
+  if (!isUserSendPasswordChangeReq) {
+    return <Redirect to={{ pathname: "/forgot-password" }} />;
   }
 
   return (

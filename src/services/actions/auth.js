@@ -8,6 +8,7 @@ import {
   updateUserData,
 } from "../../utils/api/api";
 import { setCookie } from "../../utils/setCookie";
+import { deleteCookie } from "../../utils/deleteCookie";
 
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
@@ -211,6 +212,7 @@ export const logoutUser = (data) => (dispatch) => {
   logOutRequest(data)
     .then((res) => {
       if (res && res.success) {
+        deleteCookie("token");
         dispatch(logoutSuccess(res.user));
       } else {
         dispatch(logoutFailed());

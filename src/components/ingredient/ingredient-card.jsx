@@ -11,14 +11,12 @@ import {
   hideIngredientDetails,
   showIngredientDetails,
 } from "../../services/actions/ingredients";
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import { dataTypes } from "../../utils/dataTypes";
 import { useDrag } from "react-dnd";
 
 import styles from "./ingredient-card.module.css";
 
-const IngredientCard = ({ data, idx }) => {
+const IngredientCard = ({ data }) => {
   const { ingredients, buns } = useSelector((state) => state.ingredients);
   const dispatch = useDispatch();
   const [isOpenModal, setOpenModal] = useState(false);
@@ -33,18 +31,6 @@ const IngredientCard = ({ data, idx }) => {
 
   const handleOpenModal = () => {
     setOpenModal(true);
-
-    dispatch(
-      showIngredientDetails({
-        id: data._id,
-        image: data.image_large,
-        name: data.name,
-        calories: data.calories,
-        proteins: data.proteins,
-        fat: data.fat,
-        carbohydrates: data.carbohydrates,
-      })
-    );
   };
 
   const getCounter = useMemo(() => {
@@ -81,11 +67,6 @@ const IngredientCard = ({ data, idx }) => {
           {data.name}
         </p>
       </li>
-      {isOpenModal && (
-        <Modal title="Детали ингредиента" onClose={handleCloseModal}>
-          <IngredientDetails data={data} />
-        </Modal>
-      )}
     </>
   );
 };

@@ -8,9 +8,8 @@ import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import cn from "classnames";
 
 import styles from "../form.module.css";
-import { getUser, loginUser, registerUser } from "../../services/actions/auth";
+import { loginUser } from "../../services/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { getCookie } from "../../utils/getCookie";
 
 const Login = () => {
   const location = useLocation();

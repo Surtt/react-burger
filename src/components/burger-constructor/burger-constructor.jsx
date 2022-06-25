@@ -12,10 +12,8 @@ import {
 import {
   addBuns,
   addIngredient,
-  DELETE_INGREDIENT,
   deleteIngredient,
   getOrderNumber,
-  UPDATE_ORDER_INGREDIENTS,
   updateOrderIngredients,
 } from "../../services/actions/ingredients";
 import Modal from "../modal/modal";
@@ -23,8 +21,11 @@ import OrderDetails from "../order-details/order-details";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 
 import styles from "./burger-constructor.module.css";
+import { useHistory } from "react-router-dom";
 
 const BurgerConstructor = () => {
+  const history = useHistory();
+  const { user } = useSelector((state) => state.auth);
   const { ingredientsData, ingredients, buns } = useSelector(
     (state) => state.ingredients
   );
@@ -62,7 +63,19 @@ const BurgerConstructor = () => {
     );
   }, [ingredients, buns]);
 
+  const isEmptyUser = (user) => {
+    for (let key in user) {
+      if (user[key]) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   const handleOpenModal = (data) => {
+    if (isEmptyUser(user)) {
+      history.push("/login");
+    }
     setOpenModal(true);
     const ids = data.map(({ id }) => id);
     dispatch(getOrderNumber({ ingredients: [buns._id, ...ids] }));
