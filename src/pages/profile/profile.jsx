@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import styles from "./profile.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +13,9 @@ import Loader from "../../components/loader/loader";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { user, userRequest } = useSelector((state) => state.auth);
+  const { user, userRequest, logoutRequest } = useSelector(
+    (state) => state.auth
+  );
 
   const [values, setValues] = useState({
     name: user.name,
@@ -58,17 +60,6 @@ const Profile = () => {
     setTimeout(() => refName.current.focus(), 0);
   };
 
-  // const isEmptyUser = (user) => {
-  //   for (let key in user) {
-  //     return false;
-  //   }
-  //   return true;
-  // };
-  //
-  // if (isEmptyUser(user)) {
-  //   return <Redirect to={{ pathname: "/" }} />;
-  // }
-
   const handleReset = () => {
     setValues({ ...values, name: user.name, email: user.email, password: "" });
     setDisabledName(true);
@@ -104,14 +95,13 @@ const Profile = () => {
               </NavLink>
             </li>
             <li className="text text_type_main-medium">
-              <NavLink
+              <Link
                 onClick={handleLogout}
-                activeClassName={styles.active}
                 className={cn(styles.link, "pt-4 pb-4")}
-                to="/login"
+                to={!logoutRequest ? "/profile" : "/login"}
               >
                 Выход
-              </NavLink>
+              </Link>
             </li>
           </ul>
           <p className={cn(styles.text, "text text_type_main-default")}>

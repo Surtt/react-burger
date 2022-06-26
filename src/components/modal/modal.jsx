@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import cn from "classnames";
@@ -9,12 +9,14 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 import styles from "./modla.module.css";
 import { useHistory } from "react-router-dom";
 
-const Modal = ({ title, children }) => {
+const Modal = ({ title, onClose, children }) => {
   const history = useHistory();
   const modalRoot = document.getElementById("modal");
-  const handleClose = () => {
-    history.goBack();
-  };
+
+  const handleClose = useCallback(() => {
+    return onClose ? onClose() : history.goBack();
+  }, [onClose, history]);
+
   useEffect(() => {
     const handleEscapeClose = (e) => {
       if (e.key === "Escape") {

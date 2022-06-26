@@ -8,8 +8,9 @@ import { Link, Redirect, useLocation } from "react-router-dom";
 import cn from "classnames";
 
 import styles from "../form.module.css";
-import { forgotPassword, resetPassword } from "../../services/actions/auth";
+import { resetPassword } from "../../services/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
+import { isEmptyUser } from "../../utils/isEmtyUser";
 
 const ResetPassword = () => {
   const location = useLocation();
@@ -30,15 +31,6 @@ const ResetPassword = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(resetPassword(values));
-  };
-
-  const isEmptyUser = (user) => {
-    for (let key in user) {
-      if (user[key]) {
-        return false;
-      }
-    }
-    return true;
   };
 
   if (!isEmptyUser(user)) {

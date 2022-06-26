@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Input,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
+import { Link, Redirect, useLocation } from "react-router-dom";
 import cn from "classnames";
 
 import styles from "../form.module.css";
 import { loginUser } from "../../services/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
+import { isEmptyUser } from "../../utils/isEmtyUser";
 
 const Login = () => {
   const location = useLocation();
@@ -31,15 +32,6 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser(values));
-  };
-
-  const isEmptyUser = (user) => {
-    for (let key in user) {
-      if (user[key]) {
-        return false;
-      }
-    }
-    return true;
   };
 
   if (!isEmptyUser(user)) {

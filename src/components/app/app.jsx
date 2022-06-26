@@ -21,7 +21,7 @@ function App() {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  let details = location.state && location.state.details;
+  const details = location.state && location.state.details;
 
   useEffect(() => {
     dispatch(getIngredients());

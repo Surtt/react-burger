@@ -10,6 +10,7 @@ import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import styles from "../form.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../services/actions/auth";
+import { isEmptyUser } from "../../utils/isEmtyUser";
 
 const Registration = () => {
   const location = useLocation();
@@ -32,15 +33,6 @@ const Registration = () => {
     e.preventDefault();
     dispatch(registerUser(values));
     history.replace({ pathname: "/" });
-  };
-
-  const isEmptyUser = (user) => {
-    for (let key in user) {
-      if (user[key]) {
-        return false;
-      }
-    }
-    return true;
   };
 
   if (!isEmptyUser(user)) {

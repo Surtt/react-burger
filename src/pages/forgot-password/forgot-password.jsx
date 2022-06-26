@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import {
   Input,
-  PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
+import { Link, Redirect, useLocation } from "react-router-dom";
 import cn from "classnames";
 
 import styles from "../form.module.css";
-import { forgotPassword, registerUser } from "../../services/actions/auth";
+import { forgotPassword } from "../../services/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
+import { isEmptyUser } from "../../utils/isEmtyUser";
 
 const ForgotPassword = () => {
   const location = useLocation();
@@ -31,15 +31,6 @@ const ForgotPassword = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(forgotPassword(values));
-  };
-
-  const isEmptyUser = (user) => {
-    for (let key in user) {
-      if (user[key]) {
-        return false;
-      }
-    }
-    return true;
   };
 
   if (!isEmptyUser(user)) {

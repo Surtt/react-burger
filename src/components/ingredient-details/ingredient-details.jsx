@@ -58,7 +58,7 @@ const IngredientDetails = ({ title }) => {
 };
 
 IngredientDetails.propTypes = {
-  data: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export default IngredientDetails;

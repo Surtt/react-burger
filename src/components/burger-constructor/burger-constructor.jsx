@@ -22,6 +22,7 @@ import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 
 import styles from "./burger-constructor.module.css";
 import { useHistory } from "react-router-dom";
+import { isEmptyUser } from "../../utils/isEmtyUser";
 
 const BurgerConstructor = () => {
   const history = useHistory();
@@ -62,15 +63,6 @@ const BurgerConstructor = () => {
       buns?.price * 2
     );
   }, [ingredients, buns]);
-
-  const isEmptyUser = (user) => {
-    for (let key in user) {
-      if (user[key]) {
-        return false;
-      }
-    }
-    return true;
-  };
 
   const handleOpenModal = (data) => {
     if (isEmptyUser(user)) {
