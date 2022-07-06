@@ -8,17 +8,15 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import {
-  HIDE_INGREDIENT_DETAILS,
-  SHOW_INGREDIENT_DETAILS,
+  hideIngredientDetails,
+  showIngredientDetails,
 } from "../../services/actions/ingredients";
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import { dataTypes } from "../../utils/dataTypes";
 import { useDrag } from "react-dnd";
 
 import styles from "./ingredient-card.module.css";
 
-const IngredientCard = ({ data, idx }) => {
+const IngredientCard = ({ data }) => {
   const { ingredients, buns } = useSelector((state) => state.ingredients);
   const dispatch = useDispatch();
   const [isOpenModal, setOpenModal] = useState(false);
@@ -33,19 +31,6 @@ const IngredientCard = ({ data, idx }) => {
 
   const handleOpenModal = () => {
     setOpenModal(true);
-
-    dispatch({
-      type: SHOW_INGREDIENT_DETAILS,
-      payload: {
-        id: data._id,
-        image: data.image_large,
-        name: data.name,
-        calories: data.calories,
-        proteins: data.proteins,
-        fat: data.fat,
-        carbohydrates: data.carbohydrates,
-      },
-    });
   };
 
   const getCounter = useMemo(() => {
@@ -61,7 +46,7 @@ const IngredientCard = ({ data, idx }) => {
 
   const handleCloseModal = () => {
     setOpenModal(false);
-    dispatch({ type: HIDE_INGREDIENT_DETAILS });
+    dispatch(hideIngredientDetails());
   };
   return (
     <>
@@ -82,11 +67,6 @@ const IngredientCard = ({ data, idx }) => {
           {data.name}
         </p>
       </li>
-      {isOpenModal && (
-        <Modal title="Детали ингредиента" onClose={handleCloseModal}>
-          <IngredientDetails data={data} />
-        </Modal>
-      )}
     </>
   );
 };

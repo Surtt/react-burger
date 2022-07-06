@@ -4,3 +4,11 @@
     row-gap: 32px;
     flex-wrap: wrap;
 }
+
+.link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-primary-color);
+    text-decoration: none;
+}

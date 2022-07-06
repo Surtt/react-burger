@@ -35,3 +35,7 @@ p {
   margin: 0;
   padding: 0;
 }
+
+.input_size_default {
+  min-width: 480px;
+}
