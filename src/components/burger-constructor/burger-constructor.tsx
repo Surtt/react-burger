@@ -23,7 +23,7 @@ import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./burger-constructor.module.css";
 import { useHistory } from "react-router-dom";
 import { isEmptyUser } from "../../utils/isEmtyUser";
-import { Iingredient } from "../../types";
+import { IIngredient } from "../../types";
 
 declare module "react" {
   interface FunctionComponent<P = {}> {
@@ -74,12 +74,12 @@ const BurgerConstructor = () => {
     );
   }, [ingredients, buns]);
 
-  const handleOpenModal = (data: Iingredient[]) => {
+  const handleOpenModal = (data: IIngredient[]) => {
     if (isEmptyUser(user)) {
       history.push("/login");
     }
     setOpenModal(true);
-    const ids = data.map(({ _id }: Iingredient) => _id);
+    const ids = data.map(({ _id }: IIngredient) => _id);
     //@ts-ignore
     dispatch(getOrderNumber({ ingredients: [buns._id, ...ids] }));
   };
@@ -124,8 +124,8 @@ const BurgerConstructor = () => {
           </div>
           <ul className={styles.ingredientsWrapper}>
             {ingredients
-              .filter((ingredient: Iingredient) => ingredient?.type !== "bun")
-              .map((ingredient: Iingredient, idx: number) => (
+              .filter((ingredient: IIngredient) => ingredient?.type !== "bun")
+              .map((ingredient: IIngredient, idx: number) => (
                 <BurgerIngredient
                   key={uuid4()}
                   index={idx}

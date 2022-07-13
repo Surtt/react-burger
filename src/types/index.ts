@@ -1,4 +1,4 @@
-export interface Iingredient {
+export interface IIngredient {
   calories: number;
   carbohydrates: number;
   fat: number;

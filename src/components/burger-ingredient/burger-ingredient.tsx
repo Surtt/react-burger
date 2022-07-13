@@ -4,18 +4,14 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
-import { Iingredient } from "../../types";
+import { useDrag, useDrop } from "react-dnd";
+import { IIngredient } from "../../types";
 
 interface IBurgerIngredient {
-  ingredient: Iingredient;
+  ingredient: IIngredient;
   index: number;
   handleDelete: () => void;
   moveCard: (dragIndex: number, hoverIndex: number) => void;
-}
-
-interface DragItem {
-  index: number;
 }
 
 const BurgerIngredient: FC<IBurgerIngredient> = ({
@@ -25,14 +21,14 @@ const BurgerIngredient: FC<IBurgerIngredient> = ({
   moveCard,
 }) => {
   const ref = useRef<HTMLLIElement>(null);
-  const [, drop] = useDrop({
+  const [, drop] = useDrop<{ id: string; index: number }>({
     accept: "item",
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item: DragItem, monitor: DropTargetMonitor) {
+    hover(item, monitor) {
       if (!ref.current) {
         return;
       }
@@ -49,6 +45,8 @@ const BurgerIngredient: FC<IBurgerIngredient> = ({
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
       const clientOffset = monitor.getClientOffset();
+
+      if (!clientOffset) return;
 
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 

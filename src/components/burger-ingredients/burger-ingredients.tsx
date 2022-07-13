@@ -8,7 +8,7 @@ import Ingredients from "../ingredients/ingredients";
 
 import styles from "./burger-ingredients.module.css";
 import Loader from "../loader/loader";
-import { Iingredient } from "../../types";
+import { IIngredient } from "../../types";
 
 const BurgerIngredients = () => {
   const { ingredientsData, ingredientsRequest } = useSelector(
@@ -18,21 +18,21 @@ const BurgerIngredients = () => {
   const buns = useMemo(
     () =>
       ingredientsData.filter(
-        (ingredient: Iingredient) => ingredient.type === "bun"
+        (ingredient: IIngredient) => ingredient.type === "bun"
       ),
     [ingredientsData]
   );
   const sauces = useMemo(
     () =>
       ingredientsData.filter(
-        (ingredient: Iingredient) => ingredient.type === "sauce"
+        (ingredient: IIngredient) => ingredient.type === "sauce"
       ),
     [ingredientsData]
   );
   const mains = useMemo(
     () =>
       ingredientsData.filter(
-        (ingredient: Iingredient) => ingredient.type === "main"
+        (ingredient: IIngredient) => ingredient.type === "main"
       ),
     [ingredientsData]
   );

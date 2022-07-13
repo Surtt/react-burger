@@ -1,6 +1,5 @@
-import React, { useMemo, useState } from "react";
+import React, { FC, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import PropTypes from "prop-types";
 import cn from "classnames";
 import {
   CurrencyIcon,
@@ -11,13 +10,17 @@ import {
   hideIngredientDetails,
   showIngredientDetails,
 } from "../../services/actions/ingredients";
-import { dataTypes } from "../../utils/dataTypes";
 import { useDrag } from "react-dnd";
 
 import styles from "./ingredient-card.module.css";
+import { IIngredient } from "../../types";
 
-const IngredientCard = ({ data }) => {
-  const { ingredients, buns } = useSelector((state) => state.ingredients);
+interface IIngredientCard {
+  data: IIngredient;
+}
+
+const IngredientCard: FC<IIngredientCard> = ({ data }) => {
+  const { ingredients, buns } = useSelector((state: any) => state.ingredients);
   const dispatch = useDispatch();
   const [isOpenModal, setOpenModal] = useState(false);
 
@@ -35,10 +38,10 @@ const IngredientCard = ({ data }) => {
 
   const getCounter = useMemo(() => {
     const ingredientByName = ingredients?.find(
-      (ingredient) => ingredient.name === data.name
+      (ingredient: IIngredient) => ingredient.name === data.name
     )?.name;
     const ingredientsAmount = ingredients.filter(
-      (ingredient) => ingredient.name === ingredientByName
+      (ingredient: IIngredient) => ingredient.name === ingredientByName
     ).length;
 
     return data.name === buns?.name ? 2 : ingredientsAmount;
@@ -69,10 +72,6 @@ const IngredientCard = ({ data }) => {
       </li>
     </>
   );
-};
-
-IngredientCard.propTypes = {
-  data: PropTypes.shape(dataTypes).isRequired,
 };
 
 export default IngredientCard;
