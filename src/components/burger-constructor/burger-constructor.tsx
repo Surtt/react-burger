@@ -23,18 +23,25 @@ import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./burger-constructor.module.css";
 import { useHistory } from "react-router-dom";
 import { isEmptyUser } from "../../utils/isEmtyUser";
+import { Iingredient } from "../../types";
+
+declare module "react" {
+  interface FunctionComponent<P = {}> {
+    (props: PropsWithChildren<P>, context?: any): ReactElement<any, any> | null;
+  }
+}
 
 const BurgerConstructor = () => {
   const history = useHistory();
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state: any) => state.auth);
   const { ingredientsData, ingredients, buns } = useSelector(
-    (state) => state.ingredients
+    (state: any) => state.ingredients
   );
   const dispatch = useDispatch();
 
-  const handleDrop = (itemId) => {
+  const handleDrop = (itemId: { id: string }) => {
     const targetIngredient = ingredientsData.find(
-      ({ _id }) => _id === itemId.id
+      ({ _id }: { _id: string }) => _id === itemId.id
     );
     const isBun = targetIngredient.type === "bun";
 
@@ -47,7 +54,7 @@ const BurgerConstructor = () => {
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(itemId) {
+    drop(itemId: { id: string }) {
       handleDrop(itemId);
     },
     collect: (monitor) => ({
@@ -59,17 +66,21 @@ const BurgerConstructor = () => {
 
   const getTotalPrice = useMemo(() => {
     return (
-      ingredients.reduce((acc, current) => acc + current?.price, 0) +
+      ingredients.reduce(
+        (acc: number, current: { price: number }) => acc + current?.price,
+        0
+      ) +
       buns?.price * 2
     );
   }, [ingredients, buns]);
 
-  const handleOpenModal = (data) => {
+  const handleOpenModal = (data: Iingredient[]) => {
     if (isEmptyUser(user)) {
       history.push("/login");
     }
     setOpenModal(true);
-    const ids = data.map(({ id }) => id);
+    const ids = data.map(({ _id }: Iingredient) => _id);
+    //@ts-ignore
     dispatch(getOrderNumber({ ingredients: [buns._id, ...ids] }));
   };
 
@@ -77,14 +88,14 @@ const BurgerConstructor = () => {
     setOpenModal(false);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     dispatch(deleteIngredient(id));
   };
 
   const outline = isHover ? "2px dotted #4c4cff" : "transparent";
 
   const moveCard = useCallback(
-    (dragIndex, hoverIndex) => {
+    (dragIndex: number, hoverIndex: number) => {
       dispatch(
         updateOrderIngredients({ toIndex: hoverIndex, fromIndex: dragIndex })
       );
@@ -113,8 +124,8 @@ const BurgerConstructor = () => {
           </div>
           <ul className={styles.ingredientsWrapper}>
             {ingredients
-              .filter((ingredient) => ingredient?.type !== "bun")
-              .map((ingredient, idx) => (
+              .filter((ingredient: Iingredient) => ingredient?.type !== "bun")
+              .map((ingredient: Iingredient, idx: number) => (
                 <BurgerIngredient
                   key={uuid4()}
                   index={idx}
@@ -143,7 +154,7 @@ const BurgerConstructor = () => {
                 <p className="text text_type_digits-medium">
                   {getTotalPrice ? getTotalPrice : 0}
                 </p>
-                <CurrencyIcon widht={33} height={33} type="primary" />
+                <CurrencyIcon type="primary" />
               </div>
               <Button onClick={() => handleOpenModal(ingredients)}>
                 Оформить заказ

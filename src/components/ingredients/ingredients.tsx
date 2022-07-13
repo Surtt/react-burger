@@ -1,12 +1,18 @@
-import React, { forwardRef } from "react";
+import React, { FC, forwardRef } from "react";
 import cn from "classnames";
 import styles from "./ingredients.module.css";
 import IngredientCard from "../ingredient/ingredient-card";
 import PropTypes from "prop-types";
 import { dataTypes } from "../../utils/dataTypes";
 import { Link, useLocation } from "react-router-dom";
+import { Iingredient } from "../../types";
 
-const Ingredients = forwardRef(({ data, title }, ref) => {
+interface IIngredients {
+  data: IIngredients;
+  title: string;
+}
+
+const Ingredients: FC<IIngredients> = forwardRef(({ data, title }, ref) => {
   const location = useLocation();
   return (
     <>
@@ -15,7 +21,7 @@ const Ingredients = forwardRef(({ data, title }, ref) => {
           {title}
         </p>
         <ul className={cn(styles.ingredientsContainer, "pl-4")}>
-          {data.map((item, idx) => (
+          {data.map((item: Iingredient, idx: number) => (
             <Link
               className={styles.link}
               key={item._id}
@@ -32,10 +38,5 @@ const Ingredients = forwardRef(({ data, title }, ref) => {
     </>
   );
 });
-
-Ingredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(dataTypes).isRequired),
-  title: PropTypes.string.isRequired,
-};
 
 export default Ingredients;

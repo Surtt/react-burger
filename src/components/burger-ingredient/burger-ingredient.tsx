@@ -1,21 +1,38 @@
-import React, { useRef } from "react";
+import React, { FC, useRef } from "react";
 import styles from "../burger-constructor/burger-constructor.module.css";
 import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDrag, useDrop } from "react-dnd";
+import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
+import { Iingredient } from "../../types";
 
-const BurgerIngredient = ({ ingredient, index, handleDelete, moveCard }) => {
-  const ref = useRef(null);
-  const [{ handlerId }, drop] = useDrop({
+interface IBurgerIngredient {
+  ingredient: Iingredient;
+  index: number;
+  handleDelete: () => void;
+  moveCard: (dragIndex: number, hoverIndex: number) => void;
+}
+
+interface DragItem {
+  index: number;
+}
+
+const BurgerIngredient: FC<IBurgerIngredient> = ({
+  ingredient,
+  index,
+  handleDelete,
+  moveCard,
+}) => {
+  const ref = useRef<HTMLLIElement>(null);
+  const [, drop] = useDrop({
     accept: "item",
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item, monitor) {
+    hover(item: DragItem, monitor: DropTargetMonitor) {
       if (!ref.current) {
         return;
       }
