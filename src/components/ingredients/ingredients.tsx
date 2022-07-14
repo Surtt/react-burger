@@ -1,12 +1,12 @@
-import React, { FC, forwardRef } from "react";
+import React, { forwardRef } from "react";
 import cn from "classnames";
 import styles from "./ingredients.module.css";
 import IngredientCard from "../ingredient/ingredient-card";
 import { Link, useLocation } from "react-router-dom";
-import { Iingredient } from "../../types";
+import { IIngredient } from "../../types";
 
 interface IIngredients {
-  data: Iingredient[];
+  data: IIngredient[];
   title: string;
 }
 
@@ -20,7 +20,7 @@ const Ingredients = forwardRef<HTMLElement, IIngredients>(
             {title}
           </p>
           <ul className={cn(styles.ingredientsContainer, "pl-4")}>
-            {data.map((item: Iingredient) => (
+            {data.map((item: IIngredient) => (
               <Link
                 className={styles.link}
                 key={item._id}

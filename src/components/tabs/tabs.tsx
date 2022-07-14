@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./tabs.module.css";
 import cn from "classnames";
 
-const Tabs = ({ inViewBuns, inViewSauces, inViewMains }) => {
-  const [currentTab, setCurrentTab] = useState("bun");
-  const handleTabClick = (type) => {
+interface ITabs {
+  inViewBuns: boolean;
+  inViewSauces: boolean;
+  inViewMains: boolean;
+}
+
+const Tabs: FC<ITabs> = ({ inViewBuns, inViewSauces, inViewMains }) => {
+  const [currentTab, setCurrentTab] = useState<string>("bun");
+  const handleTabClick = (type: string) => {
     setCurrentTab(type);
-    document
-      .getElementById(type)
-      .scrollIntoView({ block: "start", behavior: "smooth" });
+    const tab = document.getElementById(type);
+    if (tab) {
+      tab.scrollIntoView({ block: "start", behavior: "smooth" });
+    }
   };
 
   useEffect(() => {

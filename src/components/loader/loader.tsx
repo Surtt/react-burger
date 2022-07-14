@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 
 import styles from "./loader.module.css";
@@ -8,7 +8,11 @@ const override = {
   margin: "auto",
 };
 
-const Loader = ({ loading }) => {
+interface ILoader {
+  loading: boolean;
+}
+
+const Loader: FC<ILoader> = ({ loading }) => {
   return (
     <div className={styles.loaderWrapper}>
       <ClipLoader
