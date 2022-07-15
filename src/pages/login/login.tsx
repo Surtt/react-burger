@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import {
   Input,
   PasswordInput,
@@ -11,26 +11,28 @@ import styles from "../form.module.css";
 import { loginUser } from "../../services/actions/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { isEmptyUser } from "../../utils/isEmtyUser";
+import { ILocationState } from "../../types";
 
 const Login = () => {
-  const location = useLocation();
+  const location = useLocation<ILocationState>();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state: any) => state.auth);
 
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
     const value = target.value;
     const name = target.name;
     setValues({ ...values, [name]: value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+    //@ts-ignore
     dispatch(loginUser(values));
   };
 

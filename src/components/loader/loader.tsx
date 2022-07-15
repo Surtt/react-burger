@@ -15,12 +15,7 @@ interface ILoader {
 const Loader: FC<ILoader> = ({ loading }) => {
   return (
     <div className={styles.loaderWrapper}>
-      <ClipLoader
-        color={"#ffffff"}
-        loading={loading}
-        css={override}
-        size={100}
-      />
+      <ClipLoader color="#ffffff" loading={loading} css={override} size={100} />
     </div>
   );
 };

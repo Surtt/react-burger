@@ -1,9 +1,10 @@
 import { getCookie } from "../getCookie";
 import { setCookie } from "../setCookie";
+import { IUserData } from "../../types";
 
 const API_URL = "https://norma.nomoreparties.space/api";
 
-const checkResponse = (response) => {
+const checkResponse = (response: Response) => {
   return response.ok
     ? response.json()
     : response.json().then((err) => Promise.reject(err));
@@ -14,7 +15,7 @@ export const getData = async () => {
   return checkResponse(response);
 };
 
-export const placeOrder = async (ingredients) => {
+export const placeOrder = async (ingredients: string[]) => {
   const response = await fetch(`${API_URL}/orders`, {
     method: "POST",
     body: JSON.stringify(ingredients),
@@ -25,7 +26,7 @@ export const placeOrder = async (ingredients) => {
   return checkResponse(response);
 };
 
-export const signUpUserRequest = async (user) => {
+export const signUpUserRequest = async (user: IUserData) => {
   const response = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
     mode: "cors",
@@ -41,7 +42,7 @@ export const signUpUserRequest = async (user) => {
   return checkResponse(response);
 };
 
-export const signInUserRequest = async (user) => {
+export const signInUserRequest = async (user: IUserData) => {
   const response = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
     mode: "cors",
@@ -57,7 +58,7 @@ export const signInUserRequest = async (user) => {
   return checkResponse(response);
 };
 
-export const logOutRequest = async (data) => {
+export const logOutRequest = async (data: IUserData) => {
   const response = await fetch(`${API_URL}/auth/logout`, {
     method: "POST",
     mode: "cors",
@@ -91,25 +92,28 @@ export const refreshToken = async () => {
   return checkResponse(response);
 };
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (url: string, options: RequestInit) => {
   try {
     const res = await fetch(url, options);
     return await checkResponse(res);
   } catch (err) {
-    console.log(err);
-    if (err.message === "jwt expired") {
-      const refreshData = await refreshToken();
-      if (!refreshData.success) {
-        Promise.reject(refreshData);
+    if (err instanceof Error) {
+      console.log(err);
+      if (err.message === "jwt expired") {
+        const refreshData = await refreshToken();
+        if (!refreshData.success) {
+          Promise.reject(refreshData);
+        }
+        localStorage.setItem("refreshToken", refreshData.refreshToken);
+        const authToken = refreshData.accessToken.split("Bearer ")[1];
+        setCookie("token", authToken);
+        (options.headers as { [key: string]: string }).authorization =
+          refreshData.accessToken;
+        const res = await fetch(url, options);
+        return await checkResponse(res);
+      } else {
+        return Promise.reject(err);
       }
-      localStorage.setItem("refreshToken", refreshData.refreshToken);
-      const authToken = refreshData.accessToken.split("Bearer ")[1];
-      setCookie("token", authToken);
-      options.headers.authorization = refreshData.accessToken;
-      const res = await fetch(url, options);
-      return await checkResponse(res);
-    } else {
-      return Promise.reject(err);
     }
   }
 };
@@ -123,7 +127,7 @@ export const getUserData = async () => {
   });
 };
 
-export const updateUserData = async (data) => {
+export const updateUserData = async (data: IUserData) => {
   return await fetchWithRefresh(`${API_URL}/auth/user`, {
     method: "PATCH",
     mode: "cors",
@@ -139,7 +143,7 @@ export const updateUserData = async (data) => {
   });
 };
 
-export const forgotPasswordRequest = async (data) => {
+export const forgotPasswordRequest = async (data: IUserData) => {
   const response = await fetch(`${API_URL}/password-reset`, {
     method: "POST",
     mode: "cors",
@@ -155,7 +159,7 @@ export const forgotPasswordRequest = async (data) => {
   return checkResponse(response);
 };
 
-export const resetPasswordRequest = async (data) => {
+export const resetPasswordRequest = async (data: IUserData) => {
   const response = await fetch(`${API_URL}/password-reset/reset`, {
     method: "POST",
     mode: "cors",

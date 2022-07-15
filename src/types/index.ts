@@ -13,3 +13,15 @@ export interface IIngredient {
   __v: number;
   _id: string;
 }
+
+export interface ILocationState {
+  from: {
+    pathname: string;
+  };
+}
+
+export interface IUserData {
+  name?: string;
+  email: string;
+  password: string;
+}

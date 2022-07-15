@@ -1,4 +1,13 @@
-export function setCookie(name, value, props) {
+type TCookieValue = string | number | boolean;
+interface ICookieProps {
+  expires?: string | number | Date;
+}
+
+export function setCookie(
+  name: string,
+  value: string,
+  props: { [key: string]: string | number | Date | boolean } = {}
+) {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == "number" && exp) {
