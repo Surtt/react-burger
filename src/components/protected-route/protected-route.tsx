@@ -1,9 +1,15 @@
-import React from "react";
-import { Redirect, Route } from "react-router-dom";
+import React, { FC, ReactNode } from "react";
+import { Redirect, Route, RouterProps } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const ProtectedRoute = ({ children, ...rest }) => {
-  const { user } = useSelector((state) => state.auth);
+interface IProtectedRoute {
+  children: ReactNode;
+  path: string;
+  exact?: boolean;
+}
+
+const ProtectedRoute: FC<RouterProps> = ({ children, ...rest }) => {
+  const { user } = useSelector((state: any) => state.auth);
 
   return (
     <Route

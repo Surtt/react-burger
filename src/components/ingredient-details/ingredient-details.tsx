@@ -1,5 +1,4 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { FC } from "react";
 import cn from "classnames";
 
 import Nutrient from "../nutrient/nutrient";
@@ -7,12 +6,19 @@ import Nutrient from "../nutrient/nutrient";
 import styles from "./ingredient-details.module.css";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { IIngredient } from "../../types";
 
-const IngredientDetails = ({ title }) => {
-  const { id } = useParams();
-  const ingredients = useSelector((state) => state.ingredients.ingredientsData);
+interface IIngredientDetails {
+  title?: string;
+}
+
+const IngredientDetails: FC<IIngredientDetails> = ({ title }) => {
+  const { id } = useParams<{ id: string }>();
+  const ingredients = useSelector(
+    (state: any) => state.ingredients.ingredientsData
+  );
   const selectedIngredient = ingredients.find(
-    (ingredient) => ingredient._id === id
+    (ingredient: IIngredient) => ingredient._id === id
   );
 
   return (
@@ -55,10 +61,6 @@ const IngredientDetails = ({ title }) => {
       )}
     </>
   );
-};
-
-IngredientDetails.propTypes = {
-  title: PropTypes.string,
 };
 
 export default IngredientDetails;

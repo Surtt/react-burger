@@ -1,14 +1,27 @@
-import React, { useRef } from "react";
+import React, { FC, useRef } from "react";
 import styles from "../burger-constructor/burger-constructor.module.css";
 import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag, useDrop } from "react-dnd";
+import { IIngredient } from "../../types";
 
-const BurgerIngredient = ({ ingredient, index, handleDelete, moveCard }) => {
-  const ref = useRef(null);
-  const [{ handlerId }, drop] = useDrop({
+interface IBurgerIngredient {
+  ingredient: IIngredient;
+  index: number;
+  handleDelete: () => void;
+  moveCard: (dragIndex: number, hoverIndex: number) => void;
+}
+
+const BurgerIngredient: FC<IBurgerIngredient> = ({
+  ingredient,
+  index,
+  handleDelete,
+  moveCard,
+}) => {
+  const ref = useRef<HTMLLIElement>(null);
+  const [, drop] = useDrop<{ id: string; index: number }>({
     accept: "item",
     collect(monitor) {
       return {
@@ -32,6 +45,8 @@ const BurgerIngredient = ({ ingredient, index, handleDelete, moveCard }) => {
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
       const clientOffset = monitor.getClientOffset();
+
+      if (!clientOffset) return;
 
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 

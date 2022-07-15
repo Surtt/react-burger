@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
 import styles from "./app-header.module.css";
-import { Link, NavLink, useRouteMatch } from "react-router-dom";
+import { NavLink, useRouteMatch } from "react-router-dom";
 
 const AppHeader = () => {
   const isConstructor = !!useRouteMatch({ path: "/", exact: true });

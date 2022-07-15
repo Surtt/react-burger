@@ -8,22 +8,32 @@ import Ingredients from "../ingredients/ingredients";
 
 import styles from "./burger-ingredients.module.css";
 import Loader from "../loader/loader";
+import { IIngredient } from "../../types";
 
 const BurgerIngredients = () => {
   const { ingredientsData, ingredientsRequest } = useSelector(
-    (state) => state.ingredients
+    (state: any) => state.ingredients
   );
 
   const buns = useMemo(
-    () => ingredientsData.filter(({ type }) => type === "bun"),
+    () =>
+      ingredientsData.filter(
+        (ingredient: IIngredient) => ingredient.type === "bun"
+      ),
     [ingredientsData]
   );
   const sauces = useMemo(
-    () => ingredientsData.filter(({ type }) => type === "sauce"),
+    () =>
+      ingredientsData.filter(
+        (ingredient: IIngredient) => ingredient.type === "sauce"
+      ),
     [ingredientsData]
   );
   const mains = useMemo(
-    () => ingredientsData.filter(({ type }) => type === "main"),
+    () =>
+      ingredientsData.filter(
+        (ingredient: IIngredient) => ingredient.type === "main"
+      ),
     [ingredientsData]
   );
 

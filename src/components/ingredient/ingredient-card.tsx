@@ -1,27 +1,25 @@
-import React, { useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import PropTypes from "prop-types";
+import React, { FC, useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 import cn from "classnames";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import {
-  hideIngredientDetails,
-  showIngredientDetails,
-} from "../../services/actions/ingredients";
-import { dataTypes } from "../../utils/dataTypes";
 import { useDrag } from "react-dnd";
 
 import styles from "./ingredient-card.module.css";
+import { IIngredient } from "../../types";
 
-const IngredientCard = ({ data }) => {
-  const { ingredients, buns } = useSelector((state) => state.ingredients);
-  const dispatch = useDispatch();
-  const [isOpenModal, setOpenModal] = useState(false);
+interface IIngredientCard {
+  data: IIngredient;
+}
 
-  const [{ isDrag }, dragRef] = useDrag({
+const IngredientCard: FC<IIngredientCard> = ({ data }) => {
+  const { ingredients, buns } = useSelector((state: any) => state.ingredients);
+  const [, setOpenModal] = useState(false);
+
+  const [, dragRef] = useDrag({
     type: "ingredient",
     item: { id: data._id },
     collect: (monitor) => ({
@@ -35,19 +33,15 @@ const IngredientCard = ({ data }) => {
 
   const getCounter = useMemo(() => {
     const ingredientByName = ingredients?.find(
-      (ingredient) => ingredient.name === data.name
+      (ingredient: IIngredient) => ingredient.name === data.name
     )?.name;
     const ingredientsAmount = ingredients.filter(
-      (ingredient) => ingredient.name === ingredientByName
+      (ingredient: IIngredient) => ingredient.name === ingredientByName
     ).length;
 
     return data.name === buns?.name ? 2 : ingredientsAmount;
   }, [ingredients, buns]);
 
-  const handleCloseModal = () => {
-    setOpenModal(false);
-    dispatch(hideIngredientDetails());
-  };
   return (
     <>
       <li
@@ -69,10 +63,6 @@ const IngredientCard = ({ data }) => {
       </li>
     </>
   );
-};
-
-IngredientCard.propTypes = {
-  data: PropTypes.shape(dataTypes).isRequired,
 };
 
 export default IngredientCard;

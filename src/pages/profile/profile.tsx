@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { ChangeEvent, SyntheticEvent, useRef, useState } from "react";
 import {
   Input,
   Button,
@@ -14,7 +14,7 @@ import Loader from "../../components/loader/loader";
 const Profile = () => {
   const dispatch = useDispatch();
   const { user, userRequest, logoutRequest } = useSelector(
-    (state) => state.auth
+    (state: any) => state.auth
   );
 
   const [values, setValues] = useState({
@@ -22,15 +22,16 @@ const Profile = () => {
     email: user.email,
     password: "",
   });
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
     const value = target.value;
     const name = target.name;
     setValues({ ...values, [name]: value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+    //@ts-ignore
     dispatch(updateUser(values));
     setDisabledName(true);
     setDisabledEmail(true);
@@ -39,17 +40,20 @@ const Profile = () => {
 
   const handleLogout = () => {
     const refreshToken = localStorage.getItem("refreshToken");
+    //@ts-ignore
     dispatch(logoutUser({ token: refreshToken }));
   };
 
-  const inputNameRef = useRef(null);
-  const inputEmailRef = useRef(null);
-  const inputPasswordRef = useRef(null);
+  const inputNameRef = useRef<HTMLInputElement>(null);
+  const inputEmailRef = useRef<HTMLInputElement>(null);
+  const inputPasswordRef = useRef<HTMLInputElement>(null);
   const [isDisabledName, setDisabledName] = useState(true);
   const [isDisabledEmail, setDisabledEmail] = useState(true);
   const [isDisabledPassword, setDisabledPassword] = useState(true);
-  const onIconClick = (refName) => {
-    const name = refName.current.name;
+
+  const onIconClick = (current: HTMLInputElement | null) => {
+    if (!current) return;
+    const name = current.name;
     if (name === "name") {
       setDisabledName(!isDisabledName);
     } else if (name === "email") {
@@ -57,7 +61,7 @@ const Profile = () => {
     } else if (name === "password") {
       setDisabledPassword(!isDisabledPassword);
     }
-    setTimeout(() => refName.current.focus(), 0);
+    setTimeout(() => current.focus(), 0);
   };
 
   const handleReset = () => {
@@ -68,7 +72,7 @@ const Profile = () => {
   };
 
   if (userRequest) {
-    return <Loader />;
+    return <Loader loading={userRequest} />;
   }
 
   return (
@@ -122,7 +126,7 @@ const Profile = () => {
             size="default"
             icon={isDisabledName ? "EditIcon" : "CloseIcon"}
             ref={inputNameRef}
-            onIconClick={() => onIconClick(inputNameRef)}
+            onIconClick={() => onIconClick(inputNameRef.current)}
             disabled={isDisabledName}
           />
           <Input
@@ -136,7 +140,7 @@ const Profile = () => {
             size="default"
             icon={isDisabledEmail ? "EditIcon" : "CloseIcon"}
             ref={inputEmailRef}
-            onIconClick={() => onIconClick(inputEmailRef)}
+            onIconClick={() => onIconClick(inputEmailRef.current)}
             disabled={isDisabledEmail}
           />
           <Input
@@ -150,7 +154,7 @@ const Profile = () => {
             size="default"
             icon={isDisabledPassword ? "EditIcon" : "CloseIcon"}
             ref={inputPasswordRef}
-            onIconClick={() => onIconClick(inputPasswordRef)}
+            onIconClick={() => onIconClick(inputPasswordRef.current)}
             disabled={isDisabledPassword}
           />
           {user.name !== values.name ||

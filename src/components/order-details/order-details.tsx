@@ -10,7 +10,7 @@ const OrderDetails = () => {
   const {
     orderNumber: { number },
     orderNumberRequest,
-  } = useSelector((state) => state.ingredients);
+  } = useSelector((state: any) => state.ingredients);
 
   return (
     <>
