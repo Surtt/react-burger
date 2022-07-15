@@ -16,17 +16,20 @@ import ProtectedRoute from "../protected-route/protected-route";
 import { getCookie } from "../../utils/getCookie";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
+import { ILocationDetails } from "../../types";
 
 function App() {
-  const location = useLocation();
+  const location = useLocation<ILocationDetails>();
   const dispatch = useDispatch();
 
   const details = location.state && location.state.details;
 
   useEffect(() => {
+    //@ts-ignore
     dispatch(getIngredients());
     const isToken = getCookie("token");
     if (isToken) {
+      //@ts-ignore
       dispatch(getUser());
     }
   }, [dispatch]);

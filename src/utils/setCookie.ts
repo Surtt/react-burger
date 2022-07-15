@@ -1,11 +1,8 @@
 type TCookieValue = string | number | boolean;
-interface ICookieProps {
-  expires?: string | number | Date;
-}
 
 export function setCookie(
   name: string,
-  value: string,
+  value: TCookieValue,
   props: { [key: string]: string | number | Date | boolean } = {}
 ) {
   props = props || {};
@@ -15,9 +12,10 @@ export function setCookie(
     d.setTime(d.getTime() + exp * 1000);
     exp = props.expires = d;
   }
-  if (exp && exp.toUTCString) {
+  if (exp && exp instanceof Date) {
     props.expires = exp.toUTCString();
   }
+  if (value === null) return;
   value = encodeURIComponent(value);
   let updatedCookie = name + "=" + value;
   for (const propName in props) {

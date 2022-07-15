@@ -1,15 +1,11 @@
 import React, { FC, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import cn from "classnames";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import {
-  hideIngredientDetails,
-  showIngredientDetails,
-} from "../../services/actions/ingredients";
 import { useDrag } from "react-dnd";
 
 import styles from "./ingredient-card.module.css";
@@ -21,10 +17,9 @@ interface IIngredientCard {
 
 const IngredientCard: FC<IIngredientCard> = ({ data }) => {
   const { ingredients, buns } = useSelector((state: any) => state.ingredients);
-  const dispatch = useDispatch();
-  const [isOpenModal, setOpenModal] = useState(false);
+  const [, setOpenModal] = useState(false);
 
-  const [{ isDrag }, dragRef] = useDrag({
+  const [, dragRef] = useDrag({
     type: "ingredient",
     item: { id: data._id },
     collect: (monitor) => ({
@@ -47,10 +42,6 @@ const IngredientCard: FC<IIngredientCard> = ({ data }) => {
     return data.name === buns?.name ? 2 : ingredientsAmount;
   }, [ingredients, buns]);
 
-  const handleCloseModal = () => {
-    setOpenModal(false);
-    dispatch(hideIngredientDetails());
-  };
   return (
     <>
       <li

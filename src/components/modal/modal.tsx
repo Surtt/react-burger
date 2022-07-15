@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 
 interface IModal {
   title?: string;
-  onClose: () => void;
+  onClose?: () => void;
   children: ReactNode;
 }
 

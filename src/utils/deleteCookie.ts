@@ -1,5 +1,5 @@
 import { setCookie } from "./setCookie";
 
 export function deleteCookie(name: string) {
-  setCookie(name, null, { expires: -1 });
+  setCookie(name, false, { expires: -1 });
 }

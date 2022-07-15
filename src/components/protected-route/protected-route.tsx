@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 
 interface IProtectedRoute {
   children: ReactNode;
+  path: string;
+  exact?: boolean;
 }
 
 const ProtectedRoute: FC<IProtectedRoute> = ({ children, ...rest }) => {

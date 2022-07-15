@@ -20,6 +20,10 @@ export interface ILocationState {
   };
 }
 
+export interface ILocationDetails {
+  details?: any;
+}
+
 export interface IUserData {
   name?: string;
   email: string;

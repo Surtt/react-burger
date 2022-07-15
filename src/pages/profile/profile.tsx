@@ -51,8 +51,9 @@ const Profile = () => {
   const [isDisabledEmail, setDisabledEmail] = useState(true);
   const [isDisabledPassword, setDisabledPassword] = useState(true);
 
-  const onIconClick = (refName) => {
-    const name = refName.current.name;
+  const onIconClick = (current: HTMLInputElement | null) => {
+    if (!current) return;
+    const name = current.name;
     if (name === "name") {
       setDisabledName(!isDisabledName);
     } else if (name === "email") {
@@ -60,7 +61,7 @@ const Profile = () => {
     } else if (name === "password") {
       setDisabledPassword(!isDisabledPassword);
     }
-    setTimeout(() => refName.current.focus(), 0);
+    setTimeout(() => current.focus(), 0);
   };
 
   const handleReset = () => {
@@ -71,7 +72,7 @@ const Profile = () => {
   };
 
   if (userRequest) {
-    return <Loader />;
+    return <Loader loading={userRequest} />;
   }
 
   return (
@@ -125,7 +126,7 @@ const Profile = () => {
             size="default"
             icon={isDisabledName ? "EditIcon" : "CloseIcon"}
             ref={inputNameRef}
-            onIconClick={() => onIconClick(inputNameRef)}
+            onIconClick={() => onIconClick(inputNameRef.current)}
             disabled={isDisabledName}
           />
           <Input
@@ -139,7 +140,7 @@ const Profile = () => {
             size="default"
             icon={isDisabledEmail ? "EditIcon" : "CloseIcon"}
             ref={inputEmailRef}
-            onIconClick={() => onIconClick(inputEmailRef)}
+            onIconClick={() => onIconClick(inputEmailRef.current)}
             disabled={isDisabledEmail}
           />
           <Input
@@ -153,7 +154,7 @@ const Profile = () => {
             size="default"
             icon={isDisabledPassword ? "EditIcon" : "CloseIcon"}
             ref={inputPasswordRef}
-            onIconClick={() => onIconClick(inputPasswordRef)}
+            onIconClick={() => onIconClick(inputPasswordRef.current)}
             disabled={isDisabledPassword}
           />
           {user.name !== values.name ||

@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import PropTypes from "prop-types";
 import cn from "classnames";
 
 import Nutrient from "../nutrient/nutrient";
@@ -10,7 +9,7 @@ import { useSelector } from "react-redux";
 import { IIngredient } from "../../types";
 
 interface IIngredientDetails {
-  title: string;
+  title?: string;
 }
 
 const IngredientDetails: FC<IIngredientDetails> = ({ title }) => {
