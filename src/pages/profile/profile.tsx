@@ -7,14 +7,14 @@ import cn from "classnames";
 import { Link, NavLink } from "react-router-dom";
 
 import styles from "./profile.module.css";
-import { useDispatch, useSelector } from "react-redux";
 import { logoutUser, updateUser } from "../../services/actions/auth";
 import Loader from "../../components/loader/loader";
+import { useDispatch, useSelector } from "../../hooks";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const { user, userRequest, logoutRequest } = useSelector(
-    (state: any) => state.auth
+    (state) => state.auth
   );
 
   const [values, setValues] = useState({
@@ -31,7 +31,6 @@ const Profile = () => {
 
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    //@ts-ignore
     dispatch(updateUser(values));
     setDisabledName(true);
     setDisabledEmail(true);
@@ -40,7 +39,6 @@ const Profile = () => {
 
   const handleLogout = () => {
     const refreshToken = localStorage.getItem("refreshToken");
-    //@ts-ignore
     dispatch(logoutUser({ token: refreshToken }));
   };
 

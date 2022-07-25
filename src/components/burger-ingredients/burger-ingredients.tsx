@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import { useSelector } from "react-redux";
 import cn from "classnames";
 import { useInView } from "react-intersection-observer";
 
@@ -9,10 +8,11 @@ import Ingredients from "../ingredients/ingredients";
 import styles from "./burger-ingredients.module.css";
 import Loader from "../loader/loader";
 import { IIngredient } from "../../types";
+import { useSelector } from "../../hooks";
 
 const BurgerIngredients = () => {
   const { ingredientsData, ingredientsRequest } = useSelector(
-    (state: any) => state.ingredients
+    (state) => state.ingredients
   );
 
   const buns = useMemo(

@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Route, Switch, useLocation } from "react-router-dom";
 
 import AppHeader from "../app-header/app-header";
@@ -17,6 +16,7 @@ import { getCookie } from "../../utils/getCookie";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { ILocationDetails } from "../../types";
+import { useDispatch } from "../../hooks";
 
 function App() {
   const location = useLocation<ILocationDetails>();
@@ -25,11 +25,9 @@ function App() {
   const details = location.state && location.state.details;
 
   useEffect(() => {
-    //@ts-ignore
     dispatch(getIngredients());
     const isToken = getCookie("token");
     if (isToken) {
-      //@ts-ignore
       dispatch(getUser());
     }
   }, [dispatch]);

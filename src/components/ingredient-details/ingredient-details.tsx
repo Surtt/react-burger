@@ -5,8 +5,8 @@ import Nutrient from "../nutrient/nutrient";
 
 import styles from "./ingredient-details.module.css";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { IIngredient } from "../../types";
+import { useSelector } from "../../hooks";
 
 interface IIngredientDetails {
   title?: string;
@@ -14,9 +14,7 @@ interface IIngredientDetails {
 
 const IngredientDetails: FC<IIngredientDetails> = ({ title }) => {
   const { id } = useParams<{ id: string }>();
-  const ingredients = useSelector(
-    (state: any) => state.ingredients.ingredientsData
-  );
+  const ingredients = useSelector((state) => state.ingredients.ingredientsData);
   const selectedIngredient = ingredients.find(
     (ingredient: IIngredient) => ingredient._id === id
   );

@@ -8,15 +8,15 @@ import cn from "classnames";
 
 import styles from "../form.module.css";
 import { forgotPassword } from "../../services/actions/auth";
-import { useDispatch, useSelector } from "react-redux";
 import { isEmptyUser } from "../../utils/isEmtyUser";
 import { ILocationState } from "../../types";
+import { useDispatch, useSelector } from "../../hooks";
 
 const ForgotPassword = () => {
   const location = useLocation<ILocationState>();
   const dispatch = useDispatch();
   const { user, isUserSendPasswordChangeReq } = useSelector(
-    (state: any) => state.auth
+    (state) => state.auth
   );
   const [values, setValues] = useState({
     email: "",
@@ -31,7 +31,6 @@ const ForgotPassword = () => {
 
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    //@ts-ignore
     dispatch(forgotPassword(values));
   };
 

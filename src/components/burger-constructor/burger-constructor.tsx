@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { v4 as uuid4 } from "uuid";
 import { useDrop } from "react-dnd";
@@ -24,6 +23,7 @@ import styles from "./burger-constructor.module.css";
 import { useHistory } from "react-router-dom";
 import { isEmptyUser } from "../../utils/isEmtyUser";
 import { IIngredient } from "../../types";
+import { useDispatch, useSelector } from "../../hooks";
 
 declare module "react" {
   interface FunctionComponent<P = {}> {
@@ -33,9 +33,9 @@ declare module "react" {
 
 const BurgerConstructor = () => {
   const history = useHistory();
-  const { user } = useSelector((state: any) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const { ingredientsData, ingredients, buns } = useSelector(
-    (state: any) => state.ingredients
+    (state) => state.ingredients
   );
   const dispatch = useDispatch();
 
@@ -80,7 +80,6 @@ const BurgerConstructor = () => {
     }
     setOpenModal(true);
     const ids = data.map(({ _id }: IIngredient) => _id);
-    //@ts-ignore
     dispatch(getOrderNumber({ ingredients: [buns._id, ...ids] }));
   };
 
