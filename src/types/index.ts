@@ -44,14 +44,18 @@ export interface ILocationDetails {
 
 export interface IUserData {
   name?: string;
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 }
 
 export interface IOrderNumber {
   name: string;
   order: { number: number };
   success: boolean;
+}
+
+export interface IOrderById {
+  ingredients: string[];
 }
 
 export interface IOrderIngredient {

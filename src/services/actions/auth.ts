@@ -66,7 +66,7 @@ export interface ILogoutRequestAction {
 
 export interface ILogoutSuccessAction {
   readonly type: typeof LOGOUT_SUCCESS;
-  readonly payload: IUserData;
+  readonly payload: { token: string };
 }
 
 export interface ILogoutFailedAction {
@@ -192,7 +192,9 @@ export const logoutRequest = (): ILogoutRequestAction => {
   };
 };
 
-export const logoutSuccess = (payload: IUserData): ILogoutSuccessAction => {
+export const logoutSuccess = (payload: {
+  token: string;
+}): ILogoutSuccessAction => {
   return {
     type: LOGOUT_SUCCESS,
     payload,
@@ -287,8 +289,9 @@ export const resetPasswordFailed = (): IResetPasswordFailedAction => {
   };
 };
 
-export const registerUser: AppThunk =
-  (data: IUserData) => (dispatch: AppDispatch) => {
+export const registerUser =
+  (data: IUserData): AppThunk =>
+  (dispatch: AppDispatch) => {
     dispatch(registerRequest());
     signUpUserRequest(data)
       .then((res) => {
@@ -306,8 +309,9 @@ export const registerUser: AppThunk =
       });
   };
 
-export const loginUser: AppThunk =
-  (data: IUserData) => (dispatch: AppDispatch) => {
+export const loginUser =
+  (data: IUserData): AppThunk =>
+  (dispatch: AppDispatch) => {
     dispatch(loginRequest());
     signInUserRequest(data)
       .then((res) => {
@@ -325,8 +329,9 @@ export const loginUser: AppThunk =
       });
   };
 
-export const logoutUser: AppThunk =
-  (data: IUserData) => (dispatch: AppDispatch) => {
+export const logoutUser =
+  (data: { token: string }): AppThunk =>
+  (dispatch: AppDispatch) => {
     dispatch(logoutRequest());
     logOutRequest(data)
       .then((res) => {
@@ -342,7 +347,7 @@ export const logoutUser: AppThunk =
       });
   };
 
-export const getUser: AppThunk = () => (dispatch: AppDispatch) => {
+export const getUser = (): AppThunk => (dispatch: AppDispatch) => {
   dispatch(userRequest());
   getUserData()
     .then((res) => {
@@ -357,8 +362,9 @@ export const getUser: AppThunk = () => (dispatch: AppDispatch) => {
     });
 };
 
-export const updateUser: AppThunk =
-  (data: IUserData) => (dispatch: AppDispatch) => {
+export const updateUser =
+  (data: IUserData): AppThunk =>
+  (dispatch: AppDispatch) => {
     dispatch(updateUserRequest());
     updateUserData(data)
       .then((res) => {
@@ -373,8 +379,9 @@ export const updateUser: AppThunk =
       });
   };
 
-export const forgotPassword: AppThunk =
-  (data: IUserData) => (dispatch: AppDispatch) => {
+export const forgotPassword =
+  (data: IUserData): AppThunk =>
+  (dispatch: AppDispatch) => {
     dispatch(forgotPasswordReq());
     forgotPasswordRequest(data)
       .then((res) => {
@@ -389,8 +396,9 @@ export const forgotPassword: AppThunk =
       });
   };
 
-export const resetPassword: AppThunk =
-  (data: IUserData) => (dispatch: AppDispatch) => {
+export const resetPassword =
+  (data: IUserData): AppThunk =>
+  (dispatch: AppDispatch) => {
     dispatch(resetPasswordReq());
     resetPasswordRequest(data)
       .then((res) => {

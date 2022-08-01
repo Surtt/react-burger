@@ -1,6 +1,6 @@
 import { getCookie } from "../getCookie";
 import { setCookie } from "../setCookie";
-import { IUserData } from "../../types";
+import { IOrderById, IUserData } from "../../types";
 
 const API_URL = "https://norma.nomoreparties.space/api";
 
@@ -15,7 +15,7 @@ export const getData = async () => {
   return checkResponse(response);
 };
 
-export const placeOrder = async (ingredients: string[]) => {
+export const placeOrder = async (ingredients: IOrderById) => {
   const response = await fetch(`${API_URL}/orders`, {
     method: "POST",
     body: JSON.stringify(ingredients),
@@ -58,7 +58,7 @@ export const signInUserRequest = async (user: IUserData) => {
   return checkResponse(response);
 };
 
-export const logOutRequest = async (data: IUserData) => {
+export const logOutRequest = async (data: { token: string }) => {
   const response = await fetch(`${API_URL}/auth/logout`, {
     method: "POST",
     mode: "cors",

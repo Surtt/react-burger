@@ -15,6 +15,7 @@ import {
   AppDispatch,
   AppThunk,
   IIngredient,
+  IOrderById,
   IOrderIngredient,
   IOrderNumber,
 } from "../../types";
@@ -149,7 +150,7 @@ export const updateOrderIngredients = (
   };
 };
 
-export const getIngredients: AppThunk = () => (dispatch: AppDispatch) => {
+export const getIngredients = (): AppThunk => (dispatch: AppDispatch) => {
   dispatch(getIngredientsReq());
   getData()
     .then((res) => {
@@ -164,17 +165,19 @@ export const getIngredients: AppThunk = () => (dispatch: AppDispatch) => {
     });
 };
 
-export const getOrderNumber: AppThunk = (data) => (dispatch: AppDispatch) => {
-  dispatch(getOrderNumberReq());
-  placeOrder(data)
-    .then((req) => {
-      if (req && req.success) {
-        dispatch(getOrderNumberSuccess(req.order));
-      } else {
+export const getOrderNumber =
+  (data: IOrderById): AppThunk =>
+  (dispatch: AppDispatch) => {
+    dispatch(getOrderNumberReq());
+    placeOrder(data)
+      .then((req) => {
+        if (req && req.success) {
+          dispatch(getOrderNumberSuccess(req.order));
+        } else {
+          dispatch(getOrderNumberFailed());
+        }
+      })
+      .catch((error) => {
         dispatch(getOrderNumberFailed());
-      }
-    })
-    .catch((error) => {
-      dispatch(getOrderNumberFailed());
-    });
-};
+      });
+  };

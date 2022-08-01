@@ -30,17 +30,23 @@ const AppHeader = () => {
               </span>
             </li>
           </NavLink>
-          <li className={cn(styles.listItem, "p-5")}>
-            <ListIcon type="secondary" />
-            <span
-              className={cn(
-                styles.notActiveLink,
-                "text text_type_main-default ml-2"
-              )}
-            >
-              Лента заказов
-            </span>
-          </li>
+          <NavLink
+            activeClassName={isFeed ? styles.active : ""}
+            className={styles.link}
+            to="/feed"
+          >
+            <li className={cn(styles.listItem, "p-5")}>
+              <ListIcon type={isFeed ? "primary" : "secondary"} />
+              <span
+                className={cn(
+                  styles.notActiveLink,
+                  "text text_type_main-default ml-2"
+                )}
+              >
+                Лента заказов
+              </span>
+            </li>
+          </NavLink>
         </ul>
         <div className={styles.logo}>
           <Logo />

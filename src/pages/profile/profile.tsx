@@ -39,7 +39,9 @@ const Profile = () => {
 
   const handleLogout = () => {
     const refreshToken = localStorage.getItem("refreshToken");
-    dispatch(logoutUser({ token: refreshToken }));
+    if (refreshToken) {
+      dispatch(logoutUser({ token: refreshToken }));
+    }
   };
 
   const inputNameRef = useRef<HTMLInputElement>(null);

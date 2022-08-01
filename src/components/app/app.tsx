@@ -17,6 +17,8 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { ILocationDetails } from "../../types";
 import { useDispatch } from "../../hooks";
+import Feed from "../../pages/feed/feed";
+import Order from "../../pages/order/order";
 
 function App() {
   const location = useLocation<ILocationDetails>();
@@ -56,6 +58,12 @@ function App() {
         </Route>
         <Route path="/ingredients/:id" exact={true}>
           <IngredientDetails title="Детали ингредиента" />
+        </Route>
+        <Route path="/feed" exact={true}>
+          <Feed />
+        </Route>
+        <Route path="/feed/:id" exact={true}>
+          <Order />
         </Route>
       </Switch>
       {details && (
