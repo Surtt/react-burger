@@ -41,7 +41,7 @@ function App() {
         <Route path="/" exact={true}>
           <Main />
         </Route>
-        <ProtectedRoute path="/profile" exact={true}>
+        <ProtectedRoute path="/profile">
           <Profile />
         </ProtectedRoute>
         <Route path="/login" exact={true}>
@@ -67,14 +67,28 @@ function App() {
         </Route>
       </Switch>
       {details && (
-        <Route
-          path="/ingredients/:id"
-          children={
-            <Modal title="Детали ингредиента">
-              <IngredientDetails />
-            </Modal>
-          }
-        />
+        <>
+          <Route
+            path="/ingredients/:id"
+            children={
+              <Modal title="Детали ингредиента">
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+        </>
+      )}
+      {details && (
+        <>
+          <Route
+            path="/feed/:id"
+            children={
+              <Modal>
+                <Order />
+              </Modal>
+            }
+          />
+        </>
       )}
     </>
   );

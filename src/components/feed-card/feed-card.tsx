@@ -8,7 +8,7 @@ const FeedCard = () => {
   const {
     ingredients: { ingredientsData },
   } = useSelector((state) => state);
-  console.log(ingredientsData);
+
   return (
     <div className={cn(styles.feedCardContainer, "p-6")}>
       <div className={styles.feedCardTopWrapper}>
@@ -24,18 +24,21 @@ const FeedCard = () => {
         <ul className={styles.feedCardListContainer}>
           <li className={cn(styles.feedCardIngredientImage)}>
             <img
+              className={styles.feedCardImg}
               src={ingredientsData[0]?.image_mobile}
               alt={ingredientsData[0]?.name}
             />
           </li>
           <li className={cn(styles.feedCardIngredientImage)}>
             <img
+              className={styles.feedCardImg}
               src={ingredientsData[3]?.image_mobile}
               alt={ingredientsData[3]?.name}
             />
           </li>
           <li className={cn(styles.feedCardIngredientImage)}>
             <img
+              className={styles.feedCardImg}
               src={ingredientsData[5]?.image_mobile}
               alt={ingredientsData[5]?.name}
             />
