@@ -3,6 +3,7 @@ import { setCookie } from "../setCookie";
 import { IOrderById, IUserData } from "../../types";
 
 const API_URL = "https://norma.nomoreparties.space/api";
+export const WS_URL = "wss://norma.nomoreparties.space/orders/all";
 
 const checkResponse = (response: Response) => {
   return response.ok

@@ -40,9 +40,24 @@
 
 .feedCardListContainer {
     display: flex;
+    position: relative;
 }
 
 .feedCardPriceWrapper {
     display: flex;
     column-gap: 9px;
+}
+
+.overlay {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    background: rgba(28, 28, 33, 0.6);;
+    border-radius: 50%;
+    z-index: 1;
 }

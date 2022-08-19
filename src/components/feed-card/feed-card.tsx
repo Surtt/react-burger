@@ -1,51 +1,77 @@
-import React from "react";
+import React, { FC, useMemo } from "react";
 import styles from "./feed-card.module.css";
 import cn from "classnames";
 import { useSelector } from "../../hooks";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { convertOrderDate } from "../../utils/convertOrderDate";
+import { IIngredient } from "../../types";
 
-const FeedCard = () => {
+interface IFeedCard {
+  number: number;
+  name: string;
+  date: string;
+  ingredients: string[];
+}
+
+const FeedCard: FC<IFeedCard> = ({ number, name, date, ingredients }) => {
   const {
     ingredients: { ingredientsData },
   } = useSelector((state) => state);
+  const convertDate = convertOrderDate(date);
+
+  const ingredientsOrder = ingredients.flatMap((id: string) =>
+    ingredientsData.filter((ingredient: IIngredient) => ingredient._id === id)
+  );
+
+  const getTotalPrice = useMemo(() => {
+    return ingredientsOrder.reduce(
+      (acc: number, current: { price: number }) => acc + current?.price,
+      0
+    );
+  }, [ingredientsOrder]);
+  const price = getTotalPrice;
+
+  const visibleCountIngredients = 6;
+  const countIngredients = ingredients.length;
+  const plusNumberIngredients = countIngredients - visibleCountIngredients;
+  const slicedIngredientsOrder = ingredientsOrder.slice(
+    0,
+    visibleCountIngredients
+  );
+  let ingredientLayer = visibleCountIngredients;
 
   return (
     <div className={cn(styles.feedCardContainer, "p-6")}>
       <div className={styles.feedCardTopWrapper}>
-        <p className="text text_type_digits-default">#034535</p>
+        <p className="text text_type_digits-default">#{number}</p>
         <p className="text text_type_main-default text_color_inactive">
-          Сегодня, 16:20 i-GMT+3
+          {convertDate}
         </p>
       </div>
-      <p className="text text_type_main-medium">
-        Death Star Starship Main бургер
-      </p>
+      <p className="text text_type_main-medium">{name}</p>
       <div className={styles.feedCardBottomWrapper}>
         <ul className={styles.feedCardListContainer}>
-          <li className={cn(styles.feedCardIngredientImage)}>
-            <img
-              className={styles.feedCardImg}
-              src={ingredientsData[0]?.image_mobile}
-              alt={ingredientsData[0]?.name}
-            />
-          </li>
-          <li className={cn(styles.feedCardIngredientImage)}>
-            <img
-              className={styles.feedCardImg}
-              src={ingredientsData[3]?.image_mobile}
-              alt={ingredientsData[3]?.name}
-            />
-          </li>
-          <li className={cn(styles.feedCardIngredientImage)}>
-            <img
-              className={styles.feedCardImg}
-              src={ingredientsData[5]?.image_mobile}
-              alt={ingredientsData[5]?.name}
-            />
-          </li>
+          {slicedIngredientsOrder.map((ingredient: IIngredient, idx) => (
+            <li
+              style={{ zIndex: visibleCountIngredients - idx }}
+              key={`${ingredient._id}-${idx}`}
+              className={cn(styles.feedCardIngredientImage)}
+            >
+              <img
+                className={styles.feedCardImg}
+                src={ingredient?.image_mobile}
+                alt={ingredient?.name}
+              />
+            </li>
+          ))}
+          {countIngredients > 6 ? (
+            <div className={styles.overlay}>
+              <span>{`+${plusNumberIngredients}`}</span>
+            </div>
+          ) : null}
         </ul>
         <div className={styles.feedCardPriceWrapper}>
-          <p className="text text_type_digits-default">480</p>
+          <p className="text text_type_digits-default">{price}</p>
           <CurrencyIcon type="primary" />
         </div>
       </div>

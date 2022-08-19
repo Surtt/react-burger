@@ -1,8 +1,12 @@
 import React from "react";
 import styles from "./orders-info.module.css";
 import cn from "classnames";
+import { useSelector } from "../../hooks";
 
 export const OrdersInfo = () => {
+  const {
+    wsReducer: { total, totalToday },
+  } = useSelector((state) => state);
   return (
     <section className={styles.ordersInfo}>
       <div className={styles.topWrapper}>
@@ -62,11 +66,11 @@ export const OrdersInfo = () => {
       </div>
       <div className={styles.middleWrapper}>
         <p className="text text_type_main-medium">Выполнено за все время:</p>
-        <p className="text text_type_digits-large">28 752</p>
+        <p className="text text_type_digits-large">{total}</p>
       </div>
       <div className={styles.bottomWrapper}>
         <p className="text text_type_main-medium">Выполнено за сегодня:</p>
-        <p className="text text_type_digits-large">138</p>
+        <p className="text text_type_digits-large">{totalToday}</p>
       </div>
     </section>
   );

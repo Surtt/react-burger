@@ -3,6 +3,7 @@ import { TAuthActions } from "../services/actions/auth";
 import { Action, ActionCreator, Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { TIngredientsActions } from "../services/actions/ingredients";
+import { TWsActions } from "../services/actions/wsActions";
 
 export type RootState = ReturnType<typeof store.getState>;
 export type TApplicationActions = TAuthActions | TIngredientsActions;
@@ -13,7 +14,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   TApplicationActions
 >;
 export type AppDispatch<TReturnType = void> = (
-  action: TApplicationActions | AppThunk
+  action: TWsActions | TApplicationActions | AppThunk
 ) => TReturnType;
 
 export interface IIngredient {
@@ -61,4 +62,20 @@ export interface IOrderById {
 export interface IOrderIngredient {
   toIndex: number;
   fromIndex: number;
+}
+
+export interface IOrder {
+  createdAt: string;
+  ingredients: string[];
+  name: string;
+  number: number;
+  status: string;
+  updatedAt: string;
+  _id: string;
+}
+
+export interface IOrders {
+  orders: IOrder[];
+  total: number;
+  totalToday: number;
 }
