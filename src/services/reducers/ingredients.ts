@@ -1,16 +1,19 @@
 import {
+  ADD_BUNS,
+  ADD_INGREDIENT,
+  DELETE_INGREDIENT,
   GET_INGREDIENTS,
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_SUCCESS,
-  ADD_INGREDIENT,
-  DELETE_INGREDIENT,
+  GET_ORDER,
+  GET_ORDER_FAILED,
   GET_ORDER_NUMBER,
-  GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_NUMBER_FAILED,
-  ADD_BUNS,
+  GET_ORDER_NUMBER_SUCCESS,
+  GET_ORDER_SUCCESS,
   UPDATE_ORDER_INGREDIENTS,
 } from "../constants/ingredients";
-import { IIngredient, IOrderNumber } from "../../types";
+import { IIngredient, IOrder, IOrderNumber } from "../../types";
 import { TIngredientsActions } from "../actions/ingredients";
 
 export interface IIngredientsState {
@@ -22,6 +25,9 @@ export interface IIngredientsState {
   orderNumber: null | IOrderNumber;
   orderNumberRequest: boolean;
   orderNumberFailed: boolean;
+  orderData: null | IOrder;
+  orderRequest: boolean;
+  orderFailed: boolean;
 }
 
 const initialState = {
@@ -33,6 +39,9 @@ const initialState = {
   orderNumber: null,
   orderNumberRequest: false,
   orderNumberFailed: false,
+  orderData: null,
+  orderRequest: false,
+  orderFailed: false,
 };
 
 export const ingredients = (
@@ -88,6 +97,20 @@ export const ingredients = (
       const { toIndex, fromIndex } = action.payload;
       ingredients.splice(toIndex, 0, ingredients.splice(fromIndex, 1)[0]);
       return { ...state, ingredients: ingredients };
+    }
+    case GET_ORDER: {
+      return { ...state, orderRequest: true, orderFailed: false };
+    }
+    case GET_ORDER_SUCCESS: {
+      console.log(action);
+      return {
+        ...state,
+        orderData: action.payload,
+        orderRequest: false,
+      };
+    }
+    case GET_ORDER_FAILED: {
+      return { ...state, orderFailed: true, orderRequest: false };
     }
     default: {
       return state;

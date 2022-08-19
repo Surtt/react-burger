@@ -38,7 +38,6 @@ const FeedCard: FC<IFeedCard> = ({ number, name, date, ingredients }) => {
     0,
     visibleCountIngredients
   );
-  let ingredientLayer = visibleCountIngredients;
 
   return (
     <div className={cn(styles.feedCardContainer, "p-6")}>

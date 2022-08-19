@@ -175,3 +175,18 @@ export const resetPasswordRequest = async (data: IUserData) => {
   });
   return checkResponse(response);
 };
+
+export const getOrderRequestData = async (number: string) => {
+  const response = await fetch(`${API_URL}/orders/${number}`, {
+    method: "GET",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return checkResponse(response);
+};

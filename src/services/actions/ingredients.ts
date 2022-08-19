@@ -1,4 +1,4 @@
-import { getData, placeOrder } from "../../utils/api/api";
+import { getData, getOrderRequestData, placeOrder } from "../../utils/api/api";
 import {
   ADD_BUNS,
   ADD_INGREDIENT,
@@ -6,15 +6,19 @@ import {
   GET_INGREDIENTS,
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_SUCCESS,
+  GET_ORDER,
+  GET_ORDER_FAILED,
   GET_ORDER_NUMBER,
   GET_ORDER_NUMBER_FAILED,
   GET_ORDER_NUMBER_SUCCESS,
+  GET_ORDER_SUCCESS,
   UPDATE_ORDER_INGREDIENTS,
 } from "../constants/ingredients";
 import {
   AppDispatch,
   AppThunk,
   IIngredient,
+  IOrder,
   IOrderById,
   IOrderIngredient,
   IOrderNumber,
@@ -66,6 +70,19 @@ export interface IUpdateOrderIngredientsAction {
   readonly payload: IOrderIngredient;
 }
 
+export interface IGetOrderAction {
+  readonly type: typeof GET_ORDER;
+}
+
+export interface IGetOrderSuccessAction {
+  readonly type: typeof GET_ORDER_SUCCESS;
+  readonly payload: IOrder;
+}
+
+export interface IGetOrderFailedAction {
+  readonly type: typeof GET_ORDER_FAILED;
+}
+
 export type TIngredientsActions =
   | IGetIngredientsRequestAction
   | IGetIngredientsSuccessAction
@@ -76,7 +93,10 @@ export type TIngredientsActions =
   | IAddBunsAction
   | IAddIngredientAction
   | IDeleteIngredientAction
-  | IUpdateOrderIngredientsAction;
+  | IUpdateOrderIngredientsAction
+  | IGetOrderAction
+  | IGetOrderSuccessAction
+  | IGetOrderFailedAction;
 
 export const getIngredientsReq = (): IGetIngredientsRequestAction => {
   return {
@@ -150,6 +170,25 @@ export const updateOrderIngredients = (
   };
 };
 
+export const getOrderRequest = (): IGetOrderAction => {
+  return {
+    type: GET_ORDER,
+  };
+};
+
+export const getOrderSuccess = (payload: IOrder): IGetOrderSuccessAction => {
+  return {
+    type: GET_ORDER_SUCCESS,
+    payload,
+  };
+};
+
+export const getOrderFailed = (): IGetOrderFailedAction => {
+  return {
+    type: GET_ORDER_FAILED,
+  };
+};
+
 export const getIngredients = (): AppThunk => (dispatch: AppDispatch) => {
   dispatch(getIngredientsReq());
   getData()
@@ -179,5 +218,22 @@ export const getOrderNumber =
       })
       .catch((error) => {
         dispatch(getOrderNumberFailed());
+      });
+  };
+
+export const getOrderData =
+  (id: string): AppThunk =>
+  (dispatch: AppDispatch) => {
+    dispatch(getOrderRequest());
+    getOrderRequestData(id)
+      .then((res) => {
+        if (res && res.success) {
+          dispatch(getOrderSuccess(res.orders[0]));
+        } else {
+          dispatch(getOrderFailed());
+        }
+      })
+      .catch((error) => {
+        dispatch(getOrderFailed());
       });
   };

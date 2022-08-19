@@ -5,8 +5,9 @@ import { useSelector } from "../../hooks";
 
 export const OrdersInfo = () => {
   const {
-    wsReducer: { total, totalToday },
+    wsReducer: { orders, total, totalToday },
   } = useSelector((state) => state);
+
   return (
     <section className={styles.ordersInfo}>
       <div className={styles.topWrapper}>
