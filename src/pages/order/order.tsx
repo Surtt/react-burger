@@ -31,7 +31,14 @@ const Order = () => {
   const ingredientsOrder = orderData?.ingredients.flatMap((id: string) =>
     ingredientsData.filter((ingredient: IIngredient) => ingredient._id === id)
   );
-
+  console.log(ingredientsOrder);
+  const getCountIngredient = (arr: any[]) => {
+    return arr?.reduce((acc, el) => {
+      acc[el._id] = (acc[el._id] || 0) + 1;
+      return acc;
+    }, {});
+  };
+  console.log(getCountIngredient(ingredientsOrder));
   const getTotalPrice = useMemo(() => {
     return ingredientsOrder?.reduce(
       (acc: number, current: { price: number }) => acc + current?.price,
@@ -76,7 +83,9 @@ const Order = () => {
             </p>
             <div className={styles.priceContainer}>
               <p className="text text_type_digits-default">
-                {ingredient?.price}
+                {getCountIngredient(ingredientsOrder)[ingredient._id]} x{" "}
+                {ingredient?.price *
+                  getCountIngredient(ingredientsOrder)[ingredient._id]}
               </p>
               <CurrencyIcon type="primary" />
             </div>

@@ -2,11 +2,20 @@ import React from "react";
 import styles from "./orders-info.module.css";
 import cn from "classnames";
 import { useSelector } from "../../hooks";
+import { IOrder } from "../../types";
 
 export const OrdersInfo = () => {
   const {
     wsReducer: { orders, total, totalToday },
   } = useSelector((state) => state);
+
+  const ordersDone = orders
+    .filter((order: IOrder) => order.status === "done")
+    .slice(0, 20);
+
+  const ordersPending = orders
+    .filter((order: IOrder) => order.status === "pending")
+    .slice(0, 20);
 
   return (
     <section className={styles.ordersInfo}>
@@ -14,54 +23,27 @@ export const OrdersInfo = () => {
         <div className={styles.readyOrders}>
           <p className="text text_type_main-medium">Готовы:</p>
           <div className={styles.ordersNumberWrapper}>
-            <p
-              className={cn(
-                styles.orderNumber,
-                "text text_type_digits-default"
-              )}
-            >
-              034533
-            </p>
-            <p
-              className={cn(
-                styles.orderNumber,
-                "text text_type_digits-default"
-              )}
-            >
-              034532
-            </p>
-            <p
-              className={cn(
-                styles.orderNumber,
-                "text text_type_digits-default"
-              )}
-            >
-              034530
-            </p>
-            <p
-              className={cn(
-                styles.orderNumber,
-                "text text_type_digits-default"
-              )}
-            >
-              034527
-            </p>
-            <p
-              className={cn(
-                styles.orderNumber,
-                "text text_type_digits-default"
-              )}
-            >
-              034525
-            </p>
+            {ordersDone.map((order: IOrder) => (
+              <p
+                key={order._id}
+                className={cn(
+                  styles.orderNumber,
+                  "text text_type_digits-default"
+                )}
+              >
+                {order.number}
+              </p>
+            ))}
           </div>
         </div>
         <div className={styles.cookOrders}>
           <p className="text text_type_main-medium">В работе:</p>
           <div className={styles.ordersNumberWrapper}>
-            <p className="text text_type_digits-default">034538</p>
-            <p className="text text_type_digits-default">034541</p>
-            <p className="text text_type_digits-default">034542</p>
+            {ordersPending.map((order: IOrder) => (
+              <p key={order._id} className="text text_type_digits-default">
+                {order.number}
+              </p>
+            ))}
           </div>
         </div>
       </div>
