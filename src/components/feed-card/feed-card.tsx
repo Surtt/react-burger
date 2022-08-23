@@ -5,15 +5,24 @@ import { useSelector } from "../../hooks";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { convertOrderDate } from "../../utils/convertOrderDate";
 import { IIngredient } from "../../types";
+import { getStatus } from "../../utils/getStatus";
 
 interface IFeedCard {
   number: number;
   name: string;
   date: string;
   ingredients: string[];
+  status?: string;
 }
 
-const FeedCard: FC<IFeedCard> = ({ number, name, date, ingredients }) => {
+const FeedCard: FC<IFeedCard> = ({
+  number,
+  name,
+  date,
+  ingredients,
+  status,
+}) => {
+  console.log(status);
   const {
     ingredients: { ingredientsData },
   } = useSelector((state) => state);
@@ -38,7 +47,7 @@ const FeedCard: FC<IFeedCard> = ({ number, name, date, ingredients }) => {
     0,
     visibleCountIngredients
   );
-
+  const statusName = getStatus(status);
   return (
     <div className={cn(styles.feedCardContainer, "p-6")}>
       <div className={styles.feedCardTopWrapper}>
@@ -47,7 +56,19 @@ const FeedCard: FC<IFeedCard> = ({ number, name, date, ingredients }) => {
           {convertDate}
         </p>
       </div>
-      <p className="text text_type_main-medium">{name}</p>
+      <div>
+        <p className="text text_type_main-medium mb-2">{name}</p>
+        {status && (
+          <p
+            className={cn(
+              styles[`textColor${statusName?.color}`],
+              "text text_type_main-default mb-6"
+            )}
+          >
+            {statusName?.text}
+          </p>
+        )}
+      </div>
       <div className={styles.feedCardBottomWrapper}>
         <ul className={styles.feedCardListContainer}>
           {slicedIngredientsOrder.map((ingredient: IIngredient, idx) => (

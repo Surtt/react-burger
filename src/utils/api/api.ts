@@ -4,6 +4,7 @@ import { IOrderById, IUserData } from "../../types";
 
 const API_URL = "https://norma.nomoreparties.space/api";
 export const WS_URL = "wss://norma.nomoreparties.space/orders/all";
+export const WS_AUTH_URL = "wss://norma.nomoreparties.space/orders";
 
 const checkResponse = (response: Response) => {
   return response.ok
@@ -22,6 +23,7 @@ export const placeOrder = async (ingredients: IOrderById) => {
     body: JSON.stringify(ingredients),
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("token"),
     },
   });
   return checkResponse(response);
@@ -186,6 +188,22 @@ export const getOrderRequestData = async (number: string) => {
     referrerPolicy: "no-referrer",
     headers: {
       "Content-Type": "application/json",
+    },
+  });
+  return checkResponse(response);
+};
+
+export const getOrderRequestDataUser = async (number: string) => {
+  const response = await fetch(`${API_URL}/orders/${number}`, {
+    method: "GET",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("token"),
     },
   });
   return checkResponse(response);

@@ -63,7 +63,10 @@ function App() {
           <Feed />
         </Route>
         <Route path="/feed/:id" exact={true}>
-          <Order />
+          <Order isModal={false} />
+        </Route>
+        <Route path="/profile/orders/:id" exact={true}>
+          <Order isModal={false} />
         </Route>
       </Switch>
       {details && (
@@ -84,7 +87,19 @@ function App() {
             path="/feed/:id"
             children={
               <Modal>
-                <Order />
+                <Order isModal />
+              </Modal>
+            }
+          />
+        </>
+      )}
+      {details && (
+        <>
+          <Route
+            path="/profile/orders/:id"
+            children={
+              <Modal>
+                <Order isModal />
               </Modal>
             }
           />

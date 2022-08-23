@@ -6,14 +6,13 @@ import styles from "./profile.module.css";
 import Loader from "../../components/loader/loader";
 import { useSelector } from "../../hooks";
 import NavProfile from "../../components/nav-profile/nav-profile";
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
 import FormProfile from "../../components/form-profile/form-profile";
-import { OrdersList } from "../../components/orders-list/orders-list";
+import { ProfileOrdersList } from "../../components/profile-orders-list/profile-orders-list";
 
 const Profile = () => {
-  const location = useLocation();
   const { userRequest } = useSelector((state) => state.auth);
-  console.log(location);
+
   if (userRequest) {
     return <Loader loading={userRequest} />;
   }
@@ -27,7 +26,7 @@ const Profile = () => {
             <FormProfile />
           </Route>
           <Route path="/profile/orders" exact={true}>
-            <OrdersList />
+            <ProfileOrdersList />
           </Route>
         </Switch>
       </section>

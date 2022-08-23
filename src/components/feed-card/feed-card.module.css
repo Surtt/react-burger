@@ -61,3 +61,11 @@
     border-radius: 50%;
     z-index: 1;
 }
+
+.textColorGreen {
+    color: var(--colors-interface-success);
+}
+
+.textColorWhite {
+    color: var(--text-primary-color);
+}

@@ -1,0 +1,16 @@
+.ordersList {
+    width: 100%;
+}
+
+.ordersListContainer {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    max-height: calc(100vh - 210px);
+    overflow-y: scroll;
+}
+
+.link {
+    color: var(--text-primary-color);
+    text-decoration: none;
+}

@@ -102,7 +102,6 @@ export const ingredients = (
       return { ...state, orderRequest: true, orderFailed: false };
     }
     case GET_ORDER_SUCCESS: {
-      console.log(action);
       return {
         ...state,
         orderData: action.payload,

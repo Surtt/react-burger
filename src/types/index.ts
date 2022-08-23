@@ -4,6 +4,7 @@ import { Action, ActionCreator, Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { TIngredientsActions } from "../services/actions/ingredients";
 import { TWsActions } from "../services/actions/wsActions";
+import { TWsAuthActions } from "../services/actions/wsAuthActions";
 
 export type RootState = ReturnType<typeof store.getState>;
 export type TApplicationActions = TAuthActions | TIngredientsActions;
@@ -14,7 +15,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   TApplicationActions
 >;
 export type AppDispatch<TReturnType = void> = (
-  action: TWsActions | TApplicationActions | AppThunk
+  action: TWsAuthActions | TWsActions | TApplicationActions | AppThunk
 ) => TReturnType;
 
 export interface IIngredient {

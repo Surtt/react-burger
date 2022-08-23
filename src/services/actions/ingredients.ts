@@ -1,4 +1,9 @@
-import { getData, getOrderRequestData, placeOrder } from "../../utils/api/api";
+import {
+  getData,
+  getOrderRequestData,
+  getOrderRequestDataUser,
+  placeOrder,
+} from "../../utils/api/api";
 import {
   ADD_BUNS,
   ADD_INGREDIENT,
@@ -189,6 +194,27 @@ export const getOrderFailed = (): IGetOrderFailedAction => {
   };
 };
 
+export const getOrderRequestUser = (): IGetOrderAction => {
+  return {
+    type: GET_ORDER,
+  };
+};
+
+export const getOrderSuccessUser = (
+  payload: IOrder
+): IGetOrderSuccessAction => {
+  return {
+    type: GET_ORDER_SUCCESS,
+    payload,
+  };
+};
+
+export const getOrderFailedUser = (): IGetOrderFailedAction => {
+  return {
+    type: GET_ORDER_FAILED,
+  };
+};
+
 export const getIngredients = (): AppThunk => (dispatch: AppDispatch) => {
   dispatch(getIngredientsReq());
   getData()
@@ -235,5 +261,22 @@ export const getOrderData =
       })
       .catch((error) => {
         dispatch(getOrderFailed());
+      });
+  };
+
+export const getOrderDataUser =
+  (id: string): AppThunk =>
+  (dispatch: AppDispatch) => {
+    dispatch(getOrderRequestUser());
+    getOrderRequestDataUser(id)
+      .then((res) => {
+        if (res && res.success) {
+          dispatch(getOrderSuccessUser(res.orders[0]));
+        } else {
+          dispatch(getOrderFailedUser());
+        }
+      })
+      .catch((error) => {
+        dispatch(getOrderFailedUser());
       });
   };
