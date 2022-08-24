@@ -22,7 +22,6 @@ const FeedCard: FC<IFeedCard> = ({
   ingredients,
   status,
 }) => {
-  console.log(status);
   const {
     ingredients: { ingredientsData },
   } = useSelector((state) => state);

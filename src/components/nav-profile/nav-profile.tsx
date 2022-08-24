@@ -1,11 +1,13 @@
 import React from "react";
 import styles from "./nav-profile.module.css";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useRouteMatch } from "react-router-dom";
 import cn from "classnames";
 import { logoutUser } from "../../services/actions/auth";
 import { useDispatch, useSelector } from "../../hooks";
 
 const NavProfile = () => {
+  const { url } = useRouteMatch();
+
   const dispatch = useDispatch();
   const { logoutRequest } = useSelector((state) => state.auth);
   const handleLogout = () => {
@@ -21,7 +23,8 @@ const NavProfile = () => {
           <NavLink
             activeClassName={styles.active}
             className={cn(styles.link, "pt-4 pb-4")}
-            to="/profile"
+            exact={true}
+            to={`${url}`}
           >
             Профиль
           </NavLink>
@@ -30,7 +33,8 @@ const NavProfile = () => {
           <NavLink
             activeClassName={styles.active}
             className={cn(styles.link, "pt-4 pb-4")}
-            to="/profile/orders"
+            exact={true}
+            to={`${url}/orders`}
           >
             История заказов
           </NavLink>

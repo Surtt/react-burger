@@ -11,6 +11,8 @@ import FormProfile from "../../components/form-profile/form-profile";
 import { ProfileOrdersList } from "../../components/profile-orders-list/profile-orders-list";
 
 const Profile = () => {
+  const { path } = useRouteMatch();
+
   const { userRequest } = useSelector((state) => state.auth);
 
   if (userRequest) {
@@ -22,10 +24,10 @@ const Profile = () => {
       <section className={styles.wrapper}>
         <NavProfile />
         <Switch>
-          <Route path="/profile" exact={true}>
+          <Route path={`${path}`} exact={true}>
             <FormProfile />
           </Route>
-          <Route path="/profile/orders" exact={true}>
+          <Route path={`${path}/orders`} exact={true}>
             <ProfileOrdersList />
           </Route>
         </Switch>
