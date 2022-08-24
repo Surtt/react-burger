@@ -62,7 +62,7 @@ function App() {
         <Route path="/feed" exact={true}>
           <Feed />
         </Route>
-        <Route path="/feed/:id" exact={true}>
+        <Route path="/feed/:id">
           <Order isModal={false} />
         </Route>
         <ProtectedRoute path="/profile/orders/:id" exact={true}>
@@ -95,7 +95,7 @@ function App() {
       )}
       {details && (
         <>
-          <Route
+          <ProtectedRoute
             path="/profile/orders/:id"
             children={
               <Modal>

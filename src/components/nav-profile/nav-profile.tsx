@@ -40,13 +40,13 @@ const NavProfile = () => {
           </NavLink>
         </li>
         <li className="text text_type_main-medium">
-          <Link
+          <NavLink
             onClick={handleLogout}
             className={cn(styles.link, "pt-4 pb-4")}
             to={!logoutRequest ? "/profile" : "/login"}
           >
             Выход
-          </Link>
+          </NavLink>
         </li>
       </ul>
       <p className={cn(styles.text, "text text_type_main-default")}>
