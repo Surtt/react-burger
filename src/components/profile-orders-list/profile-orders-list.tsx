@@ -4,7 +4,10 @@ import FeedCard from "../feed-card/feed-card";
 import { Link, useLocation, useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "../../hooks";
 import { IOrder } from "../../types";
-import { WS_CONNECTION_START_AUTH } from "../../services/constants/ws-auth";
+import {
+  WS_CONNECTION_CLOSED_AUTH,
+  WS_CONNECTION_START_AUTH,
+} from "../../services/constants/ws-auth";
 
 export const ProfileOrdersList = () => {
   const { url } = useRouteMatch();
@@ -14,7 +17,10 @@ export const ProfileOrdersList = () => {
   } = useSelector((state) => state);
   const location = useLocation();
 
-  useEffect(() => dispatch({ type: WS_CONNECTION_START_AUTH }), [dispatch]);
+  useEffect(() => {
+    dispatch({ type: WS_CONNECTION_START_AUTH });
+    return () => dispatch({ type: WS_CONNECTION_CLOSED_AUTH });
+  }, [dispatch]);
   return (
     <section className={styles.ordersList}>
       <div className={styles.ordersListContainer}>
