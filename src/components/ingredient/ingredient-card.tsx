@@ -40,7 +40,7 @@ const IngredientCard: FC<IIngredientCard> = ({ data }) => {
     ).length;
 
     return data.name === buns?.name ? 2 : ingredientsAmount;
-  }, [ingredients, buns]);
+  }, [ingredients, buns, data.name]);
 
   return (
     <>

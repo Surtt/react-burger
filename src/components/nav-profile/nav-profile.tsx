@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./nav-profile.module.css";
-import { Link, NavLink, useRouteMatch } from "react-router-dom";
+import { NavLink, useRouteMatch } from "react-router-dom";
 import cn from "classnames";
 import { logoutUser } from "../../services/actions/auth";
 import { useDispatch, useSelector } from "../../hooks";

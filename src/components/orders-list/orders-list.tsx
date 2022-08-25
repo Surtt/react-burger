@@ -21,7 +21,7 @@ export const OrdersList = () => {
               key={order._id}
               to={{
                 pathname: `/feed/${order.number}`,
-                state: { details: location },
+                state: { background: location },
               }}
             >
               <FeedCard

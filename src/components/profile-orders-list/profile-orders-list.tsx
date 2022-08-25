@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import styles from "./profile-orders-list.module.css";
 import FeedCard from "../feed-card/feed-card";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "../../hooks";
 import { IOrder } from "../../types";
 import { WS_CONNECTION_START_AUTH } from "../../services/constants/ws-auth";
 
 export const ProfileOrdersList = () => {
+  const { url } = useRouteMatch();
   const dispatch = useDispatch();
   const {
     wsAuthReducer: { orders },
@@ -23,8 +24,8 @@ export const ProfileOrdersList = () => {
               className={styles.link}
               key={order._id}
               to={{
-                pathname: `/profile/orders/${order.number}`,
-                state: { details: location },
+                pathname: `${url}/${order.number}`,
+                state: { background: location },
               }}
             >
               <FeedCard

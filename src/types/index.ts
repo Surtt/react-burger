@@ -41,7 +41,7 @@ export interface ILocationState {
 }
 
 export interface ILocationDetails {
-  details?: any;
+  background?: any;
 }
 
 export interface IUserData {

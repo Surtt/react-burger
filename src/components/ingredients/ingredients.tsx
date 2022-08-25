@@ -26,7 +26,7 @@ const Ingredients = forwardRef<HTMLElement, IIngredients>(
                 key={item._id}
                 to={{
                   pathname: `/ingredients/${item._id}`,
-                  state: { details: location },
+                  state: { background: location },
                 }}
               >
                 <IngredientCard data={item} />

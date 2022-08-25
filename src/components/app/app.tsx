@@ -18,13 +18,13 @@ import Modal from "../modal/modal";
 import { ILocationDetails } from "../../types";
 import { useDispatch } from "../../hooks";
 import Feed from "../../pages/feed/feed";
-import Order from "../../pages/order/order";
+import Order from "../order/order";
 
 function App() {
   const location = useLocation<ILocationDetails>();
   const dispatch = useDispatch();
 
-  const details = location.state && location.state.details;
+  const background = location.state && location.state.background;
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -37,7 +37,7 @@ function App() {
   return (
     <>
       <AppHeader />
-      <Switch location={details || location}>
+      <Switch location={background || location}>
         <Route path="/" exact={true}>
           <Main />
         </Route>
@@ -65,11 +65,11 @@ function App() {
         <Route path="/feed/:id">
           <Order isModal={false} />
         </Route>
-        <ProtectedRoute path="/profile/orders/:id" exact={true}>
+        <Route path="profile/orders/:id" exact={true}>
           <Order isModal={false} />
-        </ProtectedRoute>
+        </Route>
       </Switch>
-      {details && (
+      {background && (
         <>
           <Route
             path="/ingredients/:id"
@@ -79,11 +79,8 @@ function App() {
               </Modal>
             }
           />
-        </>
-      )}
-      {details && (
-        <>
           <Route
+            exact={true}
             path="/feed/:id"
             children={
               <Modal>
@@ -91,11 +88,8 @@ function App() {
               </Modal>
             }
           />
-        </>
-      )}
-      {details && (
-        <>
           <ProtectedRoute
+            exact={true}
             path="/profile/orders/:id"
             children={
               <Modal>

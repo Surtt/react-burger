@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from "react";
-import { Redirect, Route, RouterProps } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import { useSelector } from "../../hooks";
 
 interface IProtectedRoute {

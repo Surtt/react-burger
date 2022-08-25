@@ -87,6 +87,8 @@ export const ingredients = (
         ...state,
         orderNumber: action.payload,
         orderNumberRequest: false,
+        buns: null,
+        ingredients: [],
       };
     }
     case GET_ORDER_NUMBER_FAILED: {
