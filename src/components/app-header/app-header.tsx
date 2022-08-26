@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
 import styles from "./app-header.module.css";
-import { NavLink, useRouteMatch } from "react-router-dom";
+import { Link, NavLink, useRouteMatch } from "react-router-dom";
 
 const AppHeader = () => {
   const isConstructor = !!useRouteMatch({ path: "/", exact: true });
@@ -49,7 +49,9 @@ const AppHeader = () => {
           </NavLink>
         </ul>
         <div className={styles.logo}>
-          <Logo />
+          <Link to="/">
+            <Logo />
+          </Link>
         </div>
         <NavLink
           activeClassName={styles.active}

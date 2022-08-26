@@ -25,18 +25,25 @@ const Order: FC<IOrder> = ({ isModal }) => {
     ingredients: { ingredientsData, orderData },
   } = useSelector((state) => state);
 
-  const convertDate = convertOrderDate(orderData?.createdAt);
+  const convert = orderData ? orderData.createdAt : "";
+  const convertDate = convertOrderDate(convert);
 
   const status = getStatus(orderData?.status);
 
-  const ingredientsOrder = orderData?.ingredients.flatMap((id: string) =>
-    ingredientsData.filter((ingredient: IIngredient) => ingredient._id === id)
+  const ingredientsOrder = useMemo(
+    () =>
+      orderData
+        ? orderData?.ingredients.flatMap((id) =>
+            ingredientsData.filter((ingredient) => ingredient._id === id)
+          )
+        : [],
+    [orderData, ingredientsData]
   );
   const uniqueIds: string[] = Array.from(new Set(orderData?.ingredients));
 
   const getCountIngredient = (arr: IIngredient[]) => {
     return arr?.reduce(
-      (acc: IAcc, el: IIngredient) => {
+      (acc: IAcc, el) => {
         const id = el._id;
         acc.ingredient[id] = el;
         acc.count[id] = (acc.count[id] || 0) + 1;
@@ -47,10 +54,7 @@ const Order: FC<IOrder> = ({ isModal }) => {
   };
 
   const getTotalPrice = useMemo(() => {
-    return ingredientsOrder?.reduce(
-      (acc: number, current: { price: number }) => acc + current?.price,
-      0
-    );
+    return ingredientsOrder?.reduce((acc, current) => acc + current?.price, 0);
   }, [ingredientsOrder]);
 
   useEffect(() => dispatch(getOrderData(id)), [id, dispatch]);

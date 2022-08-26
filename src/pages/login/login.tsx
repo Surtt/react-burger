@@ -19,6 +19,7 @@ const Login = () => {
   const { user } = useSelector((state) => state.auth);
 
   const [values, setValues] = useState({
+    name: "",
     email: "",
     password: "",
   });

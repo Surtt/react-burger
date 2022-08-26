@@ -45,15 +45,22 @@ export interface ILocationDetails {
 }
 
 export interface IUserData {
-  name?: string;
-  email?: string;
-  password?: string;
+  [key: string]: string;
+  name: string;
+  email: string;
+  password: string;
 }
 
 export interface IOrderNumber {
+  createdAt: string;
+  ingredients: IIngredient[];
   name: string;
-  order: { number: number };
-  success: boolean;
+  number: number;
+  owner: { name: string; email: string; createdAt: string; updatedAt: string };
+  price: number;
+  status: string;
+  updatedAt: string;
+  _id: string;
 }
 
 export interface IOrderById {

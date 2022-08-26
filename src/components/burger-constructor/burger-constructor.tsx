@@ -41,14 +41,16 @@ const BurgerConstructor = () => {
 
   const handleDrop = (itemId: { id: string }) => {
     const targetIngredient = ingredientsData.find(
-      ({ _id }: { _id: string }) => _id === itemId.id
+      ({ _id }) => _id === itemId.id
     );
-    const isBun = targetIngredient.type === "bun";
+    const isBun = targetIngredient?.type === "bun";
 
     if (isBun) {
       dispatch(addBuns(targetIngredient));
     } else {
-      dispatch(addIngredient({ ...targetIngredient, uuid: uuid4() }));
+      dispatch(
+        addIngredient({ ...targetIngredient, uuid: uuid4() } as IIngredient)
+      );
     }
   };
 
@@ -65,12 +67,10 @@ const BurgerConstructor = () => {
   const [isOpenModal, setOpenModal] = useState(false);
 
   const getTotalPrice = useMemo(() => {
+    const bunsPrice: number = buns ? buns.price : 0;
     return (
-      ingredients.reduce(
-        (acc: number, current: { price: number }) => acc + current?.price,
-        0
-      ) +
-      buns?.price * 2
+      ingredients.reduce((acc, current) => acc + current?.price, 0) +
+      bunsPrice * 2
     );
   }, [ingredients, buns]);
 
@@ -79,8 +79,9 @@ const BurgerConstructor = () => {
       history.push("/login");
     }
     setOpenModal(true);
-    const ids = data.map(({ _id }: IIngredient) => _id);
-    dispatch(getOrderNumber({ ingredients: [buns._id, ...ids] }));
+    const ids = data.map(({ _id }) => _id);
+    const bunId: string = buns ? buns._id : "";
+    dispatch(getOrderNumber({ ingredients: [bunId, ...ids] }));
   };
 
   const handleCloseModal = () => {
@@ -123,8 +124,8 @@ const BurgerConstructor = () => {
           </div>
           <ul className={styles.ingredientsWrapper}>
             {ingredients
-              .filter((ingredient: IIngredient) => ingredient?.type !== "bun")
-              .map((ingredient: IIngredient, idx: number) => (
+              .filter((ingredient) => ingredient?.type !== "bun")
+              .map((ingredient, idx) => (
                 <BurgerIngredient
                   key={uuid4()}
                   index={idx}

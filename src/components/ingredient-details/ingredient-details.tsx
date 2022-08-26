@@ -16,7 +16,7 @@ const IngredientDetails: FC<IIngredientDetails> = ({ title }) => {
   const { id } = useParams<{ id: string }>();
   const ingredients = useSelector((state) => state.ingredients.ingredientsData);
   const selectedIngredient = ingredients.find(
-    (ingredient: IIngredient) => ingredient._id === id
+    (ingredient) => ingredient._id === id
   );
 
   return (

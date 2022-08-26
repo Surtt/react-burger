@@ -10,11 +10,11 @@ export const OrdersInfo = () => {
   } = useSelector((state) => state);
 
   const ordersDone = orders
-    .filter((order: IOrder) => order.status === "done")
+    .filter((order) => order.status === "done")
     .slice(0, 20);
 
   const ordersPending = orders
-    .filter((order: IOrder) => order.status === "pending")
+    .filter((order) => order.status === "pending")
     .slice(0, 20);
 
   return (
@@ -23,7 +23,7 @@ export const OrdersInfo = () => {
         <div className={styles.readyOrders}>
           <p className="text text_type_main-medium">Готовы:</p>
           <div className={styles.ordersNumberWrapper}>
-            {ordersDone.map((order: IOrder) => (
+            {ordersDone.map((order) => (
               <p
                 key={order._id}
                 className={cn(
@@ -39,7 +39,7 @@ export const OrdersInfo = () => {
         <div className={styles.cookOrders}>
           <p className="text text_type_main-medium">В работе:</p>
           <div className={styles.ordersNumberWrapper}>
-            {ordersPending.map((order: IOrder) => (
+            {ordersPending.map((order) => (
               <p key={order._id} className="text text_type_digits-default">
                 {order.number}
               </p>

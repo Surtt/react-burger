@@ -27,15 +27,12 @@ const FeedCard: FC<IFeedCard> = ({
   } = useSelector((state) => state);
   const convertDate = convertOrderDate(date);
 
-  const ingredientsOrder = ingredients.flatMap((id: string) =>
-    ingredientsData.filter((ingredient: IIngredient) => ingredient._id === id)
+  const ingredientsOrder = ingredients.flatMap((id) =>
+    ingredientsData.filter((ingredient) => ingredient._id === id)
   );
 
   const getTotalPrice = useMemo(() => {
-    return ingredientsOrder.reduce(
-      (acc: number, current: { price: number }) => acc + current?.price,
-      0
-    );
+    return ingredientsOrder.reduce((acc, current) => acc + current?.price, 0);
   }, [ingredientsOrder]);
   const price = getTotalPrice;
 
@@ -70,7 +67,7 @@ const FeedCard: FC<IFeedCard> = ({
       </div>
       <div className={styles.feedCardBottomWrapper}>
         <ul className={styles.feedCardListContainer}>
-          {slicedIngredientsOrder.map((ingredient: IIngredient, idx) => (
+          {slicedIngredientsOrder.map((ingredient, idx) => (
             <li
               style={{ zIndex: visibleCountIngredients - idx }}
               key={`${ingredient._id}-${idx}`}

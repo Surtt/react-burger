@@ -16,24 +16,15 @@ const BurgerIngredients = () => {
   );
 
   const buns = useMemo(
-    () =>
-      ingredientsData.filter(
-        (ingredient: IIngredient) => ingredient.type === "bun"
-      ),
+    () => ingredientsData.filter((ingredient) => ingredient.type === "bun"),
     [ingredientsData]
   );
   const sauces = useMemo(
-    () =>
-      ingredientsData.filter(
-        (ingredient: IIngredient) => ingredient.type === "sauce"
-      ),
+    () => ingredientsData.filter((ingredient) => ingredient.type === "sauce"),
     [ingredientsData]
   );
   const mains = useMemo(
-    () =>
-      ingredientsData.filter(
-        (ingredient: IIngredient) => ingredient.type === "main"
-      ),
+    () => ingredientsData.filter((ingredient) => ingredient.type === "main"),
     [ingredientsData]
   );
 

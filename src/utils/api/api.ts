@@ -162,7 +162,10 @@ export const forgotPasswordRequest = async (data: IUserData) => {
   return checkResponse(response);
 };
 
-export const resetPasswordRequest = async (data: IUserData) => {
+export const resetPasswordRequest = async (data: {
+  password: string;
+  token: string;
+}) => {
   const response = await fetch(`${API_URL}/password-reset/reset`, {
     method: "POST",
     mode: "cors",

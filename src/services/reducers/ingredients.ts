@@ -30,7 +30,7 @@ export interface IIngredientsState {
   orderFailed: boolean;
 }
 
-const initialState = {
+const initialState: IIngredientsState = {
   ingredientsData: [],
   ingredientsRequest: false,
   ingredientsFailed: false,

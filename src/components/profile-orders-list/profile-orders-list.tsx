@@ -24,26 +24,28 @@ export const ProfileOrdersList = () => {
   return (
     <section className={styles.ordersList}>
       <div className={styles.ordersListContainer}>
-        {orders?.map((order: IOrder) => {
-          return (
-            <Link
-              className={styles.link}
-              key={order._id}
-              to={{
-                pathname: `${url}/${order.number}`,
-                state: { background: location },
-              }}
-            >
-              <FeedCard
-                number={order.number}
-                name={order.name}
-                date={order.createdAt}
-                ingredients={order.ingredients}
-                status={order.status}
-              />
-            </Link>
-          );
-        })}
+        {orders
+          ?.map((order) => {
+            return (
+              <Link
+                className={styles.link}
+                key={order._id}
+                to={{
+                  pathname: `${url}/${order.number}`,
+                  state: { background: location },
+                }}
+              >
+                <FeedCard
+                  number={order.number}
+                  name={order.name}
+                  date={order.createdAt}
+                  ingredients={order.ingredients}
+                  status={order.status}
+                />
+              </Link>
+            );
+          })
+          .reverse()}
       </div>
     </section>
   );

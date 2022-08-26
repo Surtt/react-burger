@@ -33,10 +33,10 @@ const IngredientCard: FC<IIngredientCard> = ({ data }) => {
 
   const getCounter = useMemo(() => {
     const ingredientByName = ingredients?.find(
-      (ingredient: IIngredient) => ingredient.name === data.name
+      (ingredient) => ingredient.name === data.name
     )?.name;
     const ingredientsAmount = ingredients.filter(
-      (ingredient: IIngredient) => ingredient.name === ingredientByName
+      (ingredient) => ingredient.name === ingredientByName
     ).length;
 
     return data.name === buns?.name ? 2 : ingredientsAmount;

@@ -19,7 +19,9 @@ const ForgotPassword = () => {
     (state) => state.auth
   );
   const [values, setValues] = useState({
+    name: "",
     email: "",
+    password: "",
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

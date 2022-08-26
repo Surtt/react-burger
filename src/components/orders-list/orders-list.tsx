@@ -14,7 +14,7 @@ export const OrdersList = () => {
     <section className={styles.ordersList}>
       <p className="text text_type_main-large mb-5">Лента заказов</p>
       <div className={styles.ordersListContainer}>
-        {orders.map((order: IOrder) => {
+        {orders.map((order) => {
           return (
             <Link
               className={styles.link}

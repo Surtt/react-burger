@@ -397,7 +397,7 @@ export const forgotPassword =
   };
 
 export const resetPassword =
-  (data: IUserData): AppThunk =>
+  (data: { password: string; token: string }): AppThunk =>
   (dispatch: AppDispatch) => {
     dispatch(resetPasswordReq());
     resetPasswordRequest(data)
