@@ -204,7 +204,7 @@ describe("ingredients reducer", () => {
           _id: "630b91db42d34a001c284747",
           owner: {
             name: "Александр",
-            email: "fallen2@yandex.ru",
+            email: "mail@yandex.ru",
             createdAt: "2022-06-16T12:08:25.292Z",
             updatedAt: "2022-08-05T13:36:15.318Z",
           },
@@ -240,7 +240,7 @@ describe("ingredients reducer", () => {
         _id: "630b91db42d34a001c284747",
         owner: {
           name: "Александр",
-          email: "fallen2@yandex.ru",
+          email: "mail@yandex.ru",
           createdAt: "2022-06-16T12:08:25.292Z",
           updatedAt: "2022-08-05T13:36:15.318Z",
         },
