@@ -1,8 +1,10 @@
 import { getCookie } from "../getCookie";
 import { setCookie } from "../setCookie";
-import { IUserData } from "../../types";
+import { IOrderById, IUserData } from "../../types";
 
 const API_URL = "https://norma.nomoreparties.space/api";
+export const WS_URL = "wss://norma.nomoreparties.space/orders/all";
+export const WS_AUTH_URL = "wss://norma.nomoreparties.space/orders";
 
 const checkResponse = (response: Response) => {
   return response.ok
@@ -15,12 +17,13 @@ export const getData = async () => {
   return checkResponse(response);
 };
 
-export const placeOrder = async (ingredients: string[]) => {
+export const placeOrder = async (ingredients: IOrderById) => {
   const response = await fetch(`${API_URL}/orders`, {
     method: "POST",
     body: JSON.stringify(ingredients),
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("token"),
     },
   });
   return checkResponse(response);
@@ -58,7 +61,7 @@ export const signInUserRequest = async (user: IUserData) => {
   return checkResponse(response);
 };
 
-export const logOutRequest = async (data: IUserData) => {
+export const logOutRequest = async (data: { token: string }) => {
   const response = await fetch(`${API_URL}/auth/logout`, {
     method: "POST",
     mode: "cors",
@@ -159,7 +162,10 @@ export const forgotPasswordRequest = async (data: IUserData) => {
   return checkResponse(response);
 };
 
-export const resetPasswordRequest = async (data: IUserData) => {
+export const resetPasswordRequest = async (data: {
+  password: string;
+  token: string;
+}) => {
   const response = await fetch(`${API_URL}/password-reset/reset`, {
     method: "POST",
     mode: "cors",
@@ -170,6 +176,37 @@ export const resetPasswordRequest = async (data: IUserData) => {
     body: JSON.stringify(data),
     headers: {
       "Content-Type": "application/json",
+    },
+  });
+  return checkResponse(response);
+};
+
+export const getOrderRequestData = async (number: string) => {
+  const response = await fetch(`${API_URL}/orders/${number}`, {
+    method: "GET",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return checkResponse(response);
+};
+
+export const getOrderRequestDataUser = async (number: string) => {
+  const response = await fetch(`${API_URL}/orders/${number}`, {
+    method: "GET",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("token"),
     },
   });
   return checkResponse(response);

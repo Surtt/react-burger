@@ -1,31 +1,53 @@
 import {
+  ADD_BUNS,
+  ADD_INGREDIENT,
+  DELETE_INGREDIENT,
   GET_INGREDIENTS,
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_SUCCESS,
-  ADD_INGREDIENT,
-  DELETE_INGREDIENT,
+  GET_ORDER,
+  GET_ORDER_FAILED,
   GET_ORDER_NUMBER,
-  SHOW_INGREDIENT_DETAILS,
-  HIDE_INGREDIENT_DETAILS,
-  GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_NUMBER_FAILED,
-  ADD_BUNS,
+  GET_ORDER_NUMBER_SUCCESS,
+  GET_ORDER_SUCCESS,
   UPDATE_ORDER_INGREDIENTS,
-} from "../actions/ingredients";
+} from "../constants/ingredients";
+import { IIngredient, IOrder, IOrderNumber } from "../../types";
+import { TIngredientsActions } from "../actions/ingredients";
 
-const initialState = {
+export interface IIngredientsState {
+  ingredientsData: IIngredient[];
+  ingredientsRequest: boolean;
+  ingredientsFailed: boolean;
+  ingredients: IIngredient[];
+  buns: null | IIngredient;
+  orderNumber: null | IOrderNumber;
+  orderNumberRequest: boolean;
+  orderNumberFailed: boolean;
+  orderData: null | IOrder;
+  orderRequest: boolean;
+  orderFailed: boolean;
+}
+
+const initialState: IIngredientsState = {
   ingredientsData: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
-  ingredientDetails: null,
   ingredients: [],
   buns: null,
-  orderNumber: {},
+  orderNumber: null,
   orderNumberRequest: false,
   orderNumberFailed: false,
+  orderData: null,
+  orderRequest: false,
+  orderFailed: false,
 };
 
-export const ingredients = (state = initialState, action) => {
+export const ingredients = (
+  state = initialState,
+  action: TIngredientsActions
+): IIngredientsState => {
   switch (action.type) {
     case GET_INGREDIENTS: {
       return { ...state, ingredientsRequest: true, ingredientsFailed: false };
@@ -33,7 +55,7 @@ export const ingredients = (state = initialState, action) => {
     case GET_INGREDIENTS_SUCCESS: {
       return {
         ...state,
-        ingredientsData: action.ingredientsData,
+        ingredientsData: action.payload,
         ingredientsRequest: false,
       };
     }
@@ -57,26 +79,16 @@ export const ingredients = (state = initialState, action) => {
         ],
       };
     }
-    case SHOW_INGREDIENT_DETAILS: {
-      return {
-        ...state,
-        ingredientDetails: action.payload,
-      };
-    }
-    case HIDE_INGREDIENT_DETAILS: {
-      return {
-        ...state,
-        ingredientDetails: null,
-      };
-    }
     case GET_ORDER_NUMBER: {
       return { ...state, orderNumberRequest: true, orderNumberFailed: false };
     }
     case GET_ORDER_NUMBER_SUCCESS: {
       return {
         ...state,
-        orderNumber: action.orderNumber,
+        orderNumber: action.payload,
         orderNumberRequest: false,
+        buns: null,
+        ingredients: [],
       };
     }
     case GET_ORDER_NUMBER_FAILED: {
@@ -87,6 +99,19 @@ export const ingredients = (state = initialState, action) => {
       const { toIndex, fromIndex } = action.payload;
       ingredients.splice(toIndex, 0, ingredients.splice(fromIndex, 1)[0]);
       return { ...state, ingredients: ingredients };
+    }
+    case GET_ORDER: {
+      return { ...state, orderRequest: true, orderFailed: false };
+    }
+    case GET_ORDER_SUCCESS: {
+      return {
+        ...state,
+        orderData: action.payload,
+        orderRequest: false,
+      };
+    }
+    case GET_ORDER_FAILED: {
+      return { ...state, orderFailed: true, orderRequest: false };
     }
     default: {
       return state;

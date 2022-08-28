@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { v4 as uuid4 } from "uuid";
 import { useDrop } from "react-dnd";
@@ -24,6 +23,7 @@ import styles from "./burger-constructor.module.css";
 import { useHistory } from "react-router-dom";
 import { isEmptyUser } from "../../utils/isEmtyUser";
 import { IIngredient } from "../../types";
+import { useDispatch, useSelector } from "../../hooks";
 
 declare module "react" {
   interface FunctionComponent<P = {}> {
@@ -33,22 +33,24 @@ declare module "react" {
 
 const BurgerConstructor = () => {
   const history = useHistory();
-  const { user } = useSelector((state: any) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const { ingredientsData, ingredients, buns } = useSelector(
-    (state: any) => state.ingredients
+    (state) => state.ingredients
   );
   const dispatch = useDispatch();
 
   const handleDrop = (itemId: { id: string }) => {
     const targetIngredient = ingredientsData.find(
-      ({ _id }: { _id: string }) => _id === itemId.id
+      ({ _id }) => _id === itemId.id
     );
-    const isBun = targetIngredient.type === "bun";
+    const isBun = targetIngredient?.type === "bun";
 
     if (isBun) {
       dispatch(addBuns(targetIngredient));
     } else {
-      dispatch(addIngredient({ ...targetIngredient, uuid: uuid4() }));
+      dispatch(
+        addIngredient({ ...targetIngredient, uuid: uuid4() } as IIngredient)
+      );
     }
   };
 
@@ -65,12 +67,10 @@ const BurgerConstructor = () => {
   const [isOpenModal, setOpenModal] = useState(false);
 
   const getTotalPrice = useMemo(() => {
+    const bunsPrice: number = buns ? buns.price : 0;
     return (
-      ingredients.reduce(
-        (acc: number, current: { price: number }) => acc + current?.price,
-        0
-      ) +
-      buns?.price * 2
+      ingredients.reduce((acc, current) => acc + current?.price, 0) +
+      bunsPrice * 2
     );
   }, [ingredients, buns]);
 
@@ -79,9 +79,9 @@ const BurgerConstructor = () => {
       history.push("/login");
     }
     setOpenModal(true);
-    const ids = data.map(({ _id }: IIngredient) => _id);
-    //@ts-ignore
-    dispatch(getOrderNumber({ ingredients: [buns._id, ...ids] }));
+    const ids = data.map(({ _id }) => _id);
+    const bunId: string = buns ? buns._id : "";
+    dispatch(getOrderNumber({ ingredients: [bunId, ...ids] }));
   };
 
   const handleCloseModal = () => {
@@ -124,8 +124,8 @@ const BurgerConstructor = () => {
           </div>
           <ul className={styles.ingredientsWrapper}>
             {ingredients
-              .filter((ingredient: IIngredient) => ingredient?.type !== "bun")
-              .map((ingredient: IIngredient, idx: number) => (
+              .filter((ingredient) => ingredient?.type !== "bun")
+              .map((ingredient, idx) => (
                 <BurgerIngredient
                   key={uuid4()}
                   index={idx}

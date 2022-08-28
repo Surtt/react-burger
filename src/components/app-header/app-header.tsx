@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from "classnames";
 import styles from "./app-header.module.css";
-import { NavLink, useRouteMatch } from "react-router-dom";
+import { Link, NavLink, useRouteMatch } from "react-router-dom";
 
 const AppHeader = () => {
   const isConstructor = !!useRouteMatch({ path: "/", exact: true });
@@ -30,20 +30,28 @@ const AppHeader = () => {
               </span>
             </li>
           </NavLink>
-          <li className={cn(styles.listItem, "p-5")}>
-            <ListIcon type="secondary" />
-            <span
-              className={cn(
-                styles.notActiveLink,
-                "text text_type_main-default ml-2"
-              )}
-            >
-              Лента заказов
-            </span>
-          </li>
+          <NavLink
+            activeClassName={isFeed ? styles.active : ""}
+            className={styles.link}
+            to="/feed"
+          >
+            <li className={cn(styles.listItem, "p-5")}>
+              <ListIcon type={isFeed ? "primary" : "secondary"} />
+              <span
+                className={cn(
+                  styles.notActiveLink,
+                  "text text_type_main-default ml-2"
+                )}
+              >
+                Лента заказов
+              </span>
+            </li>
+          </NavLink>
         </ul>
         <div className={styles.logo}>
-          <Logo />
+          <Link to="/">
+            <Logo />
+          </Link>
         </div>
         <NavLink
           activeClassName={styles.active}

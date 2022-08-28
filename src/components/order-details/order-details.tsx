@@ -1,16 +1,17 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import cn from "classnames";
 
 import styles from "./order-details.module.css";
 import done from "../../images/done.svg";
 import Loader from "../loader/loader";
+import { useSelector } from "../../hooks";
 
 const OrderDetails = () => {
-  const {
-    orderNumber: { number },
-    orderNumberRequest,
-  } = useSelector((state: any) => state.ingredients);
+  const { orderNumber, orderNumberRequest } = useSelector(
+    (state) => state.ingredients
+  );
+
+  const number = orderNumber?.number;
 
   return (
     <>

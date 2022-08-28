@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Route, Switch, useLocation } from "react-router-dom";
 
 import AppHeader from "../app-header/app-header";
@@ -17,19 +16,20 @@ import { getCookie } from "../../utils/getCookie";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { ILocationDetails } from "../../types";
+import { useDispatch } from "../../hooks";
+import Feed from "../../pages/feed/feed";
+import Order from "../order/order";
 
 function App() {
   const location = useLocation<ILocationDetails>();
   const dispatch = useDispatch();
 
-  const details = location.state && location.state.details;
+  const background = location.state && location.state.background;
 
   useEffect(() => {
-    //@ts-ignore
     dispatch(getIngredients());
     const isToken = getCookie("token");
     if (isToken) {
-      //@ts-ignore
       dispatch(getUser());
     }
   }, [dispatch]);
@@ -37,11 +37,11 @@ function App() {
   return (
     <>
       <AppHeader />
-      <Switch location={details || location}>
+      <Switch location={background || location}>
         <Route path="/" exact={true}>
           <Main />
         </Route>
-        <ProtectedRoute path="/profile" exact={true}>
+        <ProtectedRoute path="/profile">
           <Profile />
         </ProtectedRoute>
         <Route path="/login" exact={true}>
@@ -59,16 +59,45 @@ function App() {
         <Route path="/ingredients/:id" exact={true}>
           <IngredientDetails title="Детали ингредиента" />
         </Route>
+        <Route path="/feed" exact={true}>
+          <Feed />
+        </Route>
+        <Route path="/feed/:id">
+          <Order isModal={false} />
+        </Route>
+        <Route path="profile/orders/:id" exact={true}>
+          <Order isModal={false} />
+        </Route>
       </Switch>
-      {details && (
-        <Route
-          path="/ingredients/:id"
-          children={
-            <Modal title="Детали ингредиента">
-              <IngredientDetails />
-            </Modal>
-          }
-        />
+      {background && (
+        <>
+          <Route
+            path="/ingredients/:id"
+            children={
+              <Modal title="Детали ингредиента">
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            exact={true}
+            path="/feed/:id"
+            children={
+              <Modal>
+                <Order isModal />
+              </Modal>
+            }
+          />
+          <ProtectedRoute
+            exact={true}
+            path="/profile/orders/:id"
+            children={
+              <Modal>
+                <Order isModal />
+              </Modal>
+            }
+          />
+        </>
       )}
     </>
   );

@@ -1,5 +1,4 @@
 import React, { FC, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
 import cn from "classnames";
 import {
   CurrencyIcon,
@@ -10,13 +9,14 @@ import { useDrag } from "react-dnd";
 
 import styles from "./ingredient-card.module.css";
 import { IIngredient } from "../../types";
+import { useSelector } from "../../hooks";
 
 interface IIngredientCard {
   data: IIngredient;
 }
 
 const IngredientCard: FC<IIngredientCard> = ({ data }) => {
-  const { ingredients, buns } = useSelector((state: any) => state.ingredients);
+  const { ingredients, buns } = useSelector((state) => state.ingredients);
   const [, setOpenModal] = useState(false);
 
   const [, dragRef] = useDrag({
@@ -33,14 +33,14 @@ const IngredientCard: FC<IIngredientCard> = ({ data }) => {
 
   const getCounter = useMemo(() => {
     const ingredientByName = ingredients?.find(
-      (ingredient: IIngredient) => ingredient.name === data.name
+      (ingredient) => ingredient.name === data.name
     )?.name;
     const ingredientsAmount = ingredients.filter(
-      (ingredient: IIngredient) => ingredient.name === ingredientByName
+      (ingredient) => ingredient.name === ingredientByName
     ).length;
 
     return data.name === buns?.name ? 2 : ingredientsAmount;
-  }, [ingredients, buns]);
+  }, [ingredients, buns, data.name]);
 
   return (
     <>

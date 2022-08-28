@@ -1,0 +1,38 @@
+.ordersInfo {
+    display: flex;
+    flex-direction: column;
+    row-gap: 60px;
+    width: 50%;
+
+}
+
+.topWrapper {
+    display: flex;
+    column-gap: 36px;
+}
+
+.readyOrders {
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+    width: 272px;
+}
+
+.ordersNumberWrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    flex-wrap: wrap;
+    max-height: 320px;
+}
+
+.orderNumber {
+    color: var(--colors-interface-success);
+}
+
+.cookOrders {
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+    width: 272px;
+}

@@ -9,16 +9,17 @@ import cn from "classnames";
 
 import styles from "../form.module.css";
 import { loginUser } from "../../services/actions/auth";
-import { useDispatch, useSelector } from "react-redux";
 import { isEmptyUser } from "../../utils/isEmtyUser";
 import { ILocationState } from "../../types";
+import { useDispatch, useSelector } from "../../hooks";
 
 const Login = () => {
   const location = useLocation<ILocationState>();
   const dispatch = useDispatch();
-  const { user } = useSelector((state: any) => state.auth);
+  const { user } = useSelector((state) => state.auth);
 
   const [values, setValues] = useState({
+    name: "",
     email: "",
     password: "",
   });
@@ -32,7 +33,6 @@ const Login = () => {
 
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    //@ts-ignore
     dispatch(loginUser(values));
   };
 

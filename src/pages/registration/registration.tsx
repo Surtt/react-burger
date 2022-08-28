@@ -8,15 +8,15 @@ import cn from "classnames";
 import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 
 import styles from "../form.module.css";
-import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../services/actions/auth";
 import { isEmptyUser } from "../../utils/isEmtyUser";
 import { ILocationState } from "../../types";
+import { useDispatch, useSelector } from "../../hooks";
 
 const Registration = () => {
   const location = useLocation<ILocationState>();
   const dispatch = useDispatch();
-  const { user } = useSelector((state: any) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const history = useHistory();
   const [values, setValues] = useState({
     name: "",
@@ -32,7 +32,6 @@ const Registration = () => {
 
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    //@ts-ignore
     dispatch(registerUser(values));
     history.replace({ pathname: "/" });
   };

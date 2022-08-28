@@ -1,0 +1,18 @@
+.leftSide {
+    max-width: 320px;
+}
+
+.link {
+    display: flex;
+    text-decoration: none;
+    color: var(--text-inactive-color)
+}
+
+.active {
+    color: var(--text-primary-color);
+}
+
+.text {
+    color: var(--text-inactive-color);
+    opacity: 0.4;
+}

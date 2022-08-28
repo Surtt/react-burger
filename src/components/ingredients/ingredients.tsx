@@ -20,13 +20,13 @@ const Ingredients = forwardRef<HTMLElement, IIngredients>(
             {title}
           </p>
           <ul className={cn(styles.ingredientsContainer, "pl-4")}>
-            {data.map((item: IIngredient) => (
+            {data.map((item) => (
               <Link
                 className={styles.link}
                 key={item._id}
                 to={{
                   pathname: `/ingredients/${item._id}`,
-                  state: { details: location },
+                  state: { background: location },
                 }}
               >
                 <IngredientCard data={item} />

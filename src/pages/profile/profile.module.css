@@ -9,15 +9,12 @@
     display: flex;
     column-gap: 60px;
 }
-
 .leftSide {
     max-width: 320px;
 }
 
-.form {
-    display: flex;
-    flex-direction: column;
-    row-gap: 24px;
+.active {
+    color: var(--text-primary-color);
 }
 
 .link {
@@ -26,16 +23,8 @@
     color: var(--text-inactive-color)
 }
 
-.active {
-    color: var(--text-primary-color);
-}
-
 .text {
     color: var(--text-inactive-color);
     opacity: 0.4;
 }
 
-.buttons {
-    display: flex;
-    justify-content: flex-end;
-}

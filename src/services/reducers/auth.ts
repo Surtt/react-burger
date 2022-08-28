@@ -20,9 +20,37 @@ import {
   USER_FAILED,
   USER_REQUEST,
   USER_SUCCESS,
-} from "../actions/auth";
+} from "../constants/auth";
+import { IUserData } from "../../types";
+import { TAuthActions } from "../actions/auth";
 
-const initialState = {
+interface IAuthState {
+  user: IUserData;
+  registerRequest: boolean;
+  registerFailed: boolean;
+
+  loginRequest: boolean;
+  loginFailed: boolean;
+
+  logoutRequest: boolean;
+  logoutFailed: boolean;
+
+  userRequest: boolean;
+  userFailed: boolean;
+
+  updateUserRequest: boolean;
+  updateUserFailed: boolean;
+
+  forgotPasswordRequest: boolean;
+  forgotPasswordFailed: boolean;
+  isUserSendPasswordChangeReq: boolean;
+
+  resetPasswordRequest: boolean;
+  resetPasswordFailed: boolean;
+  isUserChangedPassword: boolean;
+}
+
+const initialState: IAuthState = {
   user: {
     name: "",
     email: "",
@@ -52,7 +80,10 @@ const initialState = {
   isUserChangedPassword: false,
 };
 
-export const auth = (state = initialState, action) => {
+export const auth = (
+  state = initialState,
+  action: TAuthActions
+): IAuthState => {
   switch (action.type) {
     case REGISTER_REQUEST: {
       return { ...state, registerRequest: true, registerFailed: false };

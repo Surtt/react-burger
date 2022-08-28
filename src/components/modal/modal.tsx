@@ -34,7 +34,7 @@ const Modal: FC<IModal> = ({ title, onClose, children }) => {
   }, [handleClose]);
   return ReactDOM.createPortal(
     <>
-      <div className={cn(styles.modal, "pt-10 pr-10 pl-10")}>
+      <div className={cn(styles.modal, "pt-10 pr-10 pl-10 pb-10")}>
         <div className={styles.modalHeader}>
           <p className="text text_type_main-large">{title}</p>
           <div className={styles.close} onClick={handleClose}>
