@@ -23,6 +23,7 @@ import {
   AppDispatch,
   AppThunk,
   IIngredient,
+  IIngredientWithUuid,
   IOrder,
   IOrderById,
   IOrderIngredient,
@@ -62,7 +63,7 @@ export interface IAddBunsAction {
 
 export interface IAddIngredientAction {
   readonly type: typeof ADD_INGREDIENT;
-  readonly payload: IIngredient;
+  readonly payload: IIngredientWithUuid;
 }
 
 export interface IDeleteIngredientAction {
@@ -152,7 +153,9 @@ export const addBuns = (payload: IIngredient): IAddBunsAction => {
   };
 };
 
-export const addIngredient = (payload: IIngredient): IAddIngredientAction => {
+export const addIngredient = (
+  payload: IIngredientWithUuid
+): IAddIngredientAction => {
   return {
     type: ADD_INGREDIENT,
     payload,

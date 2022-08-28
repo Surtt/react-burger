@@ -29,9 +29,12 @@ export interface IIngredient {
   price: number;
   proteins: number;
   type: string;
-  uuid: string;
   __v: number;
   _id: string;
+}
+
+export interface IIngredientWithUuid extends IIngredient {
+  uuid: string;
 }
 
 export interface ILocationState {
@@ -75,11 +78,13 @@ export interface IOrderIngredient {
 export interface IOrder {
   createdAt: string;
   ingredients: string[];
+  owner: string;
   name: string;
   number: number;
   status: string;
   updatedAt: string;
   _id: string;
+  __v: number;
 }
 
 export interface IOrders {

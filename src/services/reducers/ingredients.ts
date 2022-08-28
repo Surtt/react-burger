@@ -13,14 +13,19 @@ import {
   GET_ORDER_SUCCESS,
   UPDATE_ORDER_INGREDIENTS,
 } from "../constants/ingredients";
-import { IIngredient, IOrder, IOrderNumber } from "../../types";
+import {
+  IIngredient,
+  IIngredientWithUuid,
+  IOrder,
+  IOrderNumber,
+} from "../../types";
 import { TIngredientsActions } from "../actions/ingredients";
 
 export interface IIngredientsState {
   ingredientsData: IIngredient[];
   ingredientsRequest: boolean;
   ingredientsFailed: boolean;
-  ingredients: IIngredient[];
+  ingredients: IIngredientWithUuid[];
   buns: null | IIngredient;
   orderNumber: null | IOrderNumber;
   orderNumberRequest: boolean;
