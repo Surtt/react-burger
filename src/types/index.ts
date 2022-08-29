@@ -51,7 +51,7 @@ export interface IUserData {
   [key: string]: string;
   name: string;
   email: string;
-  password: string;
+  // password?: string;
 }
 
 export interface IOrderNumber {

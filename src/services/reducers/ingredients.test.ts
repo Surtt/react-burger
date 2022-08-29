@@ -1,17 +1,6 @@
 import * as types from "../constants/ingredients";
 import { ingredients as reducer } from "./ingredients";
 import data from "../../utils/data";
-import {
-  ADD_BUNS,
-  ADD_INGREDIENT,
-  GET_INGREDIENTS_FAILED,
-  GET_ORDER_FAILED,
-  GET_ORDER_NUMBER,
-  GET_ORDER_NUMBER_FAILED,
-  GET_ORDER_NUMBER_SUCCESS,
-  GET_ORDER_SUCCESS,
-  UPDATE_ORDER_INGREDIENTS,
-} from "../constants/ingredients";
 
 const initialState = {
   ingredientsData: [],

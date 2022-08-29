@@ -54,7 +54,6 @@ const initialState: IAuthState = {
   user: {
     name: "",
     email: "",
-    password: "",
   },
   registerRequest: false,
   registerFailed: false,
