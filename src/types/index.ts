@@ -76,14 +76,17 @@ export interface IOrderIngredient {
 }
 
 export interface IOrder {
-  createdAt: string;
-  ingredients: string[];
-  owner: string;
-  name: string;
-  number: number;
-  status: string;
-  updatedAt: string;
   _id: string;
+  ingredients: string[];
+  status: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+}
+
+export interface IOrderUser extends IOrder {
+  owner: string;
   __v: number;
 }
 

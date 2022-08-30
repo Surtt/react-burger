@@ -18,6 +18,7 @@ import {
   IIngredientWithUuid,
   IOrder,
   IOrderNumber,
+  IOrderUser,
 } from "../../types";
 import { TIngredientsActions } from "../actions/ingredients";
 
@@ -30,7 +31,7 @@ export interface IIngredientsState {
   orderNumber: null | IOrderNumber;
   orderNumberRequest: boolean;
   orderNumberFailed: boolean;
-  orderData: null | IOrder;
+  orderData: null | IOrderUser;
   orderRequest: boolean;
   orderFailed: boolean;
 }

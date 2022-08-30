@@ -1,4 +1,3 @@
-import { PayloadAction } from "@reduxjs/toolkit";
 import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
@@ -24,7 +23,7 @@ export interface IWsConnectionClosedAction {
 
 export interface IWsConnectionErrorAction {
   readonly type: typeof WS_CONNECTION_ERROR;
-  payload: Event;
+  payload: undefined;
 }
 
 export interface IWsConnectionStartAction {
@@ -33,7 +32,6 @@ export interface IWsConnectionStartAction {
 
 export interface IWsConnectionSuccessAction {
   readonly type: typeof WS_CONNECTION_SUCCESS;
-  payload: PayloadAction;
 }
 
 export interface IWsGetMessageAction {

@@ -1,25 +1,5 @@
 import * as types from "../constants/auth";
 import { auth as reducer } from "./auth";
-import {
-  FORGOT_PASSWORD_FAILED,
-  FORGOT_PASSWORD_REQUEST,
-  FORGOT_PASSWORD_SUCCESS,
-  LOGIN_FAILED,
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGOUT_FAILED,
-  LOGOUT_REQUEST,
-  LOGOUT_SUCCESS,
-  RESET_PASSWORD_FAILED,
-  RESET_PASSWORD_REQUEST,
-  RESET_PASSWORD_SUCCESS,
-  UPDATE_USER_FAILED,
-  UPDATE_USER_REQUEST,
-  UPDATE_USER_SUCCESS,
-  USER_FAILED,
-  USER_REQUEST,
-  USER_SUCCESS,
-} from "../constants/auth";
 
 const initialState = {
   user: {
@@ -296,7 +276,6 @@ describe("auth reducer", () => {
     expect(
       reducer(initialState, {
         type: types.RESET_PASSWORD_SUCCESS,
-        payload: { name: "Admin", email: "admin@yandex.ru" },
       })
     ).toStrictEqual({
       ...initialState,

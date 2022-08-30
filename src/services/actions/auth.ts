@@ -118,7 +118,6 @@ export interface IResetPasswordRequestAction {
 
 export interface IResetPasswordSuccessAction {
   readonly type: typeof RESET_PASSWORD_SUCCESS;
-  readonly payload: IUserData;
 }
 
 export interface IResetPasswordFailedAction {
@@ -274,12 +273,9 @@ export const resetPasswordReq = (): IResetPasswordRequestAction => {
   };
 };
 
-export const resetPasswordSuccess = (
-  payload: IUserData
-): IResetPasswordSuccessAction => {
+export const resetPasswordSuccess = (): IResetPasswordSuccessAction => {
   return {
     type: RESET_PASSWORD_SUCCESS,
-    payload,
   };
 };
 
@@ -403,7 +399,7 @@ export const resetPassword =
     resetPasswordRequest(data)
       .then((res) => {
         if (res && res.success) {
-          dispatch(resetPasswordSuccess(res.user));
+          dispatch(resetPasswordSuccess());
         } else {
           dispatch(resetPasswordFailed());
         }
