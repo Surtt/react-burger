@@ -1,4 +1,3 @@
-import { PayloadAction } from "@reduxjs/toolkit";
 import { IOrders } from "../../types";
 import {
   WS_CONNECTION_CLOSED_AUTH,
@@ -24,7 +23,7 @@ export interface IWsConnectionClosedAuthAction {
 
 export interface IWsConnectionErrorAuthAction {
   readonly type: typeof WS_CONNECTION_ERROR_AUTH;
-  payload: Event;
+  payload: undefined;
 }
 
 export interface IWsConnectionStartAuthAction {
@@ -33,7 +32,6 @@ export interface IWsConnectionStartAuthAction {
 
 export interface IWsConnectionSuccessAuthAction {
   readonly type: typeof WS_CONNECTION_SUCCESS_AUTH;
-  payload: PayloadAction;
 }
 
 export interface IWsGetMessageAuthAction {
