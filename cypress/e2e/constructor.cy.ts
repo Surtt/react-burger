@@ -20,7 +20,7 @@ describe("correct burger order", () => {
     }
   });
 
-  it("should add ingredients to constructor", () => {
+  it("should add buns to constructor", () => {
     cy.get("@ingredient").first().trigger("dragstart");
     cy.get("@constructor").trigger("drop");
     cy.get("@constructor").contains("Краторная булка N-200i");
