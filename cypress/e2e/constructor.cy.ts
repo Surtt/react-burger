@@ -62,8 +62,8 @@ describe("correct burger order", () => {
 
   it("should move to default page", () => {
     cy.get("[class^=button_button__]").as("button");
-    cy.get("input[type=email]").type("fallen2@yandex.ru");
-    cy.get("input[type=password]").type("AnfdYuv182");
+    cy.get("input[type=email]").type("mail@dmail.io");
+    cy.get("input[type=password]").type("12345678");
     cy.get("@button").contains("Войти").click();
     cy.get("[class^=burger-ingredients_ingredientsBlockContainer__]").contains(
       "Соберите бургер"
