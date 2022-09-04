@@ -1,34 +1,5 @@
 import * as types from "../constants/auth";
-import { auth as reducer } from "./auth";
-
-const initialState = {
-  user: {
-    name: "",
-    email: "",
-  },
-  registerRequest: false,
-  registerFailed: false,
-
-  loginRequest: false,
-  loginFailed: false,
-
-  logoutRequest: false,
-  logoutFailed: false,
-
-  userRequest: false,
-  userFailed: false,
-
-  updateUserRequest: false,
-  updateUserFailed: false,
-
-  forgotPasswordRequest: false,
-  forgotPasswordFailed: false,
-  isUserSendPasswordChangeReq: false,
-
-  resetPasswordRequest: false,
-  resetPasswordFailed: false,
-  isUserChangedPassword: false,
-};
+import { auth as reducer, initialState } from "./auth";
 
 describe("auth reducer", () => {
   it("should return the initial state", () => {

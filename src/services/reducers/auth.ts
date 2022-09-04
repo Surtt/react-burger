@@ -50,7 +50,7 @@ interface IAuthState {
   isUserChangedPassword: boolean;
 }
 
-const initialState: IAuthState = {
+export const initialState: IAuthState = {
   user: {
     name: "",
     email: "",

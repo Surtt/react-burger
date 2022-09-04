@@ -1,13 +1,5 @@
 import * as types from "../constants/ws-auth";
-import { wsAuthReducer as reducer } from "./wsAuthReducer";
-
-const initialState = {
-  wsConnected: false,
-  orders: [],
-  total: null,
-  totalToday: null,
-  error: undefined,
-};
+import { initialState, wsAuthReducer as reducer } from "./wsAuthReducer";
 
 describe("ws-auth reducer", () => {
   it("should return the initial state", () => {

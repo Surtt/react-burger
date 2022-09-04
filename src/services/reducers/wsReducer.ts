@@ -15,7 +15,7 @@ interface IWsReducer {
   error?: Event;
 }
 
-const initialState: IWsReducer = {
+export const initialState: IWsReducer = {
   wsConnected: false,
   orders: [],
   total: null,

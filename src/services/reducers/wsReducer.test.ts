@@ -1,13 +1,5 @@
 import * as types from "../constants/ws";
-import { wsReducer as reducer } from "./wsReducer";
-
-const initialState = {
-  wsConnected: false,
-  orders: [],
-  total: null,
-  totalToday: null,
-  error: undefined,
-};
+import { initialState, wsReducer as reducer } from "./wsReducer";
 
 describe("ws reducer", () => {
   it("should return the initial state", () => {
