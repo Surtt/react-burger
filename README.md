@@ -6,7 +6,7 @@
 
 [Демо](https://surtt.github.io/react-burger/)
 
-###Стек:
+### Стек:
 - React, React Hooks
 - Redux
 - React Router
@@ -15,15 +15,15 @@
 - Jest, Cypress
 
 
-###Скачать проект:
+### Скачать проект:
 
 ``gh repo clone Surtt/react-burger``
 
-###Установить
+### Установить
 
 ``npm install``
 
-###Деплой
+### Деплой
 
 ``npm run deploy``
 
