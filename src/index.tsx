@@ -10,7 +10,7 @@ import { store } from "./services/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as Element);
 root.render(
-  <Router>
+  <Router basename="/react-burger">
     <React.StrictMode>
       <Provider store={store}>
         <App />

@@ -22,7 +22,7 @@ import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./burger-constructor.module.css";
 import { useHistory } from "react-router-dom";
 import { isEmptyUser } from "../../utils/isEmtyUser";
-import { IIngredient } from "../../types";
+import { IIngredient, IIngredientWithUuid } from "../../types";
 import { useDispatch, useSelector } from "../../hooks";
 
 declare module "react" {
@@ -49,7 +49,10 @@ const BurgerConstructor = () => {
       dispatch(addBuns(targetIngredient));
     } else {
       dispatch(
-        addIngredient({ ...targetIngredient, uuid: uuid4() } as IIngredient)
+        addIngredient({
+          ...targetIngredient,
+          uuid: uuid4(),
+        } as IIngredientWithUuid)
       );
     }
   };

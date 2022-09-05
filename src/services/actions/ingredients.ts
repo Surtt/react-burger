@@ -23,10 +23,12 @@ import {
   AppDispatch,
   AppThunk,
   IIngredient,
+  IIngredientWithUuid,
   IOrder,
   IOrderById,
   IOrderIngredient,
   IOrderNumber,
+  IOrderUser,
 } from "../../types";
 
 export interface IGetIngredientsRequestAction {
@@ -62,7 +64,7 @@ export interface IAddBunsAction {
 
 export interface IAddIngredientAction {
   readonly type: typeof ADD_INGREDIENT;
-  readonly payload: IIngredient;
+  readonly payload: IIngredientWithUuid;
 }
 
 export interface IDeleteIngredientAction {
@@ -81,7 +83,7 @@ export interface IGetOrderAction {
 
 export interface IGetOrderSuccessAction {
   readonly type: typeof GET_ORDER_SUCCESS;
-  readonly payload: IOrder;
+  readonly payload: IOrderUser;
 }
 
 export interface IGetOrderFailedAction {
@@ -152,7 +154,9 @@ export const addBuns = (payload: IIngredient): IAddBunsAction => {
   };
 };
 
-export const addIngredient = (payload: IIngredient): IAddIngredientAction => {
+export const addIngredient = (
+  payload: IIngredientWithUuid
+): IAddIngredientAction => {
   return {
     type: ADD_INGREDIENT,
     payload,
@@ -181,7 +185,9 @@ export const getOrderRequest = (): IGetOrderAction => {
   };
 };
 
-export const getOrderSuccess = (payload: IOrder): IGetOrderSuccessAction => {
+export const getOrderSuccess = (
+  payload: IOrderUser
+): IGetOrderSuccessAction => {
   return {
     type: GET_ORDER_SUCCESS,
     payload,
@@ -201,7 +207,7 @@ export const getOrderRequestUser = (): IGetOrderAction => {
 };
 
 export const getOrderSuccessUser = (
-  payload: IOrder
+  payload: IOrderUser
 ): IGetOrderSuccessAction => {
   return {
     type: GET_ORDER_SUCCESS,
