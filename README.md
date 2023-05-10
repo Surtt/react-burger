@@ -1,12 +1,10 @@
 # React Burger
 
-Проект реализован в рамках курса Яндекс.Практикум "React-разработчик"
+A space burger project, with the ability to place an order, register, log in, and track the order in real time.
 
-Проект космической бургерной, с возможностью сделать заказ, зарегистрироваться, авторизоваться, отслеживанием заказа в режиме реального времени.
+[Demo](https://surtt.github.io/react-burger/)
 
-[Демо](https://surtt.github.io/react-burger/)
-
-### Стек:
+### Stack:
 - React, React Hooks
 - Redux
 - React Router
@@ -15,15 +13,15 @@
 - Jest, Cypress
 
 
-### Скачать проект:
+### Download the project:
 
 ``gh repo clone Surtt/react-burger``
 
-### Установить
+### Run the project
 
-``npm install``
+``npm install && npm start``
 
-### Деплой
+### Deploy
 
 ``npm run deploy``
 
